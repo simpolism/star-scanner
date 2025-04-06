@@ -31,6 +31,13 @@ export function isInSign(position: number, signName: SignName): boolean {
   return start <= normalizedPos && normalizedPos < end;
 }
 
+export function detectSign(position: number): SignName {
+  for (const sign in SIGNS) {
+    if (isInSign(position, sign)) return sign as SignName;
+  }
+  throw new Error('Invalid position');
+}
+
 export function checkAspect(pos1: number, pos2: number, aspectName: AspectName): boolean {
   const { angle, orb } = ASPECTS[aspectName];
 

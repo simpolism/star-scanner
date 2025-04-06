@@ -6,7 +6,7 @@ import {
   type PlanetName,
   type AspectName,
 } from '../types';
-import { checkAspect } from '../utils';
+import { checkAspect, detectSign } from '../utils';
 
 export class AspectDetector extends EventDetector {
   private planetPairs: [PlanetName, PlanetName][];
@@ -61,10 +61,12 @@ export class AspectDetector extends EventDetector {
 
         // Detect aspect becoming exact (crossing from not in orb to in orb)
         if (hasAspectNow && !hadAspectPrev) {
+          const p1Sign = detectSign(currPos1);
+          const p2Sign = detectSign(currPos2);
           events.push({
             date: new Date(currentDate),
             type: 'aspect',
-            description: `${p1} ${aspect} ${p2}`,
+            description: `${p1} (${p1Sign}) ${aspect} ${p2} (${p2Sign})`,
           });
         }
       }

@@ -3,6 +3,11 @@ import * as sweph from 'sweph';
 export const START_DATE = new Date(2025, 3, 5); // April 5, 2025
 export const END_DATE = new Date(2027, 11, 31); // December 31, 2027
 export const PLANETS: { [name: string]: number } = {
+  Sun: sweph.constants.SE_SUN,
+  Moon: sweph.constants.SE_MOON,
+  Mercury: sweph.constants.SE_MERCURY,
+  Venus: sweph.constants.SE_VENUS,
+  Mars: sweph.constants.SE_MARS,
   Jupiter: sweph.constants.SE_JUPITER,
   Saturn: sweph.constants.SE_SATURN,
   Uranus: sweph.constants.SE_URANUS,

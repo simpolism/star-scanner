@@ -131,8 +131,11 @@ class AstrologicalEventScanner extends EventEmitter {
 async function main(): Promise<void> {
   // Create event detectors
   const detectors: EventDetector[] = [
-    // Focus on Jupiter, Saturn, and outer planets in Aquarius
-    new SignIngressDetector(['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'], ['Aquarius']),
+    // All outer planet ingresses
+    new SignIngressDetector(['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']),
+
+    // Any planet ingress into Aquarius
+    new SignIngressDetector(['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'], ['Aquarius']),
 
     // Retrograde motion in Aquarius
     new RetrogradeDetector(['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'], ['Aquarius']),
@@ -140,6 +143,26 @@ async function main(): Promise<void> {
     // Major aspects between outer planets
     new AspectDetector(
       [
+        ['Sun', 'Saturn'],
+        ['Sun', 'Uranus'],
+        ['Sun', 'Neptune'],
+        ['Sun', 'Pluto'],
+        // ['Moon', 'Saturn'],
+        // ['Moon', 'Uranus'],
+        // ['Moon', 'Neptune'],
+        // ['Moon', 'Pluto'],
+        ['Mercury', 'Saturn'],
+        ['Mercury', 'Uranus'],
+        ['Mercury', 'Neptune'],
+        ['Mercury', 'Pluto'],
+        ['Venus', 'Saturn'],
+        ['Venus', 'Uranus'],
+        ['Venus', 'Neptune'],
+        ['Venus', 'Pluto'],
+        ['Mars', 'Saturn'],
+        ['Mars', 'Uranus'],
+        ['Mars', 'Neptune'],
+        ['Mars', 'Pluto'],
         ['Jupiter', 'Saturn'],
         ['Jupiter', 'Uranus'],
         ['Jupiter', 'Neptune'],
