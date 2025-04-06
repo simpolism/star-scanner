@@ -2,8 +2,8 @@ import * as sweph from 'sweph';
 import * as path from 'path';
 import { EventEmitter } from 'events';
 import { EventDetector, type PlanetaryData, type AstrologicalEvent } from './types';
-import { getPlanetData, julianDayFromDate } from './utils';
-import { END_DATE, PLANETS, START_DATE } from './constants';
+import { getPlanetData, julianDayFromDate, colorizeText, colorizeEventType } from './utils';
+import { COLORS, END_DATE, PLANETS, START_DATE } from './constants';
 import {
   PlanetarySignConfiguration,
   AspectDetector,
@@ -122,7 +122,13 @@ class AstrologicalEventScanner extends EventEmitter {
 
     for (const event of events) {
       const dateStr = event.date.toISOString().split('T')[0];
-      console.log(`${dateStr} | ${event.type.toUpperCase().padEnd(15)} | ${event.description}`);
+      // Apply colors to event type and description
+      const coloredType = colorizeEventType(event.type as keyof typeof COLORS.TYPE_COLORS);
+      const coloredDescription = colorizeText(event.description);
+
+      console.log(
+        `${dateStr} | ${coloredType.padEnd(15 + COLORS.RESET.length)} | ${coloredDescription}`,
+      );
     }
   }
 }

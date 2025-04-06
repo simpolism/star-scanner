@@ -1,6 +1,6 @@
 import * as sweph from 'sweph';
 import type { AspectName, PlanetData, SignName } from './types';
-import { ASPECTS, SIGNS } from './constants';
+import { ASPECTS, COLORS, SIGNS } from './constants';
 
 export function julianDayFromDate(date: Date): number {
   return sweph.julday(
@@ -49,4 +49,41 @@ export function checkAspect(pos1: number, pos2: number, aspectName: AspectName):
 
   // Check if within orb
   return Math.abs(diff - angle) <= orb;
+}
+
+/**
+ * Colorize text elements in an astrological event description
+ * Adds appropriate colors to planets, signs, aspects, and event types
+ */
+export function colorizeText(text: string): string {
+  let colorized = text;
+  const reset = COLORS.RESET;
+
+  // Colorize planets
+  Object.entries(COLORS.PLANET_COLORS).forEach(([planet, color]) => {
+    const regex = new RegExp(`\\b${planet}\\b`, 'g');
+    colorized = colorized.replace(regex, `${color}${planet}${reset}`);
+  });
+
+  // Colorize signs
+  Object.entries(COLORS.SIGN_COLORS).forEach(([sign, color]) => {
+    const regex = new RegExp(`\\b${sign}\\b`, 'g');
+    colorized = colorized.replace(regex, `${color}${sign}${reset}`);
+  });
+
+  // Colorize aspects
+  Object.entries(COLORS.ASPECT_COLORS).forEach(([aspect, color]) => {
+    const regex = new RegExp(`\\b${aspect}\\b`, 'g');
+    colorized = colorized.replace(regex, `${color}${aspect}${reset}`);
+  });
+
+  return colorized;
+}
+
+/**
+ * Colorize an event type
+ */
+export function colorizeEventType(type: keyof typeof COLORS.TYPE_COLORS): string {
+  const typeColor = COLORS.TYPE_COLORS[type] || '';
+  return `${typeColor}${type.toUpperCase()}${COLORS.RESET}`;
 }
