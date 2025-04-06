@@ -1,6 +1,6 @@
 import * as sweph from 'sweph';
 
-export const START_DATE = new Date(2025, 3, 5); // April 5, 2025
+export const START_DATE = new Date(2025, 0, 1); // January 1, 2025
 export const END_DATE = new Date(2027, 11, 31); // December 31, 2027
 
 // Console colors for output formatting
@@ -83,9 +83,9 @@ export const SIGNS: { [name: string]: [number, number] } = {
   Pisces: [330, 360],
 };
 export const ASPECTS: { [name: string]: { angle: number; orb: number } } = {
-  conjunction: { angle: 0.0, orb: 8.0 },
-  opposition: { angle: 180.0, orb: 8.0 },
-  trine: { angle: 120.0, orb: 6.0 },
-  square: { angle: 90.0, orb: 6.0 },
-  sextile: { angle: 60.0, orb: 4.0 },
+  conjunction: { angle: 0.0, orb: 5.0 },
+  opposition: { angle: 180.0, orb: 5.0 },
+  trine: { angle: 120.0, orb: 5.0 },
+  square: { angle: 90.0, orb: 5.0 },
+  sextile: { angle: 60.0, orb: 2.0 },
 };

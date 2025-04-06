@@ -6,7 +6,7 @@ import {
   type PlanetName,
   type SignName,
 } from '../types';
-import { isInSign } from '../utils';
+import { detectSign } from '../utils';
 
 export class SignIngressDetector extends EventDetector {
   private planets: PlanetName[];
@@ -36,25 +36,15 @@ export class SignIngressDetector extends EventDetector {
       }
 
       const currPos = currentData[planet].longitude;
+      const currSign = detectSign(currPos);
       const prevPos = previousData[planet].longitude;
-
-      for (const sign of this.signs) {
-        const prevInSign = isInSign(prevPos, sign);
-        const currInSign = isInSign(currPos, sign);
-
-        if (!prevInSign && currInSign) {
-          events.push({
-            date: new Date(currentDate),
-            type: 'ingress',
-            description: `${planet} enters ${sign}`,
-          });
-        } else if (prevInSign && !currInSign) {
-          events.push({
-            date: new Date(currentDate),
-            type: 'egress',
-            description: `${planet} leaves ${sign}`,
-          });
-        }
+      const prevSign = detectSign(prevPos);
+      if (currSign !== prevSign) {
+        events.push({
+          date: new Date(currentDate),
+          type: 'ingress',
+          description: `${planet} enters ${currSign} (from ${prevSign})`,
+        });
       }
     }
 
