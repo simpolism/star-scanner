@@ -143,8 +143,8 @@ async function main(): Promise<void> {
     // Any planet ingress into Aquarius
     // new SignIngressDetector(['Sun', 'Mercury', 'Venus', 'Mars'], ['Aquarius']),
 
-    // Retrograde motion in Aquarius
-    new RetrogradeDetector(['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'], ['Aquarius']),
+    // Retrograde motion
+    new RetrogradeDetector(['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']),
 
     // Major aspects between outer planets
     new AspectDetector(

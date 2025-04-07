@@ -13,7 +13,7 @@ export function julianDayFromDate(date: Date): number {
 }
 
 export function getPlanetData(jd: number, planetId: number): PlanetData {
-  const result = sweph.calc(jd, planetId, sweph.constants.SEFLG_SPEED);
+  const result = sweph.calc(jd, planetId, sweph.constants.SEFLG_SWIEPH | sweph.constants.SEFLG_SPEED);
   return {
     longitude: result.data[0], // Longitude is first element in data array
     latitude: result.data[1], // Latitude is second element
@@ -38,6 +38,29 @@ export function detectSign(position: number): SignName {
   throw new Error('Invalid position');
 }
 
+/**
+ * Get the sign index (0-11) from a longitude position
+ */
+export function getSignIndex(position: number): number {
+  return Math.floor((position % 360) / 30);
+}
+
+/**
+ * Calculate how many signs apart two positions are (0-11)
+ * Used to validate astrological aspects are "in sign"
+ */
+export function getSignDistance(pos1: number, pos2: number): number {
+  const sign1 = getSignIndex(pos1);
+  const sign2 = getSignIndex(pos2);
+
+  // Get shortest distance between signs (clockwise or counterclockwise)
+  const diff = Math.abs(sign1 - sign2);
+  return diff > 6 ? 12 - diff : diff;
+}
+
+/**
+ * Check if an aspect is valid based on both angular distance and sign distance
+ */
 export function checkAspect(pos1: number, pos2: number, aspectName: AspectName): boolean {
   const { angle, orb } = ASPECTS[aspectName];
 
@@ -48,7 +71,30 @@ export function checkAspect(pos1: number, pos2: number, aspectName: AspectName):
   }
 
   // Check if within orb
-  return Math.abs(diff - angle) <= orb;
+  const isWithinOrb = Math.abs(diff - angle) <= orb;
+
+  // If not within orb, no need to check sign compatibility
+  if (!isWithinOrb) {
+    return false;
+  }
+
+  // Check sign compatibility based on aspect type
+  const signDistance = getSignDistance(pos1, pos2);
+
+  switch (aspectName) {
+    case 'conjunction':
+      return signDistance === 0; // Same sign
+    case 'opposition':
+      return signDistance === 6; // Opposite signs
+    case 'trine':
+      return signDistance === 4 || signDistance === 8; // Same element (4 signs apart)
+    case 'square':
+      return signDistance === 3 || signDistance === 9; // Same modality (3 signs apart)
+    case 'sextile':
+      return signDistance === 2 || signDistance === 10; // Compatible elements (2 signs apart)
+    default:
+      return true; // For any other aspects, don't apply sign restrictions
+  }
 }
 
 /**

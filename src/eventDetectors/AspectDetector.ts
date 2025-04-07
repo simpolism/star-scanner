@@ -65,16 +65,16 @@ export class AspectDetector extends EventDetector {
           const p2Sign = detectSign(currPos2);
           events.push({
             date: new Date(currentDate),
-            type: 'aspect',
-            description: `BEGIN: ${p1} (${p1Sign}) ${aspect} ${p2} (${p2Sign})`,
+            type: 'aspect_begin',
+            description: `${p1} (${p1Sign}) ${aspect} ${p2} (${p2Sign})`,
           });
         } else if (hadAspectPrev && !hasAspectNow) {
-          const p1Sign = detectSign(currPos1);
-          const p2Sign = detectSign(currPos2);
+          const p1Sign = detectSign(prevPos1);
+          const p2Sign = detectSign(prevPos2);
           events.push({
             date: new Date(currentDate),
-            type: 'aspect',
-            description: `END: ${p1} (${p1Sign}) ${aspect} ${p2} (${p2Sign})`,
+            type: 'aspect_end',
+            description: `${p1} (${p1Sign}) ${aspect} ${p2} (${p2Sign})`,
           });
         }
       }

@@ -1,6 +1,6 @@
 import * as sweph from 'sweph';
 
-export const START_DATE = new Date(2025, 0, 1); // January 1, 2025
+export const START_DATE = new Date(2024, 8, 1); // September 1, 2024
 export const END_DATE = new Date(2027, 11, 31); // December 31, 2027
 
 // Console colors for output formatting
@@ -46,7 +46,8 @@ export const COLORS = {
 
   // Event type colors
   TYPE_COLORS: {
-    aspect: '\x1b[35m', // Magenta
+    aspect_end: '\x1b[35m', // Magenta
+    aspect_begin: '\x1b[92m', // Light Green
     ingress: '\x1b[32m', // Green
     retrograde: '\x1b[33m', // Yellow
     configuration: '\x1b[36m', // Cyan
