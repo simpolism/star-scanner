@@ -5,10 +5,19 @@ import {
   type AstrologicalEvent,
   type PlanetName,
   type AspectName,
+  type SignName,
 } from '../types';
 import { checkAspect, detectSign } from '../utils';
 
-export class AspectDetector extends EventDetector {
+// TODO: orb and position data, clean up tuples
+export interface AspectData {
+  planet1: [PlanetName, SignName];
+  planet2: [PlanetName, SignName];
+  aspect: AspectName;
+  status: 'start' | 'end';
+}
+
+export class AspectDetector extends EventDetector<AspectData> {
   private planetPairs: [PlanetName, PlanetName][];
   private aspects: AspectName[];
 
@@ -16,7 +25,7 @@ export class AspectDetector extends EventDetector {
     super();
     // If no planet pairs specified, check all combinations
     if (!planetPairs) {
-      const planetList = Object.keys(PLANETS);
+      const planetList = Object.keys(PLANETS) as PlanetName[];
       this.planetPairs = [];
       for (let i = 0; i < planetList.length; i++) {
         for (let j = i + 1; j < planetList.length; j++) {
@@ -27,15 +36,15 @@ export class AspectDetector extends EventDetector {
       this.planetPairs = planetPairs;
     }
 
-    this.aspects = aspects || Object.keys(ASPECTS);
+    this.aspects = aspects || (Object.keys(ASPECTS) as AspectName[]);
   }
 
   detect(
     currentDate: Date,
     currentData: PlanetaryData,
     previousData: PlanetaryData | null,
-  ): AstrologicalEvent[] {
-    const events: AstrologicalEvent[] = [];
+  ): AstrologicalEvent<AspectData>[] {
+    const events: AstrologicalEvent<AspectData>[] = [];
 
     // Skip if no previous data
     if (!previousData) {
@@ -61,20 +70,28 @@ export class AspectDetector extends EventDetector {
 
         // Detect aspect becoming exact (crossing from not in orb to in orb)
         if (hasAspectNow && !hadAspectPrev) {
-          const p1Sign = detectSign(currPos1);
-          const p2Sign = detectSign(currPos2);
           events.push({
             date: new Date(currentDate),
             type: 'aspect_begin',
-            description: `${p1} (${p1Sign}) ${aspect} ${p2} (${p2Sign})`,
+            description: `${p1} ${aspect} ${p2}`,
+            data: {
+              planet1: [p1, detectSign(currPos1)],
+              planet2: [p2, detectSign(currPos2)],
+              aspect,
+              status: 'start',
+            },
           });
         } else if (hadAspectPrev && !hasAspectNow) {
-          const p1Sign = detectSign(prevPos1);
-          const p2Sign = detectSign(prevPos2);
           events.push({
             date: new Date(currentDate),
             type: 'aspect_end',
-            description: `${p1} (${p1Sign}) ${aspect} ${p2} (${p2Sign})`,
+            description: `${p1} ${aspect} ${p2}`,
+            data: {
+              planet1: [p1, detectSign(prevPos1)],
+              planet2: [p2, detectSign(prevPos2)],
+              aspect,
+              status: 'end',
+            },
           });
         }
       }

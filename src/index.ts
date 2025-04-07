@@ -1,10 +1,11 @@
 import * as sweph from 'sweph';
 import * as path from 'path';
 import { EventEmitter } from 'events';
-import { EventDetector, type PlanetaryData, type AstrologicalEvent } from './types';
+import { EventDetector, type PlanetaryData, type AstrologicalEvent, EventProcessor } from './types';
 import { getPlanetData, julianDayFromDate, colorizeText, colorizeEventType } from './utils';
 import { COLORS, END_DATE, PLANETS, START_DATE } from './constants';
-import { AspectDetector, RetrogradeDetector, SignIngressDetector } from './eventDetectors/index';
+import { AspectDetector, RetrogradeDetector, SignIngressDetector } from './eventDetectors';
+import { NeptunePlutoIngressProcessor, PlutoRetrogradeProcessor } from './eventProcessors';
 
 // Initialize Swiss Ephemeris
 const ephePath = path.join(__dirname, 'ephemeris');
@@ -105,7 +106,7 @@ class AstrologicalEventScanner extends EventEmitter {
     this.emit('stopped', { reason: 'User requested stop' });
   }
 
-  displayEvents(events: AstrologicalEvent[]): void {
+  displayEvents(events: AstrologicalEvent[], eventProcessors: Array<EventProcessor> = []): void {
     if (!events.length) {
       console.log('No events found.');
       return;
@@ -116,9 +117,12 @@ class AstrologicalEventScanner extends EventEmitter {
     console.log('-'.repeat(70));
 
     for (const event of events) {
+      for (const processor of eventProcessors) {
+        processor(event);
+      }
       const dateStr = event.date.toISOString().split('T')[0];
       // Apply colors to event type and description
-      const coloredType = colorizeEventType(event.type as keyof typeof COLORS.TYPE_COLORS);
+      const coloredType = colorizeEventType(event.type);
       const coloredDescription = colorizeText(event.description);
 
       console.log(
@@ -135,31 +139,12 @@ async function main(): Promise<void> {
     // All outer planet ingresses
     new SignIngressDetector(['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']),
 
-    // Any planet ingress into Aquarius
-    // new SignIngressDetector(['Sun', 'Mercury', 'Venus', 'Mars'], ['Aquarius']),
-
     // Retrograde motion
     new RetrogradeDetector(['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']),
 
     // Major aspects between outer planets
     new AspectDetector(
       [
-        // ['Sun', 'Saturn'],
-        // ['Sun', 'Uranus'],
-        // ['Sun', 'Neptune'],
-        // ['Sun', 'Pluto'],
-        // ['Mercury', 'Saturn'],
-        // ['Mercury', 'Uranus'],
-        // ['Mercury', 'Neptune'],
-        // ['Mercury', 'Pluto'],
-        // ['Venus', 'Saturn'],
-        // ['Venus', 'Uranus'],
-        // ['Venus', 'Neptune'],
-        // ['Venus', 'Pluto'],
-        // ['Mars', 'Saturn'],
-        // ['Mars', 'Uranus'],
-        // ['Mars', 'Neptune'],
-        // ['Mars', 'Pluto'],
         ['Jupiter', 'Saturn'],
         ['Jupiter', 'Uranus'],
         ['Jupiter', 'Neptune'],
@@ -195,7 +180,9 @@ async function main(): Promise<void> {
 
   // Run the scan
   const events = await scanner.scan();
-  scanner.displayEvents(events);
+
+  // Add relevant processors
+  scanner.displayEvents(events, [PlutoRetrogradeProcessor, NeptunePlutoIngressProcessor]);
   return;
 }
 

@@ -1,4 +1,4 @@
-import { PLANETS, SIGNS } from '../constants';
+import { PLANETS } from '../constants';
 import {
   EventDetector,
   type PlanetaryData,
@@ -8,22 +8,26 @@ import {
 } from '../types';
 import { detectSign } from '../utils';
 
-export class SignIngressDetector extends EventDetector {
-  private planets: PlanetName[];
-  private signs: SignName[];
+export interface IngressData {
+  planet: PlanetName;
+  prevSign: SignName;
+  newSign: SignName;
+}
 
-  constructor(planets?: PlanetName[], signs?: SignName[]) {
+export class SignIngressDetector extends EventDetector<IngressData> {
+  private planets: PlanetName[];
+
+  constructor(planets?: PlanetName[]) {
     super();
-    this.planets = planets || Object.keys(PLANETS);
-    this.signs = signs || Object.keys(SIGNS);
+    this.planets = planets || (Object.keys(PLANETS) as PlanetName[]);
   }
 
   detect(
     currentDate: Date,
     currentData: PlanetaryData,
     previousData: PlanetaryData | null,
-  ): AstrologicalEvent[] {
-    const events: AstrologicalEvent[] = [];
+  ): AstrologicalEvent<IngressData>[] {
+    const events: AstrologicalEvent<IngressData>[] = [];
 
     // Skip if no previous data
     if (!previousData) {
@@ -44,6 +48,11 @@ export class SignIngressDetector extends EventDetector {
           date: new Date(currentDate),
           type: 'ingress',
           description: `${planet} enters ${currSign} (from ${prevSign})`,
+          data: {
+            planet,
+            prevSign,
+            newSign: currSign,
+          },
         });
       }
     }

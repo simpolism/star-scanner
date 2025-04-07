@@ -1,5 +1,5 @@
 import * as sweph from 'sweph';
-import type { AspectName, PlanetData, SignName } from './types';
+import type { AspectName, EventType, PlanetData, SignName } from './types';
 import { ASPECTS, COLORS, SIGNS } from './constants';
 
 // Set observer's geographical location (San Francisco)
@@ -43,8 +43,8 @@ export function isInSign(position: number, signName: SignName): boolean {
 }
 
 export function detectSign(position: number): SignName {
-  for (const sign in SIGNS) {
-    if (isInSign(position, sign)) return sign as SignName;
+  for (const sign of Object.keys(SIGNS) as SignName[]) {
+    if (isInSign(position, sign)) return sign;
   }
   throw new Error('Invalid position');
 }
@@ -140,7 +140,7 @@ export function colorizeText(text: string): string {
 /**
  * Colorize an event type
  */
-export function colorizeEventType(type: keyof typeof COLORS.TYPE_COLORS): string {
+export function colorizeEventType(type: EventType): string {
   const typeColor = COLORS.TYPE_COLORS[type] || '';
   return `${typeColor}${type.toUpperCase()}${COLORS.RESET}`;
 }

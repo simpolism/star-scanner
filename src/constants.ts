@@ -1,7 +1,7 @@
 import * as sweph from 'sweph';
 
 export const START_DATE = new Date(2024, 8, 1); // September 1, 2024
-export const END_DATE = new Date(2027, 11, 31); // December 31, 2027
+export const END_DATE = new Date(2028, 6, 1); // July 1, 2028
 
 // Console colors for output formatting
 export const COLORS = {
@@ -57,7 +57,7 @@ export const COLORS = {
   RESET: '\x1b[0m',
 };
 
-export const PLANETS: { [name: string]: number } = {
+export const PLANETS = {
   Sun: sweph.constants.SE_SUN,
   Moon: sweph.constants.SE_MOON,
   Mercury: sweph.constants.SE_MERCURY,
@@ -69,7 +69,7 @@ export const PLANETS: { [name: string]: number } = {
   Neptune: sweph.constants.SE_NEPTUNE,
   Pluto: sweph.constants.SE_PLUTO,
 };
-export const SIGNS: { [name: string]: [number, number] } = {
+export const SIGNS = {
   Aries: [0, 30],
   Taurus: [30, 60],
   Gemini: [60, 90],
@@ -83,7 +83,7 @@ export const SIGNS: { [name: string]: [number, number] } = {
   Aquarius: [300, 330],
   Pisces: [330, 360],
 };
-export const ASPECTS: { [name: string]: { angle: number; orb: number } } = {
+export const ASPECTS = {
   conjunction: { angle: 0.0, orb: 5.0 },
   opposition: { angle: 180.0, orb: 5.0 },
   trine: { angle: 120.0, orb: 5.0 },

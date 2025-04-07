@@ -6,17 +6,23 @@ import {
   type PlanetName,
   type SignName,
 } from '../types';
-import { isInSign } from '../utils';
+import { detectSign, isInSign } from '../utils';
 
-export class RetrogradeDetector extends EventDetector {
+export interface RetrogradeData {
+  planet: PlanetName;
+  direction: 'retrograde' | 'direct';
+  sign: SignName;
+}
+
+export class RetrogradeDetector extends EventDetector<RetrogradeData> {
   private planets: PlanetName[];
   private signs: SignName[];
   private checkSign: boolean;
 
   constructor(planets?: PlanetName[], signs?: SignName[]) {
     super();
-    this.planets = planets || Object.keys(PLANETS);
-    this.signs = signs || Object.keys(SIGNS);
+    this.planets = planets || (Object.keys(PLANETS) as PlanetName[]);
+    this.signs = signs || (Object.keys(SIGNS) as SignName[]);
     this.checkSign = !!signs;
   }
 
@@ -24,8 +30,8 @@ export class RetrogradeDetector extends EventDetector {
     currentDate: Date,
     currentData: PlanetaryData,
     previousData: PlanetaryData | null,
-  ): AstrologicalEvent[] {
-    const events: AstrologicalEvent[] = [];
+  ): AstrologicalEvent<RetrogradeData>[] {
+    const events: AstrologicalEvent<RetrogradeData>[] = [];
 
     // Skip if no previous data
     if (!previousData) {
@@ -56,7 +62,7 @@ export class RetrogradeDetector extends EventDetector {
             const status = currRetro ? 'begins retrograde' : 'goes direct';
             events.push({
               date: new Date(currentDate),
-              type: 'retrograde_change',
+              type: 'retrograde',
               description: `${planet} ${status} in ${sign}`,
             });
             break;
@@ -72,8 +78,13 @@ export class RetrogradeDetector extends EventDetector {
         const status = currRetro ? 'begins retrograde' : 'goes direct';
         events.push({
           date: new Date(currentDate),
-          type: 'retrograde_change',
+          type: 'retrograde',
           description: `${planet} ${status}`,
+          data: {
+            planet: planet,
+            direction: currRetro ? 'retrograde' : 'direct',
+            sign: detectSign(currPos),
+          },
         });
       }
     }
