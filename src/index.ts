@@ -4,12 +4,7 @@ import { EventEmitter } from 'events';
 import { EventDetector, type PlanetaryData, type AstrologicalEvent } from './types';
 import { getPlanetData, julianDayFromDate, colorizeText, colorizeEventType } from './utils';
 import { COLORS, END_DATE, PLANETS, START_DATE } from './constants';
-import {
-  PlanetarySignConfiguration,
-  AspectDetector,
-  RetrogradeDetector,
-  SignIngressDetector,
-} from './eventDetectors/index';
+import { AspectDetector, RetrogradeDetector, SignIngressDetector } from './eventDetectors/index';
 
 // Initialize Swiss Ephemeris
 const ephePath = path.join(__dirname, 'ephemeris');
@@ -178,12 +173,6 @@ async function main(): Promise<void> {
       ],
       ['conjunction', 'opposition', 'square', 'trine'],
     ),
-
-    // Example of a specific configuration detector
-    new PlanetarySignConfiguration('Multiple planets in Aquarius', [
-      ['Jupiter', 'Aquarius'],
-      ['Saturn', 'Aquarius'],
-    ]),
   ];
 
   // Create scanner
