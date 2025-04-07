@@ -8,22 +8,22 @@ sweph.set_topo(-122.4194, 37.7749, 0); // longitude (west is negative), latitude
 export function julianDayFromDate(date: Date): number {
   // Convert to UTC time
   const utcDate = new Date(date);
-  
+
   return sweph.julday(
     utcDate.getUTCFullYear(),
     utcDate.getUTCMonth() + 1,
     utcDate.getUTCDate(),
-    utcDate.getUTCHours() + (utcDate.getUTCMinutes() / 60) + (utcDate.getUTCSeconds() / 3600),
+    utcDate.getUTCHours() + utcDate.getUTCMinutes() / 60 + utcDate.getUTCSeconds() / 3600,
     sweph.constants.SE_GREG_CAL,
   );
 }
 
 export function getPlanetData(jd: number, planetId: number): PlanetData {
   // Use SEFLG_TOPOCTR flag for topocentric calculations
-  const result = sweph.calc(jd, planetId, 
-    sweph.constants.SEFLG_SWIEPH | 
-    sweph.constants.SEFLG_SPEED | 
-    sweph.constants.SEFLG_TOPOCTR
+  const result = sweph.calc(
+    jd,
+    planetId,
+    sweph.constants.SEFLG_SWIEPH | sweph.constants.SEFLG_SPEED | sweph.constants.SEFLG_TOPOCTR,
   );
   return {
     longitude: result.data[0], // Longitude is first element in data array
