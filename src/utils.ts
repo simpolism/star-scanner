@@ -2,18 +2,29 @@ import * as sweph from 'sweph';
 import type { AspectName, PlanetData, SignName } from './types';
 import { ASPECTS, COLORS, SIGNS } from './constants';
 
+// Set observer's geographical location (San Francisco)
+sweph.set_topo(-122.4194, 37.7749, 0); // longitude (west is negative), latitude, altitude
+
 export function julianDayFromDate(date: Date): number {
+  // Convert to UTC time
+  const utcDate = new Date(date);
+  
   return sweph.julday(
-    date.getFullYear(),
-    date.getMonth() + 1, // JavaScript months are 0-based
-    date.getDate(),
-    0,
+    utcDate.getUTCFullYear(),
+    utcDate.getUTCMonth() + 1,
+    utcDate.getUTCDate(),
+    utcDate.getUTCHours() + (utcDate.getUTCMinutes() / 60) + (utcDate.getUTCSeconds() / 3600),
     sweph.constants.SE_GREG_CAL,
   );
 }
 
 export function getPlanetData(jd: number, planetId: number): PlanetData {
-  const result = sweph.calc(jd, planetId, sweph.constants.SEFLG_SWIEPH | sweph.constants.SEFLG_SPEED);
+  // Use SEFLG_TOPOCTR flag for topocentric calculations
+  const result = sweph.calc(jd, planetId, 
+    sweph.constants.SEFLG_SWIEPH | 
+    sweph.constants.SEFLG_SPEED | 
+    sweph.constants.SEFLG_TOPOCTR
+  );
   return {
     longitude: result.data[0], // Longitude is first element in data array
     latitude: result.data[1], // Latitude is second element
