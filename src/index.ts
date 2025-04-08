@@ -43,6 +43,8 @@ class AstrologicalEventScanner extends EventEmitter {
     const allEvents: AstrologicalEvent[] = [];
     const currentDate = new Date(this.startDate);
     let previousData: PlanetaryData | null = null;
+    let previousData2: PlanetaryData | null = null;
+    let previousDate: Date | null = null;
 
     this.isRunning = true;
     const startEvent: StartEventType = { startDate: this.startDate, endDate: this.endDate };
@@ -63,7 +65,13 @@ class AstrologicalEventScanner extends EventEmitter {
 
       // Run all event detectors
       for (const detector of this.eventDetectors) {
-        const events = detector.detect(currentDate, currentData, previousData);
+        const events = detector.detect(
+          currentDate,
+          currentData,
+          previousDate,
+          previousData,
+          previousData2,
+        );
         // augment list of events with full astro data for image construction
         const eventsWithAstroData: AstrologicalEvent[] = events.map((e) => ({
           ...e,
@@ -78,7 +86,9 @@ class AstrologicalEventScanner extends EventEmitter {
       }
 
       // Store current data for next iteration
+      previousData2 = previousData;
       previousData = currentData;
+      previousDate = new Date(currentDate);
 
       // Move to next day
       currentDate.setDate(currentDate.getDate() + 1);

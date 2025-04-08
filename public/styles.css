@@ -121,7 +121,7 @@ select {
 
 .chart-container {
   display: none;
-  padding: 15px;
+  padding: 10px;
   margin-top: 10px;
   background-color: #fff;
   border-radius: 4px;
@@ -158,6 +158,7 @@ select {
 /* Event type colors */
 .type-aspect_end { color: #cc00cc; }
 .type-aspect_begin { color: #00cc00; }
+.type-aspect_peak { color: #6495ED; }
 .type-ingress { color: #006600; }
 .type-retrograde { color: #e6b800; }
 .type-configuration { color: #00b3b3; }

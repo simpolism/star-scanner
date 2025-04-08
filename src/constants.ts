@@ -48,6 +48,7 @@ export const COLORS = {
   TYPE_COLORS: {
     aspect_end: '\x1b[35m', // Magenta
     aspect_begin: '\x1b[92m', // Light Green
+    aspect_peak: '\x1b[94m', // Light Blue
     ingress: '\x1b[32m', // Green
     retrograde: '\x1b[33m', // Yellow
     configuration: '\x1b[36m', // Cyan

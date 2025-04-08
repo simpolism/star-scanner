@@ -33,7 +33,9 @@ export abstract class EventDetector<DataT = unknown> {
   abstract detect(
     currentDate: Date,
     currentData: PlanetaryData,
+    previousDate: Date | null,
     previousData: PlanetaryData | null,
+    previousData2?: PlanetaryData | null, // for going back two timesteps to see direction shifts
   ): AstrologicalEvent<DataT>[];
 }
 

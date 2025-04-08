@@ -273,6 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
           ASPECTS_FONT_SIZE: 27,
           RADIX_POINTS_FONT_SIZE: 40,
           RADIX_SIGNS_FONT_SIZE: 40,
+          CHART_PADDING: 10,
         };
         const universe = new astrology.Universe(svgElement.id, settings);
         const radix = universe.radix();
@@ -283,7 +284,6 @@ document.addEventListener('DOMContentLoaded', () => {
           cusps: []
         };
         
-        console.log(eventItem);
         if (eventItem.planets && Object.keys(eventItem.planets).length > 0) {
           // Map planets data to the format required by the library
           const planetNames = ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"];

@@ -14,7 +14,8 @@ export interface AspectData {
   planet1: [PlanetName, SignName];
   planet2: [PlanetName, SignName];
   aspect: AspectName;
-  status: 'start' | 'end';
+  aspectSize?: number;
+  status: 'start' | 'end' | 'peak';
 }
 
 export class AspectDetector extends EventDetector<AspectData> {
@@ -42,12 +43,14 @@ export class AspectDetector extends EventDetector<AspectData> {
   detect(
     currentDate: Date,
     currentData: PlanetaryData,
+    previousDate: Date | null,
     previousData: PlanetaryData | null,
+    previousData2: PlanetaryData | null,
   ): AstrologicalEvent<AspectData>[] {
     const events: AstrologicalEvent<AspectData>[] = [];
 
     // Skip if no previous data
-    if (!previousData) {
+    if (!previousData || !previousData2) {
       return events;
     }
 
@@ -63,21 +66,25 @@ export class AspectDetector extends EventDetector<AspectData> {
       const currPos2 = currentData[p2].longitude;
       const prevPos1 = previousData[p1].longitude;
       const prevPos2 = previousData[p2].longitude;
+      const prev2Pos1 = previousData2[p1].longitude;
+      const prev2Pos2 = previousData2[p2].longitude;
 
       for (const aspect of this.aspects) {
         const hasAspectNow = checkAspect(currPos1, currPos2, aspect);
         const hadAspectPrev = checkAspect(prevPos1, prevPos2, aspect);
+        const hadAspectPrev2 = checkAspect(prev2Pos1, prev2Pos2, aspect);
 
         // Detect aspect becoming exact (crossing from not in orb to in orb)
         if (hasAspectNow && !hadAspectPrev) {
           events.push({
             date: new Date(currentDate),
             type: 'aspect_begin',
-            description: `${p1} ${aspect} ${p2}`,
+            description: `${p1} ${aspect} ${p2} (orb: ${hasAspectNow.toFixed(2)} deg)`,
             data: {
               planet1: [p1, detectSign(currPos1)],
               planet2: [p2, detectSign(currPos2)],
               aspect,
+              aspectSize: hasAspectNow,
               status: 'start',
             },
           });
@@ -85,12 +92,33 @@ export class AspectDetector extends EventDetector<AspectData> {
           events.push({
             date: new Date(currentDate),
             type: 'aspect_end',
-            description: `${p1} ${aspect} ${p2}`,
+            description: `${p1} ${aspect} ${p2} (orb: ${hadAspectPrev.toFixed(2)} deg)`,
             data: {
               planet1: [p1, detectSign(prevPos1)],
               planet2: [p2, detectSign(prevPos2)],
               aspect,
+              aspectSize: hadAspectPrev,
               status: 'end',
+            },
+          });
+        } else if (
+          previousDate &&
+          hadAspectPrev2 &&
+          hadAspectPrev &&
+          hasAspectNow &&
+          hadAspectPrev2 > hadAspectPrev &&
+          hadAspectPrev < hasAspectNow
+        ) {
+          events.push({
+            date: new Date(previousDate),
+            type: 'aspect_peak',
+            description: `${p1} ${aspect} ${p2} (orb: ${hadAspectPrev.toFixed(2)} deg)`,
+            data: {
+              planet1: [p1, detectSign(prevPos1)],
+              planet2: [p2, detectSign(prevPos2)],
+              aspect,
+              aspectSize: hadAspectPrev,
+              status: 'peak',
             },
           });
         }

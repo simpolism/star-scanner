@@ -29,6 +29,7 @@ export class RetrogradeDetector extends EventDetector<RetrogradeData> {
   detect(
     currentDate: Date,
     currentData: PlanetaryData,
+    previousDate: Date,
     previousData: PlanetaryData | null,
   ): AstrologicalEvent<RetrogradeData>[] {
     const events: AstrologicalEvent<RetrogradeData>[] = [];

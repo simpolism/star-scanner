@@ -25,6 +25,7 @@ export class SignIngressDetector extends EventDetector<IngressData> {
   detect(
     currentDate: Date,
     currentData: PlanetaryData,
+    previousDate: Date | null,
     previousData: PlanetaryData | null,
   ): AstrologicalEvent<IngressData>[] {
     const events: AstrologicalEvent<IngressData>[] = [];

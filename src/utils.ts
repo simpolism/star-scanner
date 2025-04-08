@@ -52,7 +52,11 @@ export function detectSign(position: number): SignName {
 /**
  * Check if an aspect is valid based on both angular distance and sign distance
  */
-export function checkAspect(pos1: number, pos2: number, aspectName: AspectName): boolean {
+export function checkAspect(
+  pos1: number,
+  pos2: number,
+  aspectName: AspectName,
+): number | undefined {
   const { angle, orb } = ASPECTS[aspectName];
 
   // Calculate the smallest angle between positions
@@ -60,13 +64,14 @@ export function checkAspect(pos1: number, pos2: number, aspectName: AspectName):
   if (diff > 180) {
     diff = 360 - diff;
   }
+  const aspectOrb = Math.abs(diff - angle);
 
   // Check if within orb
-  const isWithinOrb = Math.abs(diff - angle) <= orb;
+  const isWithinOrb = aspectOrb <= orb;
 
   // If not within orb, no need to check sign compatibility
   if (!isWithinOrb) {
-    return false;
+    return;
   }
 
   // Check sign compatibility based on aspect type
@@ -77,7 +82,9 @@ export function checkAspect(pos1: number, pos2: number, aspectName: AspectName):
   if (planetSignDiff > 6) {
     planetSignDiff = 12 - planetSignDiff;
   }
-  return aspectSignDiff === planetSignDiff;
+  if (aspectSignDiff === planetSignDiff) {
+    return aspectOrb;
+  }
 }
 
 /**
