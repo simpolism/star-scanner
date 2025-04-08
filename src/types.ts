@@ -36,4 +36,4 @@ export abstract class EventDetector<DataT = unknown> {
   ): AstrologicalEvent<DataT>[];
 }
 
-export type EventProcessor = (evt: AstrologicalEvent) => void;
+export type EventProcessor = (evt: AstrologicalEvent) => string | undefined;
