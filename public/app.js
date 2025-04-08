@@ -219,17 +219,32 @@ document.addEventListener('DOMContentLoaded', () => {
         svgElement.style.margin = '0 auto';
         container.appendChild(svgElement);
         
-        // Add chart caption
-        const caption = document.createElement('div');
-        caption.className = 'chart-caption';
-        caption.style.textAlign = 'center';
-        caption.style.marginBottom = '10px';
-        caption.style.fontWeight = 'bold';
-        caption.textContent = 'Astrological chart for ' + dateStr;
-        container.insertBefore(caption, svgElement);
-        
         // Initialize the universe and chart
-        const universe = new astrology.Universe(svgElement.id, 400, 400);
+        const settings = {
+          COLOR_ARIES: "#CC0000",
+          COLOR_LEO: "#CC0000",
+          COLOR_SAGITTARIUS: "#CC0000",
+          COLOR_CAPRICORN: "#006600",
+          COLOR_TAURUS: "#006600",
+          COLOR_VIRGO: "#006600",
+          COLOR_GEMINI: "#E6B800",
+          COLOR_LIBRA: "#E6B800",
+          COLOR_AQUARIUS: "#E6B800",
+          COLOR_CANCER: "#00B3B3",
+          COLOR_SCORPIO: "#00B3B3",
+          COLOR_PISCES: "#00B3B3",
+          ASPECT_COLORS: {
+            Conjunction: "#333",
+            Opposition: "#CC0000",
+            Trine: "#006600",
+            Square: "#CC0000",
+            Sextile: "#E6B800"
+          },
+          ASPECTS_FONT_SIZE: 27,
+          RADIX_POINTS_FONT_SIZE: 40,
+          RADIX_SIGNS_FONT_SIZE: 40,
+        };
+        const universe = new astrology.Universe(svgElement.id, settings);
         const radix = universe.radix();
         
         // Generate some angles based on the date to make each chart unique

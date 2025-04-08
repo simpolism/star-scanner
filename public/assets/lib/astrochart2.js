@@ -1983,6 +1983,7 @@ class Universe {
     this.#settings = Object.assign({}, _settings_DefaultSettings_js__WEBPACK_IMPORTED_MODULE_0__["default"], options, {
       HTML_ELEMENT_ID: htmlElementID
     });
+    //console.log(this.#settings);
     this.#SVGDocument = _utils_SVGUtils_js__WEBPACK_IMPORTED_MODULE_1__["default"].SVGDocument(this.#settings.CHART_VIEWBOX_WIDTH, this.#settings.CHART_VIEWBOX_HEIGHT)
     document.getElementById(htmlElementID).appendChild(this.#SVGDocument);
 
