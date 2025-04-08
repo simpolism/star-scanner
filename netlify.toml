@@ -1,0 +1,15 @@
+[build]
+  # Directory to publish (relative to root of your repo)
+  publish = "public"
+  
+  # Default build command
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "16"
+
+# Redirects for SPA routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

@@ -1,12 +1,12 @@
 import * as sweph from 'sweph';
 import * as path from 'path';
+import * as fs from 'fs';
 import { EventEmitter } from 'events';
 import { EventDetector, type PlanetaryData, type AstrologicalEvent, EventProcessor } from './types';
 import { getPlanetData, julianDayFromDate } from './utils';
 import { END_DATE, PLANETS, START_DATE } from './constants';
 import { AspectDetector, RetrogradeDetector, SignIngressDetector } from './eventDetectors';
 import { NeptunePlutoIngressProcessor, PlutoRetrogradeProcessor } from './eventProcessors';
-import { generateHtml } from './htmlGenerator';
 
 // Initialize Swiss Ephemeris
 const ephePath = path.join(__dirname, 'ephemeris');
@@ -107,8 +107,53 @@ class AstrologicalEventScanner extends EventEmitter {
     this.emit('stopped', { reason: 'User requested stop' });
   }
 
-  displayEvents(events: AstrologicalEvent[], eventProcessors: Array<EventProcessor> = []): void {
-    generateHtml(events, eventProcessors);
+  // New method to save events to JSON file
+  saveEventsToJson(events: AstrologicalEvent[], eventProcessors: Array<EventProcessor> = []): void {
+    // Apply event processors to get any special events
+    const processedEvents = events.map((event) => {
+      const processedOutputs = eventProcessors
+        .map((processor) => processor(event))
+        .filter((output) => output !== null);
+
+      return {
+        ...event,
+        date: event.date.toISOString(), // Convert Date to string for JSON
+        processedOutputs,
+      };
+    });
+
+    // Create public directory if it doesn't exist
+    const publicDir = path.join(__dirname, '..', 'public');
+    const dataDir = path.join(publicDir, 'data');
+
+    if (!fs.existsSync(publicDir)) {
+      fs.mkdirSync(publicDir);
+    }
+
+    if (!fs.existsSync(dataDir)) {
+      fs.mkdirSync(dataDir);
+    }
+
+    // Write JSON file
+    const outputPath = path.join(dataDir, 'astrological-events.json');
+    fs.writeFileSync(
+      outputPath,
+      JSON.stringify(
+        {
+          metadata: {
+            startDate: START_DATE.toISOString(),
+            endDate: END_DATE.toISOString(),
+            generatedAt: new Date().toISOString(),
+            totalEvents: events.length,
+          },
+          events: processedEvents,
+        },
+        null,
+        2,
+      ),
+    );
+
+    console.log(`JSON data saved to: ${outputPath}`);
   }
 }
 
@@ -161,8 +206,10 @@ async function main(): Promise<void> {
   // Run the scan
   const events = await scanner.scan();
 
-  // Add relevant processors
-  scanner.displayEvents(events, [PlutoRetrogradeProcessor, NeptunePlutoIngressProcessor]);
+  // Save to JSON
+  scanner.saveEventsToJson(events, [PlutoRetrogradeProcessor, NeptunePlutoIngressProcessor]);
+
+  console.log('Event data generated and saved. You can now view the data in the static HTML site.');
   return;
 }
 

@@ -1,0 +1,1529 @@
+{
+  "metadata": {
+    "startDate": "2024-09-01T04:00:00.000Z",
+    "endDate": "2028-07-01T04:00:00.000Z",
+    "generatedAt": "2025-04-08T16:01:16.045Z",
+    "totalEvents": 90
+  },
+  "events": [
+    {
+      "date": "2024-09-02T04:00:00.000Z",
+      "type": "ingress",
+      "description": "Pluto enters Capricorn (from Aquarius)",
+      "data": {
+        "planet": "Pluto",
+        "prevSign": "Aquarius",
+        "newSign": "Capricorn"
+      },
+      "processedOutputs": [
+        null,
+        "Pluto Enters CAPRICORN"
+      ]
+    },
+    {
+      "date": "2024-09-02T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Uranus trine Pluto",
+      "data": {
+        "planet1": [
+          "Uranus",
+          "Taurus"
+        ],
+        "planet2": [
+          "Pluto",
+          "Capricorn"
+        ],
+        "aspect": "trine",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2024-09-03T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Uranus begins retrograde",
+      "data": {
+        "planet": "Uranus",
+        "direction": "retrograde",
+        "sign": "Taurus"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2024-09-16T04:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Jupiter square Saturn",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Gemini"
+        ],
+        "planet2": [
+          "Saturn",
+          "Pisces"
+        ],
+        "aspect": "square",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2024-10-10T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Jupiter begins retrograde",
+      "data": {
+        "planet": "Jupiter",
+        "direction": "retrograde",
+        "sign": "Gemini"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2024-10-13T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Pluto goes direct",
+      "data": {
+        "planet": "Pluto",
+        "direction": "direct",
+        "sign": "Capricorn"
+      },
+      "processedOutputs": [
+        "Pluto Goes DIRECT",
+        null
+      ]
+    },
+    {
+      "date": "2024-11-17T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Saturn goes direct",
+      "data": {
+        "planet": "Saturn",
+        "direction": "direct",
+        "sign": "Pisces"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2024-11-20T05:00:00.000Z",
+      "type": "ingress",
+      "description": "Pluto enters Aquarius (from Capricorn)",
+      "data": {
+        "planet": "Pluto",
+        "prevSign": "Capricorn",
+        "newSign": "Aquarius"
+      },
+      "processedOutputs": [
+        null,
+        "Pluto Enters AQUARIUS"
+      ]
+    },
+    {
+      "date": "2024-11-20T05:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Uranus trine Pluto",
+      "data": {
+        "planet1": [
+          "Uranus",
+          "Taurus"
+        ],
+        "planet2": [
+          "Pluto",
+          "Capricorn"
+        ],
+        "aspect": "trine",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2024-11-27T05:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Jupiter square Saturn",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Gemini"
+        ],
+        "planet2": [
+          "Saturn",
+          "Pisces"
+        ],
+        "aspect": "square",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2024-12-09T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Neptune goes direct",
+      "data": {
+        "planet": "Neptune",
+        "direction": "direct",
+        "sign": "Pisces"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-01-24T05:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Jupiter square Saturn",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Gemini"
+        ],
+        "planet2": [
+          "Saturn",
+          "Pisces"
+        ],
+        "aspect": "square",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-02-01T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Uranus goes direct",
+      "data": {
+        "planet": "Uranus",
+        "direction": "direct",
+        "sign": "Taurus"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-02-05T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Jupiter goes direct",
+      "data": {
+        "planet": "Jupiter",
+        "direction": "direct",
+        "sign": "Gemini"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-03-31T04:00:00.000Z",
+      "type": "ingress",
+      "description": "Neptune enters Aries (from Pisces)",
+      "data": {
+        "planet": "Neptune",
+        "prevSign": "Pisces",
+        "newSign": "Aries"
+      },
+      "processedOutputs": [
+        null,
+        "Neptune Enters ARIES"
+      ]
+    },
+    {
+      "date": "2025-05-06T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Pluto begins retrograde",
+      "data": {
+        "planet": "Pluto",
+        "direction": "retrograde",
+        "sign": "Aquarius"
+      },
+      "processedOutputs": [
+        "Pluto Goes RETROGRADE",
+        null
+      ]
+    },
+    {
+      "date": "2025-05-15T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Jupiter square Saturn",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Gemini"
+        ],
+        "planet2": [
+          "Saturn",
+          "Pisces"
+        ],
+        "aspect": "square",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-05-25T04:00:00.000Z",
+      "type": "ingress",
+      "description": "Saturn enters Aries (from Pisces)",
+      "data": {
+        "planet": "Saturn",
+        "prevSign": "Pisces",
+        "newSign": "Aries"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-05-25T04:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Jupiter square Saturn",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Gemini"
+        ],
+        "planet2": [
+          "Saturn",
+          "Pisces"
+        ],
+        "aspect": "square",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-05-25T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Saturn conjunction Neptune",
+      "data": {
+        "planet1": [
+          "Saturn",
+          "Aries"
+        ],
+        "planet2": [
+          "Neptune",
+          "Aries"
+        ],
+        "aspect": "conjunction",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-06-10T04:00:00.000Z",
+      "type": "ingress",
+      "description": "Jupiter enters Cancer (from Gemini)",
+      "data": {
+        "planet": "Jupiter",
+        "prevSign": "Gemini",
+        "newSign": "Cancer"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-06-10T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Jupiter square Saturn",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Cancer"
+        ],
+        "planet2": [
+          "Saturn",
+          "Aries"
+        ],
+        "aspect": "square",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-06-10T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Jupiter square Neptune",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Cancer"
+        ],
+        "planet2": [
+          "Neptune",
+          "Aries"
+        ],
+        "aspect": "square",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-07-06T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Neptune begins retrograde",
+      "data": {
+        "planet": "Neptune",
+        "direction": "retrograde",
+        "sign": "Aries"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-07-08T04:00:00.000Z",
+      "type": "ingress",
+      "description": "Uranus enters Gemini (from Taurus)",
+      "data": {
+        "planet": "Uranus",
+        "prevSign": "Taurus",
+        "newSign": "Gemini"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-07-08T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Uranus trine Pluto",
+      "data": {
+        "planet1": [
+          "Uranus",
+          "Gemini"
+        ],
+        "planet2": [
+          "Pluto",
+          "Aquarius"
+        ],
+        "aspect": "trine",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-07-11T04:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Jupiter square Saturn",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Cancer"
+        ],
+        "planet2": [
+          "Saturn",
+          "Aries"
+        ],
+        "aspect": "square",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-07-12T04:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Jupiter square Neptune",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Cancer"
+        ],
+        "planet2": [
+          "Neptune",
+          "Aries"
+        ],
+        "aspect": "square",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-07-14T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Saturn begins retrograde",
+      "data": {
+        "planet": "Saturn",
+        "direction": "retrograde",
+        "sign": "Aries"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-09-02T04:00:00.000Z",
+      "type": "ingress",
+      "description": "Saturn enters Pisces (from Aries)",
+      "data": {
+        "planet": "Saturn",
+        "prevSign": "Aries",
+        "newSign": "Pisces"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-09-02T04:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Saturn conjunction Neptune",
+      "data": {
+        "planet1": [
+          "Saturn",
+          "Aries"
+        ],
+        "planet2": [
+          "Neptune",
+          "Aries"
+        ],
+        "aspect": "conjunction",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-09-07T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Uranus begins retrograde",
+      "data": {
+        "planet": "Uranus",
+        "direction": "retrograde",
+        "sign": "Gemini"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-10-03T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Jupiter trine Saturn",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Cancer"
+        ],
+        "planet2": [
+          "Saturn",
+          "Pisces"
+        ],
+        "aspect": "trine",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-10-15T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Pluto goes direct",
+      "data": {
+        "planet": "Pluto",
+        "direction": "direct",
+        "sign": "Aquarius"
+      },
+      "processedOutputs": [
+        "Pluto Goes DIRECT",
+        null
+      ]
+    },
+    {
+      "date": "2025-10-23T04:00:00.000Z",
+      "type": "ingress",
+      "description": "Neptune enters Pisces (from Aries)",
+      "data": {
+        "planet": "Neptune",
+        "prevSign": "Aries",
+        "newSign": "Pisces"
+      },
+      "processedOutputs": [
+        null,
+        "Neptune Enters PISCES"
+      ]
+    },
+    {
+      "date": "2025-10-23T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Saturn conjunction Neptune",
+      "data": {
+        "planet1": [
+          "Saturn",
+          "Pisces"
+        ],
+        "planet2": [
+          "Neptune",
+          "Pisces"
+        ],
+        "aspect": "conjunction",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-10-29T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Jupiter trine Neptune",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Cancer"
+        ],
+        "planet2": [
+          "Neptune",
+          "Pisces"
+        ],
+        "aspect": "trine",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-11-08T05:00:00.000Z",
+      "type": "ingress",
+      "description": "Uranus enters Taurus (from Gemini)",
+      "data": {
+        "planet": "Uranus",
+        "prevSign": "Gemini",
+        "newSign": "Taurus"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-11-08T05:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Uranus trine Pluto",
+      "data": {
+        "planet1": [
+          "Uranus",
+          "Gemini"
+        ],
+        "planet2": [
+          "Pluto",
+          "Aquarius"
+        ],
+        "aspect": "trine",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-11-12T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Jupiter begins retrograde",
+      "data": {
+        "planet": "Jupiter",
+        "direction": "retrograde",
+        "sign": "Cancer"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-11-29T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Saturn goes direct",
+      "data": {
+        "planet": "Saturn",
+        "direction": "direct",
+        "sign": "Pisces"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-12-04T05:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Jupiter trine Neptune",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Cancer"
+        ],
+        "planet2": [
+          "Neptune",
+          "Pisces"
+        ],
+        "aspect": "trine",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2025-12-12T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Neptune goes direct",
+      "data": {
+        "planet": "Neptune",
+        "direction": "direct",
+        "sign": "Pisces"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-01-02T05:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Jupiter trine Saturn",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Cancer"
+        ],
+        "planet2": [
+          "Saturn",
+          "Pisces"
+        ],
+        "aspect": "trine",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-01-27T05:00:00.000Z",
+      "type": "ingress",
+      "description": "Neptune enters Aries (from Pisces)",
+      "data": {
+        "planet": "Neptune",
+        "prevSign": "Pisces",
+        "newSign": "Aries"
+      },
+      "processedOutputs": [
+        null,
+        "Neptune Enters ARIES"
+      ]
+    },
+    {
+      "date": "2026-01-27T05:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Saturn conjunction Neptune",
+      "data": {
+        "planet1": [
+          "Saturn",
+          "Pisces"
+        ],
+        "planet2": [
+          "Neptune",
+          "Pisces"
+        ],
+        "aspect": "conjunction",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-02-05T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Uranus goes direct",
+      "data": {
+        "planet": "Uranus",
+        "direction": "direct",
+        "sign": "Taurus"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-02-14T05:00:00.000Z",
+      "type": "ingress",
+      "description": "Saturn enters Aries (from Pisces)",
+      "data": {
+        "planet": "Saturn",
+        "prevSign": "Pisces",
+        "newSign": "Aries"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-02-14T05:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Saturn conjunction Neptune",
+      "data": {
+        "planet1": [
+          "Saturn",
+          "Aries"
+        ],
+        "planet2": [
+          "Neptune",
+          "Aries"
+        ],
+        "aspect": "conjunction",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-03-12T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Jupiter goes direct",
+      "data": {
+        "planet": "Jupiter",
+        "direction": "direct",
+        "sign": "Cancer"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-04-21T04:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Saturn conjunction Neptune",
+      "data": {
+        "planet1": [
+          "Saturn",
+          "Aries"
+        ],
+        "planet2": [
+          "Neptune",
+          "Aries"
+        ],
+        "aspect": "conjunction",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-04-26T04:00:00.000Z",
+      "type": "ingress",
+      "description": "Uranus enters Gemini (from Taurus)",
+      "data": {
+        "planet": "Uranus",
+        "prevSign": "Taurus",
+        "newSign": "Gemini"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-05-06T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Uranus trine Pluto",
+      "data": {
+        "planet1": [
+          "Uranus",
+          "Gemini"
+        ],
+        "planet2": [
+          "Pluto",
+          "Aquarius"
+        ],
+        "aspect": "trine",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-05-08T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Pluto begins retrograde",
+      "data": {
+        "planet": "Pluto",
+        "direction": "retrograde",
+        "sign": "Aquarius"
+      },
+      "processedOutputs": [
+        "Pluto Goes RETROGRADE",
+        null
+      ]
+    },
+    {
+      "date": "2026-07-01T04:00:00.000Z",
+      "type": "ingress",
+      "description": "Jupiter enters Leo (from Cancer)",
+      "data": {
+        "planet": "Jupiter",
+        "prevSign": "Cancer",
+        "newSign": "Leo"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-07-01T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Jupiter trine Neptune",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Leo"
+        ],
+        "planet2": [
+          "Neptune",
+          "Aries"
+        ],
+        "aspect": "trine",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-07-01T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Jupiter opposition Pluto",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Leo"
+        ],
+        "planet2": [
+          "Pluto",
+          "Aquarius"
+        ],
+        "aspect": "opposition",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-07-09T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Neptune begins retrograde",
+      "data": {
+        "planet": "Neptune",
+        "direction": "retrograde",
+        "sign": "Aries"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-07-28T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Saturn begins retrograde",
+      "data": {
+        "planet": "Saturn",
+        "direction": "retrograde",
+        "sign": "Aries"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-08-10T04:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Jupiter opposition Pluto",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Leo"
+        ],
+        "planet2": [
+          "Pluto",
+          "Aquarius"
+        ],
+        "aspect": "opposition",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-08-11T04:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Jupiter trine Neptune",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Leo"
+        ],
+        "planet2": [
+          "Neptune",
+          "Aries"
+        ],
+        "aspect": "trine",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-08-13T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Jupiter trine Saturn",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Leo"
+        ],
+        "planet2": [
+          "Saturn",
+          "Aries"
+        ],
+        "aspect": "trine",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-09-12T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Uranus begins retrograde",
+      "data": {
+        "planet": "Uranus",
+        "direction": "retrograde",
+        "sign": "Gemini"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-09-20T04:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Jupiter trine Saturn",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Leo"
+        ],
+        "planet2": [
+          "Saturn",
+          "Aries"
+        ],
+        "aspect": "trine",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-10-17T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Pluto goes direct",
+      "data": {
+        "planet": "Pluto",
+        "direction": "direct",
+        "sign": "Aquarius"
+      },
+      "processedOutputs": [
+        "Pluto Goes DIRECT",
+        null
+      ]
+    },
+    {
+      "date": "2026-12-12T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Saturn goes direct",
+      "data": {
+        "planet": "Saturn",
+        "direction": "direct",
+        "sign": "Aries"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-12-14T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Jupiter begins retrograde",
+      "data": {
+        "planet": "Jupiter",
+        "direction": "retrograde",
+        "sign": "Leo"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2026-12-14T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Neptune goes direct",
+      "data": {
+        "planet": "Neptune",
+        "direction": "direct",
+        "sign": "Aries"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2027-02-10T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Uranus goes direct",
+      "data": {
+        "planet": "Uranus",
+        "direction": "direct",
+        "sign": "Gemini"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2027-03-09T05:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Jupiter trine Saturn",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Leo"
+        ],
+        "planet2": [
+          "Saturn",
+          "Aries"
+        ],
+        "aspect": "trine",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2027-04-14T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Jupiter goes direct",
+      "data": {
+        "planet": "Jupiter",
+        "direction": "direct",
+        "sign": "Leo"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2027-05-10T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Pluto begins retrograde",
+      "data": {
+        "planet": "Pluto",
+        "direction": "retrograde",
+        "sign": "Aquarius"
+      },
+      "processedOutputs": [
+        "Pluto Goes RETROGRADE",
+        null
+      ]
+    },
+    {
+      "date": "2027-07-11T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Neptune begins retrograde",
+      "data": {
+        "planet": "Neptune",
+        "direction": "retrograde",
+        "sign": "Aries"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2027-07-27T04:00:00.000Z",
+      "type": "ingress",
+      "description": "Jupiter enters Virgo (from Leo)",
+      "data": {
+        "planet": "Jupiter",
+        "prevSign": "Leo",
+        "newSign": "Virgo"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2027-07-27T04:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Jupiter trine Saturn",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Leo"
+        ],
+        "planet2": [
+          "Saturn",
+          "Aries"
+        ],
+        "aspect": "trine",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2027-08-11T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Saturn begins retrograde",
+      "data": {
+        "planet": "Saturn",
+        "direction": "retrograde",
+        "sign": "Aries"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2027-08-17T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Jupiter square Uranus",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Virgo"
+        ],
+        "planet2": [
+          "Uranus",
+          "Gemini"
+        ],
+        "aspect": "square",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2027-09-17T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Uranus begins retrograde",
+      "data": {
+        "planet": "Uranus",
+        "direction": "retrograde",
+        "sign": "Gemini"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2027-09-18T04:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Uranus trine Pluto",
+      "data": {
+        "planet1": [
+          "Uranus",
+          "Gemini"
+        ],
+        "planet2": [
+          "Pluto",
+          "Aquarius"
+        ],
+        "aspect": "trine",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2027-10-04T04:00:00.000Z",
+      "type": "aspect_end",
+      "description": "Jupiter square Uranus",
+      "data": {
+        "planet1": [
+          "Jupiter",
+          "Virgo"
+        ],
+        "planet2": [
+          "Uranus",
+          "Gemini"
+        ],
+        "aspect": "square",
+        "status": "end"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2027-10-06T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Uranus trine Pluto",
+      "data": {
+        "planet1": [
+          "Uranus",
+          "Gemini"
+        ],
+        "planet2": [
+          "Pluto",
+          "Aquarius"
+        ],
+        "aspect": "trine",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2027-10-20T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Pluto goes direct",
+      "data": {
+        "planet": "Pluto",
+        "direction": "direct",
+        "sign": "Aquarius"
+      },
+      "processedOutputs": [
+        "Pluto Goes DIRECT",
+        null
+      ]
+    },
+    {
+      "date": "2027-12-17T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Neptune goes direct",
+      "data": {
+        "planet": "Neptune",
+        "direction": "direct",
+        "sign": "Aries"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2027-12-25T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Saturn goes direct",
+      "data": {
+        "planet": "Saturn",
+        "direction": "direct",
+        "sign": "Aries"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2028-01-13T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Jupiter begins retrograde",
+      "data": {
+        "planet": "Jupiter",
+        "direction": "retrograde",
+        "sign": "Virgo"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2028-02-14T05:00:00.000Z",
+      "type": "retrograde",
+      "description": "Uranus goes direct",
+      "data": {
+        "planet": "Uranus",
+        "direction": "direct",
+        "sign": "Gemini"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2028-04-13T04:00:00.000Z",
+      "type": "ingress",
+      "description": "Saturn enters Taurus (from Aries)",
+      "data": {
+        "planet": "Saturn",
+        "prevSign": "Aries",
+        "newSign": "Taurus"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2028-05-11T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Pluto begins retrograde",
+      "data": {
+        "planet": "Pluto",
+        "direction": "retrograde",
+        "sign": "Aquarius"
+      },
+      "processedOutputs": [
+        "Pluto Goes RETROGRADE",
+        null
+      ]
+    },
+    {
+      "date": "2028-05-14T04:00:00.000Z",
+      "type": "aspect_begin",
+      "description": "Saturn square Pluto",
+      "data": {
+        "planet1": [
+          "Saturn",
+          "Taurus"
+        ],
+        "planet2": [
+          "Pluto",
+          "Aquarius"
+        ],
+        "aspect": "square",
+        "status": "start"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    },
+    {
+      "date": "2028-05-15T04:00:00.000Z",
+      "type": "retrograde",
+      "description": "Jupiter goes direct",
+      "data": {
+        "planet": "Jupiter",
+        "direction": "direct",
+        "sign": "Virgo"
+      },
+      "processedOutputs": [
+        null,
+        null
+      ]
+    }
+  ]
+}

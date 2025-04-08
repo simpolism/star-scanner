@@ -1,8 +1,7 @@
 import * as sweph from 'sweph';
 
 export const START_DATE = new Date(2024, 8, 1); // September 1, 2024
-export const END_DATE = new Date(2025, 6, 1);
-//export const END_DATE = new Date(2028, 6, 1); // July 1, 2028
+export const END_DATE = new Date(2028, 6, 1); // July 1, 2028
 
 // Console colors for output formatting
 export const COLORS = {
