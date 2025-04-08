@@ -292,6 +292,8 @@ document.addEventListener('DOMContentLoaded', () => {
       canvas.height = 1600;
 
       const ctx = canvas.getContext('2d');
+      ctx.fillStyle = 'white';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
       const img = new Image();
       
       // Scale factor between display size and output size
