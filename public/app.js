@@ -176,6 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Toggle chart visibility
   function toggleChart(eventId, event) {
+    console.log(eventId, event);
     // Stop event propagation
     if (event) {
       event.stopPropagation();

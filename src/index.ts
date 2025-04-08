@@ -64,7 +64,12 @@ class AstrologicalEventScanner extends EventEmitter {
       // Run all event detectors
       for (const detector of this.eventDetectors) {
         const events = detector.detect(currentDate, currentData, previousData);
-        allEvents.push(...events);
+        // augment list of events with full astro data for image construction
+        const eventsWithAstroData: AstrologicalEvent[] = events.map((e) => ({
+          ...e,
+          planets: currentData,
+        }));
+        allEvents.push(...eventsWithAstroData);
 
         // Emit events as they're found
         for (const event of events) {
