@@ -180,6 +180,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Stop event propagation
     if (event) {
       event.stopPropagation();
+      
+      // Check if the click originated from within the chart container
+      const chartContainer = document.getElementById('chart-' + eventId);
+      if (event.target.closest('.chart-container') === chartContainer) {
+        // Open chart as image in new tab
+        openChartAsImage(eventId);
+        return;
+      }
     }
     
     const chartContainer = document.getElementById('chart-' + eventId);
@@ -200,6 +208,119 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!chartSvg.hasChildNodes()) {
         generateAstrologyChart(eventId, chartSvg);
       }
+    }
+  }
+  
+  // Function to download chart as PNG, embedding the required font
+  // Helper function to convert ArrayBuffer to Base64
+  function arrayBufferToBase64(buffer) {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  }
+
+  // Function to open chart as PNG in a new tab, embedding the required font as Base64 data URL
+  async function openChartAsImage(eventId) {
+    const chartSvgContainer = document.getElementById('chart-svg-' + eventId);
+    if (!chartSvgContainer || !chartSvgContainer.querySelector('svg')) {
+      console.error('SVG element not found for chart:', eventId);
+      return;
+    }
+
+    try {
+      // --- Fetch and Encode Font ---
+      const fontUrl = '/assets/fonts/ttf/AstronomiconFonts_1.1/Astronomicon.ttf';
+      let fontDataUrl = '';
+      try {
+        const response = await fetch(fontUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const fontBuffer = await response.arrayBuffer();
+        const fontBase64 = arrayBufferToBase64(fontBuffer);
+        fontDataUrl = `data:font/ttf;base64,${fontBase64}`;
+        console.log('Font fetched and encoded as data URL.'); // Debugging
+      } catch (fontError) {
+        console.error('Error fetching or encoding font:', fontError);
+        // Optionally: proceed without embedding font or show error to user
+        // For now, we'll log the error and continue, the font might fail to render
+      }
+
+      // Get the original SVG element
+      const originalSvgElement = chartSvgContainer.querySelector('svg');
+
+      // --- Font Embedding ---
+      // Clone the SVG element to avoid modifying the live chart
+      const clonedSvgElement = originalSvgElement.cloneNode(true);
+
+      // Define the font-face rule using the Base64 data URL (if available)
+      const fontFaceStyle = fontDataUrl ? `
+        @font-face {
+          font-family: 'Astronomicon';
+          src: url(${fontDataUrl}) format('truetype');
+        }
+      ` : ''; // If font fetch failed, don't include the rule
+
+      // Create or find the <defs> element in the clone
+      let defs = clonedSvgElement.querySelector('defs');
+      if (!defs) {
+        defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+        clonedSvgElement.insertBefore(defs, clonedSvgElement.firstChild);
+      }
+
+      // Create and append the <style> element to the defs in the clone
+      if (fontFaceStyle) { // Only add style if font was loaded
+          const styleElement = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+          styleElement.textContent = fontFaceStyle.trim();
+          defs.appendChild(styleElement);
+      }
+
+      // Serialize the *cloned* and modified SVG element
+      const svgData = new XMLSerializer().serializeToString(clonedSvgElement);
+      // Encode the SVG data for use in an Image source
+      const svgDataBase64 = btoa(unescape(encodeURIComponent(svgData)));
+      const svgDataUrl = `data:image/svg+xml;base64,${svgDataBase64}`;
+
+      // --- Canvas Rendering --- (No need for document.fonts.load anymore)
+      const canvas = document.createElement('canvas');
+      // Set canvas to larger size (1600x1600) while keeping SVG display size at 400x400
+      canvas.width = 1600;
+      canvas.height = 1600;
+
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      
+      // Scale factor between display size and output size
+      const scale = 4; // 1600/400 = 4
+
+      // Use a Promise to handle image loading cleanly
+      await new Promise((resolve, reject) => {
+        img.onload = () => {
+          // Apply scaling to draw the SVG at larger size
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve();
+        };
+        img.onerror = (err) => {
+          console.error('Error loading SVG into image element:', err);
+          reject(err);
+        };
+        img.src = svgDataUrl;
+      });
+
+      // Get the PNG data URL
+      const pngDataUrl = canvas.toDataURL('image/png');
+
+      // Open PNG in a new tab
+      const newTab = window.open();
+      newTab.document.write(`<img src="${pngDataUrl}" alt="Astrological Chart" />`);
+      newTab.document.title = `Chart ${eventId}`;
+      newTab.document.close();
+    } catch (error) {
+      console.error('Error generating or downloading chart PNG:', error);
     }
   }
   
