@@ -25,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
       metadata = data.metadata;
       allEvents = data.events.map(event => ({
         ...event,
-        date: new Date(event.date) // Convert string back to Date
+        date: new Date(event.date), // Convert string back to Date
+        planets: event.planets || {} // Ensure planets data is preserved
       }));
       
       // Sort events by date
@@ -176,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Toggle chart visibility
   function toggleChart(eventId, event) {
-    console.log(eventId, event);
     // Stop event propagation
     if (event) {
       event.stopPropagation();
@@ -205,9 +205,16 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Function to generate astrological chart using astrochart2
   function generateAstrologyChart(eventId, container) {
-    // Extract date from the eventId or from parent element
-    const dateStr = container.closest('li').querySelector('.date').textContent;
-    const eventDate = new Date(dateStr);
+    // Find the event data for this specific chart
+    const eventItem = filteredEvents.find(event => {
+      const id = `event-${event.date.getTime()}-${event.type.replace(/[^a-zA-Z0-9]/g, '')}`;
+      return id === eventId;
+    });
+    
+    if (!eventItem) {
+      console.error('Event not found:', eventId);
+      return;
+    }
     
     try {
       // Initialize the chart 
@@ -241,6 +248,28 @@ document.addEventListener('DOMContentLoaded', () => {
             Square: "#CC0000",
             Sextile: "#E6B800"
           },
+          DEFAULT_ASPECTS: [
+              {
+                  "name": "Conjunction",
+                  "angle": 0,
+                  "orb": 5
+              },
+              {
+                  "name": "Opposition",
+                  "angle": 180,
+                  "orb": 5
+              },
+              {
+                  "name": "Trine",
+                  "angle": 120,
+                  "orb": 5
+              },
+              {
+                  "name": "Square",
+                  "angle": 90,
+                  "orb": 5
+              }
+          ],
           ASPECTS_FONT_SIZE: 27,
           RADIX_POINTS_FONT_SIZE: 40,
           RADIX_SIGNS_FONT_SIZE: 40,
@@ -248,28 +277,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const universe = new astrology.Universe(svgElement.id, settings);
         const radix = universe.radix();
         
-        // Generate some angles based on the date to make each chart unique
-        // This is a simple algorithm to generate pseudo-random but consistent angles
-        const day = eventDate.getDate();
-        const month = eventDate.getMonth() + 1;
-        const year = eventDate.getFullYear();
-        
-        // The library requires specific data format
+        // Use actual planet positions from the data if available
         const chartData = {
-          points: [
-            { name: "Sun", angle: (day * 12) % 360 },
-            { name: "Moon", angle: (month * 30) % 360 },
-            { name: "Mercury", angle: (day * month) % 360 },
-            { name: "Venus", angle: (month * 10 + day) % 360 },
-            { name: "Mars", angle: (day * 5 + month * 10) % 360 },
-            { name: "Jupiter", angle: (year % 100 * 3.6) % 360 },
-            { name: "Saturn", angle: (year % 100 * 1.8 + day) % 360 },
-            { name: "Uranus", angle: (month * 40 - day * 2) % 360 },
-            { name: "Neptune", angle: (day * 15 + month * 5) % 360 },
-            { name: "Pluto", angle: (month * 25 + day * 3) % 360 },
-          ],
+          points: [],
           cusps: []
         };
+        
+        console.log(eventItem);
+        if (eventItem.planets && Object.keys(eventItem.planets).length > 0) {
+          // Map planets data to the format required by the library
+          const planetNames = ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"];
+          planetNames.forEach(planet => {
+            if (eventItem.planets[planet]) {
+              chartData.points.push({
+                name: planet,
+                angle: eventItem.planets[planet].longitude,
+                retrograde: eventItem.planets[planet].retrograde,
+              });
+            }
+          });
+        }
         
         // Set data and render
         radix.setData(chartData);

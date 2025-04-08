@@ -50,26 +50,6 @@ export function detectSign(position: number): SignName {
 }
 
 /**
- * Get the sign index (0-11) from a longitude position
- */
-export function getSignIndex(position: number): number {
-  return Math.floor((position % 360) / 30);
-}
-
-/**
- * Calculate how many signs apart two positions are (0-11)
- * Used to validate astrological aspects are "in sign"
- */
-export function getSignDistance(pos1: number, pos2: number): number {
-  const sign1 = getSignIndex(pos1);
-  const sign2 = getSignIndex(pos2);
-
-  // Get shortest distance between signs (clockwise or counterclockwise)
-  const diff = Math.abs(sign1 - sign2);
-  return diff > 6 ? 12 - diff : diff;
-}
-
-/**
  * Check if an aspect is valid based on both angular distance and sign distance
  */
 export function checkAspect(pos1: number, pos2: number, aspectName: AspectName): boolean {
@@ -90,22 +70,14 @@ export function checkAspect(pos1: number, pos2: number, aspectName: AspectName):
   }
 
   // Check sign compatibility based on aspect type
-  const signDistance = getSignDistance(pos1, pos2);
-
-  switch (aspectName) {
-    case 'conjunction':
-      return signDistance === 0; // Same sign
-    case 'opposition':
-      return signDistance === 6; // Opposite signs
-    case 'trine':
-      return signDistance === 4 || signDistance === 8; // Same element (4 signs apart)
-    case 'square':
-      return signDistance === 3 || signDistance === 9; // Same modality (3 signs apart)
-    case 'sextile':
-      return signDistance === 2 || signDistance === 10; // Compatible elements (2 signs apart)
-    default:
-      return true; // For any other aspects, don't apply sign restrictions
+  const sign1 = Math.floor(pos1 / 30);
+  const sign2 = Math.floor(pos2 / 30);
+  const aspectSignDiff = Math.floor(angle / 30);
+  let planetSignDiff = Math.abs(sign1 - sign2);
+  if (planetSignDiff > 6) {
+    planetSignDiff = 12 - planetSignDiff;
   }
+  return aspectSignDiff === planetSignDiff;
 }
 
 /**
