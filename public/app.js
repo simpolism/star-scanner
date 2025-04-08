@@ -252,12 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { name: "Neptune", angle: (day * 15 + month * 5) % 360 },
             { name: "Pluto", angle: (month * 25 + day * 3) % 360 },
           ],
-          cusps: [
-            { angle: 0 }, { angle: 30 }, { angle: 60 }, 
-            { angle: 90 }, { angle: 120 }, { angle: 150 }, 
-            { angle: 180 }, { angle: 210 }, { angle: 240 }, 
-            { angle: 270 }, { angle: 300 }, { angle: 330 }
-          ]
+          cusps: []
         };
         
         // Set data and render
