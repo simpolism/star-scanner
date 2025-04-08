@@ -5,9 +5,7 @@ export const NeptunePlutoIngressProcessor: EventProcessor = (evt: AstrologicalEv
   if (evt.type === 'ingress') {
     const planet = (evt.data as IngressData)?.planet;
     if (planet === 'Neptune' || planet === 'Pluto') {
-      return `------------${planet} Enters ${(
-        evt.data as IngressData
-      ).newSign.toUpperCase()}----------------`;
+      return `${planet} Enters ${(evt.data as IngressData).newSign.toUpperCase()}`;
     }
   }
 };
