@@ -1,4 +1,4 @@
-# AStrological Inferences (ASI) 2017
+# AStrological Inferences (ASI) 2027
 
 A tool for finding significant astrological events between outer planets.
 
