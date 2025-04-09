@@ -47,11 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Update the metadata display
   function updateMetadata() {
-    const startYear = new Date(metadata.startDate).getFullYear();
-    const endYear = new Date(metadata.endDate).getFullYear();
-    
-    mainTitle.textContent = `Astrological Events ${startYear}-${endYear}`;
-    metaInfo.textContent = `Time generated: ${new Date(metadata.generatedAt).toLocaleString()} | Total events: ${metadata.totalEvents}`;
+    metaInfo.innerHTML = `Time generated: ${new Date(metadata.generatedAt).toLocaleString()} | <a href="https://github.com/simpolism/asi-2027" target="_blank">GitHub</a>`;
   }
   
   // Populate the year filter dropdown
