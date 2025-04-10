@@ -2,8 +2,15 @@ import * as sweph from 'sweph';
 import type { AspectName, EventType, PlanetData, SignName } from './types';
 import { ASPECTS, COLORS, SIGNS } from './constants';
 
-// Set observer's geographical location (San Francisco)
-sweph.set_topo(-122.4194, 37.7749, 0); // longitude (west is negative), latitude, altitude
+// Initialize ephemeris (only if not already initialized)
+try {
+  sweph.set_ephe_path('../ephemeris');
+
+  // Set observer's geographical location (San Francisco)
+  sweph.set_topo(-122.4194, 37.7749, 0); // longitude (west is negative), latitude, altitude
+} catch (error) {
+  console.error('Error initializing ephemeris:', error);
+}
 
 export function julianDayFromDate(date: Date): number {
   // Convert to UTC time

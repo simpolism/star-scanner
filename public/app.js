@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load the JSON data
   async function loadEvents() {
     try {
-      const response = await fetch('data/astrological-events.json');
+      const response = await fetch('/.netlify/functions/scan');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

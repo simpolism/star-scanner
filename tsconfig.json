@@ -1,14 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
+    "target": "es2020",
     "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "outDir": "dist",
+    "strict": true,
+    "sourceMap": false,
+    "declaration": false,
+    "rootDir": ".",
+    "skipLibCheck": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.test.ts"]
+  "include": ["src/**/*", "netlify/functions/**/*", "ephemeris/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

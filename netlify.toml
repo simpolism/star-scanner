@@ -8,7 +8,16 @@
 [build.environment]
   NODE_VERSION = "16"
 
+# Function configuration
+[functions]
+  directory = "dist/netlify/functions"
+
 # Redirects for SPA routing
+[[redirects]]
+  from = "/scan"
+  to = "/.netlify/functions/scan"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
