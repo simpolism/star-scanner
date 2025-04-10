@@ -26,19 +26,13 @@ export function julianDayFromDate(date: Date): number {
 }
 
 export function getPlanetData(jd: number, planetId: number): PlanetData {
-  // Use SEFLG_TOPOCTR flag for topocentric calculations
-  const result = sweph.calc(
+  const result = sweph.calc_ut(
     jd,
     planetId,
-    sweph.constants.SEFLG_SWIEPH | sweph.constants.SEFLG_SPEED | sweph.constants.SEFLG_TOPOCTR,
+    sweph.constants.SEFLG_SWIEPH,
   );
   return {
     longitude: result.data[0], // Longitude is first element in data array
-    latitude: result.data[1], // Latitude is second element
-    distance: result.data[2], // Distance is third element
-    speedLong: result.data[3], // Longitude speed is fourth element
-    speedLat: result.data[4], // Latitude speed is fifth element
-    speedDist: result.data[5], // Distance speed is sixth element
     retrograde: result.data[3] < 0, // Negative longitude speed means retrograde
   };
 }

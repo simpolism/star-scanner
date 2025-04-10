@@ -6,11 +6,6 @@ export type AspectName = keyof typeof ASPECTS;
 
 export interface PlanetData {
   longitude: number;
-  latitude: number;
-  distance: number;
-  speedLong: number;
-  speedLat: number;
-  speedDist: number;
   retrograde: boolean;
 }
 
