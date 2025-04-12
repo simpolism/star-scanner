@@ -3,8 +3,6 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   trailingSlash: true,
-  // Configure asset paths
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/' : '',
   // Configure rewrites for Netlify Functions in development
   async rewrites() {
     return [
