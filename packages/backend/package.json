@@ -1,0 +1,21 @@
+{
+  "name": "@star-scanner/backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "dev": "netlify dev"
+  },
+  "dependencies": {
+    "@netlify/functions": "^2.0.0",
+    "@star-scanner/common": "1.0.0",
+    "sweph": "2.10.3-4"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.12",
+    "netlify-cli": "^12.0.0",
+    "typescript": "^4.9.5",
+    "rimraf": "^5.0.0"
+  }
+}

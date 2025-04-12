@@ -1,43 +1,44 @@
-# AStrological Inferences (ASI) 2027
+# Star Scanner
 
-A tool for finding significant astrological events between outer planets.
+An astrological event viewer that tracks planetary movements, aspects, and configurations.
 
-## Features
+## Project Structure
 
-- Detects planetary ingresses (sign changes)
-- Tracks retrograde motion
-- Identifies major aspects between planets
-- Generates JSON data file with events
-- Provides a static HTML viewer for easy visualization
+- `packages/common`: Shared types and utilities
+- `packages/backend`: Netlify functions and astronomy calculations
+- `packages/frontend`: Next.js frontend application
 
-## Usage
+## Development
 
-```
-# Install dependencies
+### Prerequisites
+
+- Node.js 16+
+- npm 7+
+
+### Setup
+
+```bash
+# Install dependencies for all packages
 npm install
 
-# Build and generate event data
+# Build packages in the correct order
 npm run build
-
-# The above will:
-# 1. Generate JSON data in public/data/
-# 2. Create a static site in the public/ directory
 ```
 
-## Viewing Results
+### Running Locally
 
-After running the build, run `npx serve public` in your browser to view the events.
+```bash
+# Start the backend server (Netlify Functions)
+npm run dev:backend
 
-To modify the HTML visualization:
-1. Edit files in the `public/` directory
-2. Refresh your browser to see changes (no need to regenerate data)
+# In another terminal, start the frontend
+npm run dev:frontend
+```
 
 ## Deployment
 
-The project is Netlify-ready:
-```
-# Deploy to Netlify
-npm run deploy
-```
+The application is deployed to Netlify. Push to the main branch to trigger deployment.
 
-To customize the time period or tracked planets, edit `src/constants.ts`.
+## License
+
+MIT

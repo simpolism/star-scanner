@@ -1,30 +1,30 @@
 {
-  "name": "astro-event-finder",
+  "name": "star-scanner",
   "version": "1.0.0",
   "description": "Finds astrological events involving Jupiter, Saturn, outer planets and Aquarius",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "dev": "netlify dev",
-    "build": "tsc",
-    "lint": "eslint src/",
-    "lint:fix": "eslint src/ --fix",
-    "format": "prettier --write src/",
-    "check": "npm run lint && npm run build"
-  },
-  "dependencies": {
-    "@netlify/functions": "^2.0.0",
-    "astrochart2": "^0.7.3",
-    "sweph": "2.10.3-4"
+    "build": "npm run build:common && npm run build:backend && npm run build:frontend",
+    "build:common": "cd packages/common && npm run build",
+    "build:backend": "cd packages/backend && npm run build",
+    "build:frontend": "cd packages/frontend && npm run build && npm run export",
+    "dev:backend": "cd packages/backend && npm run dev",
+    "dev:frontend": "cd packages/frontend && npm run dev",
+    "lint": "eslint 'packages/*/src/**/*.{ts,tsx}'",
+    "format": "prettier --write 'packages/*/src/**/*.{ts,tsx}'",
+    "clean": "rimraf packages/*/dist packages/frontend/out"
   },
   "devDependencies": {
-    "@types/node": "^16.11.12",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
     "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "netlify-cli": "^12.0.0",
     "prettier": "^2.5.1",
-    "ts-node": "^10.4.0",
-    "typescript": "^4.5.4"
+    "rimraf": "^5.0.0",
+    "typescript": "^4.9.5"
   }
 }

@@ -1,6 +1,6 @@
 [build]
-  # Directory to publish (relative to root of your repo)
-  publish = "public"
+  # Directory to publish from the frontend build
+  publish = "packages/frontend/out"
   
   # Default build command
   command = "npm run build"
@@ -8,9 +8,9 @@
 [build.environment]
   NODE_VERSION = "16"
 
-# Function configuration
+# Function configuration - updated path
 [functions]
-  directory = "dist/netlify/functions"
+  directory = "packages/backend/netlify/functions"
 
 # Redirects for SPA routing
 [[redirects]]
@@ -18,7 +18,14 @@
   to = "/.netlify/functions/scan"
   status = 200
 
+# For Next.js static export
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/404.html"
+  status = 404
+
+# Handle trailing slashes for Next.js
+[[redirects]]
+  from = "/*/"
+  to = "/:splat/index.html"
   status = 200
