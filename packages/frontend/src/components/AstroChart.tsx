@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { AstrologicalEvent } from "../lib/types";
+import { AstrologicalEvent } from "@star-scanner/common";
 
 interface AstroChartProps {
   event: AstrologicalEvent;

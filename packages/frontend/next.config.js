@@ -8,7 +8,7 @@ const nextConfig = {
     return [
       {
         source: '/.netlify/functions/:path*',
-        destination: '/.netlify/functions/:path*',
+        destination: 'http://localhost:8888/.netlify/functions/:path*',
       },
     ];
   },

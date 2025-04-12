@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { AstrologicalEvent, FilterState } from "../lib/types";
+import { AstrologicalEvent } from "@star-scanner/common";
 import AstroChart from "./AstroChart";
+import { type FilterState } from "../lib/types";
 
 interface EventListProps {
   events: AstrologicalEvent[];

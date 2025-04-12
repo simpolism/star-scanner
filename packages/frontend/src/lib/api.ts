@@ -1,4 +1,4 @@
-import { EventsData } from "./types";
+import { EventsData } from "@star-scanner/common";
 
 const NETLIFY_FUNCTION_URL = "/.netlify/functions/scan";
 

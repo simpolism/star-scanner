@@ -1,4 +1,4 @@
-import * as sweph from "sweph";
+import sweph from './sweph';
 
 export const START_DATE = new Date(2024, 0, 1); // September 1, 2024
 export const END_DATE = new Date(2025, 0, 1); // July 1, 2028

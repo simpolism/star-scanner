@@ -2,10 +2,11 @@
   "name": "@star-scanner/backend",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "clean": "rimraf dist",
-    "dev": "netlify dev"
+    "dev": "cross-env BROWSER=none netlify dev --functions netlify/functions"
   },
   "dependencies": {
     "@netlify/functions": "^2.0.0",

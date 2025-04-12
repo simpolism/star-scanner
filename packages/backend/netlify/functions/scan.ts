@@ -4,6 +4,8 @@ import { AstrologicalEventScanner } from '../../src/scanner';
 import { AspectDetector, RetrogradeDetector, SignIngressDetector } from '../../src/eventDetectors';
 import { NeptunePlutoIngressProcessor, PlutoRetrogradeProcessor } from '../../src/eventProcessors';
 import { START_DATE, END_DATE } from '../../src/constants';
+import { EventsData } from '@star-scanner/common';
+import { AstrologicalEvent } from '../../src/types';
 
 const handler: Handler = async (event, context) => {
   try {
@@ -38,7 +40,7 @@ const handler: Handler = async (event, context) => {
     console.log(`Scan complete, found ${events.length} events`);
     
     // Process events (instead of saving to file)
-    const processedEvents = events.map((event) => {
+    const processedEvents: Array<Omit<AstrologicalEvent, 'date'> & { date: string }> = events.map((event) => {
       const processedOutputs = [
         PlutoRetrogradeProcessor(event),
         NeptunePlutoIngressProcessor(event),
@@ -52,7 +54,7 @@ const handler: Handler = async (event, context) => {
     });
     
     // Create JSON response
-    const responseData = {
+    const responseData: EventsData = {
       metadata: {
         startDate: START_DATE.toISOString(),
         endDate: END_DATE.toISOString(),

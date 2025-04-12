@@ -4,7 +4,7 @@ import Link from "next/link";
 import useSWR from "swr";
 import { fetchEvents } from "../lib/api";
 import EventList from "../components/EventList";
-import { EventsData } from "../lib/types";
+import { EventsData } from "@star-scanner/common";
 
 export default function HomePage() {
   const { data, error } = useSWR<EventsData>("events", fetchEvents);
