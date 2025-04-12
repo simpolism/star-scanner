@@ -26,11 +26,7 @@ export function julianDayFromDate(date: Date): number {
 }
 
 export function getPlanetData(jd: number, planetId: number): PlanetData {
-  const result = sweph.calc_ut(
-    jd,
-    planetId,
-    sweph.constants.SEFLG_SWIEPH,
-  );
+  const result = sweph.calc_ut(jd, planetId, sweph.constants.SEFLG_SWIEPH);
   return {
     longitude: result.data[0], // Longitude is first element in data array
     retrograde: result.data[3] < 0, // Negative longitude speed means retrograde

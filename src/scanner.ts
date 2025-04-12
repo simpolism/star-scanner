@@ -12,6 +12,17 @@ export class AstrologicalEventScanner extends EventEmitter {
 
   constructor(startDate: Date, endDate: Date, eventDetectors: EventDetector[]) {
     super();
+    const MAX_COMPUTE_ITEMS = 5000; // should ALWAYS be WELL under <10s
+    const N_COMPUTE_POINTS = Object.keys(PLANETS).length;
+    const MAX_DAYS = MAX_COMPUTE_ITEMS / N_COMPUTE_POINTS;
+    const DAYS_REQUESTED = (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24);
+    if (DAYS_REQUESTED > MAX_DAYS) {
+      throw new Error(
+        `Request too large! ${
+          DAYS_REQUESTED * N_COMPUTE_POINTS
+        } events requested, vs ${MAX_COMPUTE_ITEMS} max. Try reducing number of computed points or date range.`,
+      );
+    }
     this.startDate = new Date(startDate);
     this.endDate = new Date(endDate);
     this.eventDetectors = eventDetectors;
