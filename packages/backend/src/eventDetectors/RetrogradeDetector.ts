@@ -1,16 +1,16 @@
-import { PLANETS, SIGNS } from '../constants';
+import { PLANETS, SIGNS } from "../constants";
 import {
   type AstrologicalEvent,
   EventDetector,
   type PlanetaryData,
   type PlanetName,
   type SignName,
-} from '../types';
-import { detectSign, isInSign } from '../utils';
+} from "../types";
+import { detectSign, isInSign } from "../utils";
 
 export interface RetrogradeData {
   planet: PlanetName;
-  direction: 'retrograde' | 'direct';
+  direction: "retrograde" | "direct";
   sign: SignName;
 }
 
@@ -30,7 +30,7 @@ export class RetrogradeDetector extends EventDetector<RetrogradeData> {
     currentDate: Date,
     currentData: PlanetaryData,
     previousDate: Date,
-    previousData: PlanetaryData | null,
+    previousData: PlanetaryData | null
   ): AstrologicalEvent<RetrogradeData>[] {
     const events: AstrologicalEvent<RetrogradeData>[] = [];
 
@@ -60,10 +60,10 @@ export class RetrogradeDetector extends EventDetector<RetrogradeData> {
         for (const sign of this.signs) {
           if (isInSign(currPos, sign)) {
             inTargetSign = true;
-            const status = currRetro ? 'begins retrograde' : 'goes direct';
+            const status = currRetro ? "begins retrograde" : "goes direct";
             events.push({
               date: new Date(currentDate),
-              type: 'retrograde',
+              type: "retrograde",
               description: `${planet} ${status} in ${sign}`,
             });
             break;
@@ -76,14 +76,14 @@ export class RetrogradeDetector extends EventDetector<RetrogradeData> {
         }
       } else {
         // Not checking signs, just report the retrograde change
-        const status = currRetro ? 'begins retrograde' : 'goes direct';
+        const status = currRetro ? "begins retrograde" : "goes direct";
         events.push({
           date: new Date(currentDate),
-          type: 'retrograde',
+          type: "retrograde",
           description: `${planet} ${status}`,
           data: {
             planet: planet,
-            direction: currRetro ? 'retrograde' : 'direct',
+            direction: currRetro ? "retrograde" : "direct",
             sign: detectSign(currPos),
           },
         });

@@ -1,15 +1,15 @@
-import * as sweph from 'sweph';
-import type { AspectName, EventType, PlanetData, SignName } from './types';
-import { ASPECTS, COLORS, SIGNS } from './constants';
+import * as sweph from "sweph";
+import type { AspectName, EventType, PlanetData, SignName } from "./types";
+import { ASPECTS, COLORS, SIGNS } from "./constants";
 
 // Initialize ephemeris (only if not already initialized)
 try {
-  sweph.set_ephe_path('../ephemeris');
+  sweph.set_ephe_path("../ephemeris");
 
   // Set observer's geographical location (San Francisco)
   sweph.set_topo(-122.4194, 37.7749, 0); // longitude (west is negative), latitude, altitude
 } catch (error) {
-  console.error('Error initializing ephemeris:', error);
+  console.error("Error initializing ephemeris:", error);
 }
 
 export function julianDayFromDate(date: Date): number {
@@ -20,8 +20,10 @@ export function julianDayFromDate(date: Date): number {
     utcDate.getUTCFullYear(),
     utcDate.getUTCMonth() + 1,
     utcDate.getUTCDate(),
-    utcDate.getUTCHours() + utcDate.getUTCMinutes() / 60 + utcDate.getUTCSeconds() / 3600,
-    sweph.constants.SE_GREG_CAL,
+    utcDate.getUTCHours() +
+      utcDate.getUTCMinutes() / 60 +
+      utcDate.getUTCSeconds() / 3600,
+    sweph.constants.SE_GREG_CAL
   );
 }
 
@@ -43,7 +45,7 @@ export function detectSign(position: number): SignName {
   for (const sign of Object.keys(SIGNS) as SignName[]) {
     if (isInSign(position, sign)) return sign;
   }
-  throw new Error('Invalid position');
+  throw new Error("Invalid position");
 }
 
 /**
@@ -52,7 +54,7 @@ export function detectSign(position: number): SignName {
 export function checkAspect(
   pos1: number,
   pos2: number,
-  aspectName: AspectName,
+  aspectName: AspectName
 ): number | undefined {
   const { angle, orb } = ASPECTS[aspectName];
 
@@ -94,19 +96,19 @@ export function colorizeText(text: string): string {
 
   // Colorize planets
   Object.entries(COLORS.PLANET_COLORS).forEach(([planet, color]) => {
-    const regex = new RegExp(`\\b${planet}\\b`, 'g');
+    const regex = new RegExp(`\\b${planet}\\b`, "g");
     colorized = colorized.replace(regex, `${color}${planet}${reset}`);
   });
 
   // Colorize signs
   Object.entries(COLORS.SIGN_COLORS).forEach(([sign, color]) => {
-    const regex = new RegExp(`\\b${sign}\\b`, 'g');
+    const regex = new RegExp(`\\b${sign}\\b`, "g");
     colorized = colorized.replace(regex, `${color}${sign}${reset}`);
   });
 
   // Colorize aspects
   Object.entries(COLORS.ASPECT_COLORS).forEach(([aspect, color]) => {
-    const regex = new RegExp(`\\b${aspect}\\b`, 'g');
+    const regex = new RegExp(`\\b${aspect}\\b`, "g");
     colorized = colorized.replace(regex, `${color}${aspect}${reset}`);
   });
 
@@ -117,6 +119,6 @@ export function colorizeText(text: string): string {
  * Colorize an event type
  */
 export function colorizeEventType(type: EventType): string {
-  const typeColor = COLORS.TYPE_COLORS[type] || '';
+  const typeColor = COLORS.TYPE_COLORS[type] || "";
   return `${typeColor}${type.toUpperCase()}${COLORS.RESET}`;
 }

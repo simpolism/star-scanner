@@ -1,4 +1,4 @@
-import { ASPECTS, COLORS, PLANETS, SIGNS } from './constants';
+import { ASPECTS, COLORS, PLANETS, SIGNS } from "./constants";
 
 export type PlanetName = keyof typeof PLANETS;
 export type SignName = keyof typeof SIGNS;
@@ -30,7 +30,7 @@ export abstract class EventDetector<DataT = unknown> {
     currentData: PlanetaryData,
     previousDate: Date | null,
     previousData: PlanetaryData | null,
-    previousData2?: PlanetaryData | null, // for going back two timesteps to see direction shifts
+    previousData2?: PlanetaryData | null // for going back two timesteps to see direction shifts
   ): AstrologicalEvent<DataT>[];
 }
 

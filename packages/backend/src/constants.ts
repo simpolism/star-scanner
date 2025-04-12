@@ -1,4 +1,4 @@
-import * as sweph from 'sweph';
+import * as sweph from "sweph";
 
 export const START_DATE = new Date(2024, 0, 1); // September 1, 2024
 export const END_DATE = new Date(2025, 0, 1); // July 1, 2028
@@ -7,55 +7,55 @@ export const END_DATE = new Date(2025, 0, 1); // July 1, 2028
 export const COLORS = {
   // Planet colors
   PLANET_COLORS: {
-    Sun: '\x1b[33m', // Yellow
-    Moon: '\x1b[37m', // White
-    Mercury: '\x1b[36m', // Cyan
-    Venus: '\x1b[35m', // Magenta
-    Mars: '\x1b[31m', // Red
-    Jupiter: '\x1b[34m', // Blue
-    Saturn: '\x1b[90m', // Gray
-    Uranus: '\x1b[96m', // Light Cyan
-    Neptune: '\x1b[94m', // Light Blue
-    Pluto: '\x1b[95m', // Light Magenta
+    Sun: "\x1b[33m", // Yellow
+    Moon: "\x1b[37m", // White
+    Mercury: "\x1b[36m", // Cyan
+    Venus: "\x1b[35m", // Magenta
+    Mars: "\x1b[31m", // Red
+    Jupiter: "\x1b[34m", // Blue
+    Saturn: "\x1b[90m", // Gray
+    Uranus: "\x1b[96m", // Light Cyan
+    Neptune: "\x1b[94m", // Light Blue
+    Pluto: "\x1b[95m", // Light Magenta
   },
 
   // Sign colors
   SIGN_COLORS: {
-    Aries: '\x1b[31m', // Red (fire)
-    Taurus: '\x1b[32m', // Green (earth)
-    Gemini: '\x1b[33m', // Yellow (air)
-    Cancer: '\x1b[36m', // Cyan (water)
-    Leo: '\x1b[31m', // Red (fire)
-    Virgo: '\x1b[32m', // Green (earth)
-    Libra: '\x1b[33m', // Yellow (air)
-    Scorpio: '\x1b[36m', // Cyan (water)
-    Sagittarius: '\x1b[31m', // Red (fire)
-    Capricorn: '\x1b[32m', // Green (earth)
-    Aquarius: '\x1b[33m', // Yellow (air)
-    Pisces: '\x1b[36m', // Cyan (water)
+    Aries: "\x1b[31m", // Red (fire)
+    Taurus: "\x1b[32m", // Green (earth)
+    Gemini: "\x1b[33m", // Yellow (air)
+    Cancer: "\x1b[36m", // Cyan (water)
+    Leo: "\x1b[31m", // Red (fire)
+    Virgo: "\x1b[32m", // Green (earth)
+    Libra: "\x1b[33m", // Yellow (air)
+    Scorpio: "\x1b[36m", // Cyan (water)
+    Sagittarius: "\x1b[31m", // Red (fire)
+    Capricorn: "\x1b[32m", // Green (earth)
+    Aquarius: "\x1b[33m", // Yellow (air)
+    Pisces: "\x1b[36m", // Cyan (water)
   },
 
   // Aspect colors
   ASPECT_COLORS: {
-    conjunction: '\x1b[37m', // White
-    opposition: '\x1b[31m', // Red
-    trine: '\x1b[32m', // Green
-    square: '\x1b[31m', // Red
-    sextile: '\x1b[33m', // Yellow
+    conjunction: "\x1b[37m", // White
+    opposition: "\x1b[31m", // Red
+    trine: "\x1b[32m", // Green
+    square: "\x1b[31m", // Red
+    sextile: "\x1b[33m", // Yellow
   },
 
   // Event type colors
   TYPE_COLORS: {
-    aspect_end: '\x1b[35m', // Magenta
-    aspect_begin: '\x1b[92m', // Light Green
-    aspect_peak: '\x1b[94m', // Light Blue
-    ingress: '\x1b[32m', // Green
-    retrograde: '\x1b[33m', // Yellow
-    configuration: '\x1b[36m', // Cyan
+    aspect_end: "\x1b[35m", // Magenta
+    aspect_begin: "\x1b[92m", // Light Green
+    aspect_peak: "\x1b[94m", // Light Blue
+    ingress: "\x1b[32m", // Green
+    retrograde: "\x1b[33m", // Yellow
+    configuration: "\x1b[36m", // Cyan
   },
 
   // Reset color
-  RESET: '\x1b[0m',
+  RESET: "\x1b[0m",
 };
 
 export const PLANETS = {

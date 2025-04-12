@@ -13,14 +13,15 @@
     "build:frontend": "cd packages/frontend && npm run build && npm run export",
     "dev:backend": "cd packages/backend && npm run dev",
     "dev:frontend": "cd packages/frontend && npm run dev",
-    "lint": "eslint 'packages/*/src/**/*.{ts,tsx}'",
-    "format": "prettier --write 'packages/*/src/**/*.{ts,tsx}'",
+    "lint": "eslint \"packages/*/src/**/*.{ts,tsx}\"",
+    "format": "prettier --write \"packages/*/src/**/*.{ts,tsx}\"",
     "clean": "rimraf packages/*/dist packages/frontend/out"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
     "eslint": "^8.7.0",
+    "eslint-config-next": "^15.3.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.5.1",

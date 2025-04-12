@@ -7,7 +7,13 @@ export interface Planet {
 
 export interface AstrologicalEvent {
   date: string; // ISO string from API
-  type: 'ingress' | 'retrograde' | 'aspect_begin' | 'aspect_peak' | 'aspect_end' | 'configuration';
+  type:
+    | "ingress"
+    | "retrograde"
+    | "aspect_begin"
+    | "aspect_peak"
+    | "aspect_end"
+    | "configuration";
   description: string;
   planets?: Record<string, Planet>;
   processedOutputs?: string[];

@@ -1,12 +1,12 @@
-import { PLANETS } from '../constants';
+import { PLANETS } from "../constants";
 import {
   EventDetector,
   type PlanetaryData,
   type AstrologicalEvent,
   type PlanetName,
   type SignName,
-} from '../types';
-import { detectSign } from '../utils';
+} from "../types";
+import { detectSign } from "../utils";
 
 export interface IngressData {
   planet: PlanetName;
@@ -26,7 +26,7 @@ export class SignIngressDetector extends EventDetector<IngressData> {
     currentDate: Date,
     currentData: PlanetaryData,
     previousDate: Date | null,
-    previousData: PlanetaryData | null,
+    previousData: PlanetaryData | null
   ): AstrologicalEvent<IngressData>[] {
     const events: AstrologicalEvent<IngressData>[] = [];
 
@@ -47,7 +47,7 @@ export class SignIngressDetector extends EventDetector<IngressData> {
       if (currSign !== prevSign) {
         events.push({
           date: new Date(currentDate),
-          type: 'ingress',
+          type: "ingress",
           description: `${planet} enters ${currSign} (from ${prevSign})`,
           data: {
             planet,

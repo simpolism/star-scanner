@@ -5,12 +5,15 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier'
+    'prettier',
+    'next',
+    'next/core-web-vitals'
   ],
   rules: {
     'prettier/prettier': 'error',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@next/next/no-html-link-for-pages': ['error', 'packages/frontend/src/pages']
   },
   overrides: [
     {
