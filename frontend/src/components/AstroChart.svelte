@@ -111,15 +111,68 @@
     }
   }
 
-  export function openChartAsImage(): void {
+  // Function to download chart as PNG, embedding the required font
+  // Helper function to convert ArrayBuffer to Base64
+  function arrayBufferToBase64(buffer: ArrayBuffer): string {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  }
+
+  export async function openChartAsImage(): void {
     try {
       const svgElement = document.querySelector(`#${chartId} svg`) as SVGElement;
       if (!svgElement) {
         throw new Error('SVG element not found');
       }
 
+      // --- Fetch and Encode Font ---
+      const fontUrl = '/assets/fonts/ttf/AstronomiconFonts_1.1/Astronomicon.ttf';
+      let fontDataUrl = '';
+      try {
+        const response = await fetch(fontUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const fontBuffer = await response.arrayBuffer();
+        const fontBase64 = arrayBufferToBase64(fontBuffer);
+        fontDataUrl = `data:font/ttf;base64,${fontBase64}`;
+        console.log('Font fetched and encoded as data URL.'); // Debugging
+      } catch (fontError) {
+        console.error('Error fetching or encoding font:', fontError);
+        // Optionally: proceed without embedding font or show error to user
+        // For now, we'll log the error and continue, the font might fail to render
+      }
+
+      // --- Font Embedding ---
       // Clone the SVG element to avoid modifying the live chart
       const clonedSvgElement = svgElement.cloneNode(true) as SVGElement;
+
+      // Define the font-face rule using the Base64 data URL (if available)
+      const fontFaceStyle = fontDataUrl ? `
+        @font-face {
+          font-family: 'Astronomicon';
+          src: url(${fontDataUrl}) format('truetype');
+        }
+      ` : ''; // If font fetch failed, don't include the rule
+
+      // Create or find the <defs> element in the clone
+      let defs = clonedSvgElement.querySelector('defs');
+      if (!defs) {
+        defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+        clonedSvgElement.insertBefore(defs, clonedSvgElement.firstChild);
+      }
+
+      // Create and append the <style> element to the defs in the clone
+      if (fontFaceStyle) { // Only add style if font was loaded
+          const styleElement = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+          styleElement.textContent = fontFaceStyle.trim();
+          defs.appendChild(styleElement);
+      }
 
       // Serialize the SVG element
       const svgData = new XMLSerializer().serializeToString(clonedSvgElement);
