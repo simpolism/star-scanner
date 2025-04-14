@@ -6,11 +6,11 @@ A tool for finding and visualizing significant astrological events between outer
 
 ```bash
 # Install dependencies
-cd frontend && npm install
-cd ../backend && npm install
+cd frontend && npm install && npm run build
+cd ../backend && npm install && npm run build
 
 # Run both with Netlify CLI
-cd .. && netlify dev
+netlify dev
 ```
 
 ## Production Build
@@ -28,7 +28,6 @@ netlify deploy --prod
 
 - `frontend/` - Svelte TypeScript frontend
 - `backend/` - Node.js backend with Netlify functions
-- `packages/` - Shared code packages
 
 ## Configuration
 
