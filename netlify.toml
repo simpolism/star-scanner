@@ -1,16 +1,16 @@
 [build]
   # Directory to publish (relative to root of your repo)
-  publish = "public"
+  publish = "frontend/public"
   
   # Default build command
-  command = "npm run build"
+  command = "cd backend && npm run build"
 
 [build.environment]
   NODE_VERSION = "16"
 
 # Function configuration
 [functions]
-  directory = "dist/netlify/functions"
+  directory = "backend/dist/netlify/functions"
 
 # Redirects for SPA routing
 [[redirects]]
