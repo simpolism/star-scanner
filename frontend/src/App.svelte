@@ -1,17 +1,24 @@
 <script lang="ts">
-  // Initial App component
+  import EventList from './components/EventList.svelte';
 </script>
 
 <main>
-  <h1>Astrological Events Viewer</h1>
-  <p>Loading events...</p>
+  <EventList />
 </main>
 
 <style>
-  main {
+  :global(body) {
     font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+  }
+
+  main {
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
   }
 </style>

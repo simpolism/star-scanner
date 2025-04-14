@@ -1,9 +1,9 @@
 [build]
   # Directory to publish (relative to root of your repo)
-  publish = "frontend/public"
+  publish = "frontend/dist"
   
   # Default build command
-  command = "cd backend && npm run build"
+  command = "cd frontend && npm install && npm run build && cd ../backend && npm run build"
 
 [build.environment]
   NODE_VERSION = "16"
