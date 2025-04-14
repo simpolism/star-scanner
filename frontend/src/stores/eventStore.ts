@@ -35,7 +35,7 @@ export async function loadEvents(): Promise<void> {
     metadata.set(data.metadata);
 
     // Convert date strings to Date objects, ensure planets data exists, and sort by date
-    const processedEvents = data.events.map((event: AstrologicalEvent) => ({
+    const processedEvents: AstrologicalEvent[] = data.events.map((event: AstrologicalEvent) => ({
       ...event,
       date: event.date,
       planets: event.planets || {},
