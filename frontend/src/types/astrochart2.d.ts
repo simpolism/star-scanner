@@ -49,7 +49,7 @@ declare namespace astrology {
 
   class Universe {
     constructor(elementId: string, settings?: UniverseSettings);
-    
+
     radix(): RadixChart;
   }
 }

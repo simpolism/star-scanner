@@ -8,7 +8,7 @@ export const events = writable<AstrologicalEvent[]>([]);
 export const metadata = writable<EventsMetadata>({
   generatedAt: '',
   startDate: '',
-  endDate: ''
+  endDate: '',
 });
 
 // Store for loading state
@@ -20,32 +20,31 @@ export const error = writable<string | null>(null);
 export async function loadEvents(): Promise<void> {
   loading.set(true);
   error.set(null);
-  
+
   try {
     const apiUrl = import.meta.env.VITE_API_URL || '/.netlify/functions';
     const response = await fetch(`${apiUrl}/scan`);
-    
+
     if (!response.ok) {
       throw new Error(`Network response was not ok: ${response.status}`);
     }
-    
+
     const data = await response.json();
-    
+
     // Update stores with fetched data
     metadata.set(data.metadata);
-    
+
     // Convert date strings to Date objects, ensure planets data exists, and sort by date
     const processedEvents = data.events.map((event: AstrologicalEvent) => ({
       ...event,
       date: event.date,
-      planets: event.planets || {}
+      planets: event.planets || {},
     }));
-    
+
     // Sort events by date
     processedEvents.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    
+
     events.set(processedEvents);
-    
   } catch (err) {
     console.error('Error loading event data:', err);
     error.set(err instanceof Error ? err.message : 'Unknown error occurred');

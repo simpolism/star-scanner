@@ -1,9 +1,9 @@
-export type EventType = 
-  | 'ingress' 
-  | 'retrograde' 
-  | 'aspect_begin' 
-  | 'aspect_peak' 
-  | 'aspect_end' 
+export type EventType =
+  | 'ingress'
+  | 'retrograde'
+  | 'aspect_begin'
+  | 'aspect_peak'
+  | 'aspect_end'
   | 'configuration';
 
 export interface Planet {

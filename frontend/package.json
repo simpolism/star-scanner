@@ -9,6 +9,8 @@
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "lint": "eslint --ext .ts,.svelte src",
+    "lint:fix": "eslint --ext .ts,.svelte src --fix",
+    "format": "prettier --write src/**/*.{ts,svelte}",
     "postbuild": "npm run copy-assets",
     "copy-assets": "xcopy public\\assets dist\\assets /E /I /Y"
   },
@@ -22,6 +24,8 @@
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.52.0",
     "eslint-plugin-svelte": "^2.32.4",
+    "prettier": "^3.0.0",
+    "prettier-plugin-svelte": "^3.0.0",
     "svelte-check": "^3.5.2",
     "tslib": "^2.6.2",
     "typescript": "^5.2.2",
