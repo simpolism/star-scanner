@@ -1,6 +1,6 @@
 # Star Scanner
 
-A tool for finding and visualizing significant astrological events between outer planets.
+A tool for finding and visualizing significant astrological events.
 
 ## Development
 
