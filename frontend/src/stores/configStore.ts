@@ -10,14 +10,26 @@ const defaultConfig = {
   detectors: {
     signIngressDetector: {
       enabled: true,
-      planets: ['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']
+      planets: ['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'],
     },
     retrogradeDetector: {
       enabled: true,
       planets: ['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'],
-      signs: ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 
-              'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'],
-      checkSign: false
+      signs: [
+        'Aries',
+        'Taurus',
+        'Gemini',
+        'Cancer',
+        'Leo',
+        'Virgo',
+        'Libra',
+        'Scorpio',
+        'Sagittarius',
+        'Capricorn',
+        'Aquarius',
+        'Pisces',
+      ],
+      checkSign: false,
     },
     aspectDetector: {
       enabled: true,
@@ -31,11 +43,11 @@ const defaultConfig = {
         ['Saturn', 'Pluto'],
         ['Uranus', 'Neptune'],
         ['Uranus', 'Pluto'],
-        ['Neptune', 'Pluto']
+        ['Neptune', 'Pluto'],
       ],
-      aspects: ['conjunction', 'opposition', 'square', 'trine']
-    }
-  }
+      aspects: ['conjunction', 'opposition', 'square', 'trine'],
+    },
+  },
 };
 
 // Try to load saved configuration from localStorage
@@ -57,7 +69,7 @@ function loadSavedConfig() {
 export const config = writable(loadSavedConfig());
 
 // Save to localStorage when config changes
-config.subscribe(value => {
+config.subscribe((value) => {
   if (typeof localStorage !== 'undefined') {
     localStorage.setItem('starScannerConfig', JSON.stringify(value));
   }
@@ -65,19 +77,35 @@ config.subscribe(value => {
 
 // Common planet options
 export const planetOptions = [
-  'Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 
-  'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'
+  'Sun',
+  'Moon',
+  'Mercury',
+  'Venus',
+  'Mars',
+  'Jupiter',
+  'Saturn',
+  'Uranus',
+  'Neptune',
+  'Pluto',
 ];
 
 // Common aspect options
-export const aspectOptions = [
-  'conjunction', 'opposition', 'trine', 'square', 'sextile'
-];
+export const aspectOptions = ['conjunction', 'opposition', 'trine', 'square', 'sextile'];
 
 // Zodiac sign options
 export const signOptions = [
-  'Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 
-  'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'
+  'Aries',
+  'Taurus',
+  'Gemini',
+  'Cancer',
+  'Leo',
+  'Virgo',
+  'Libra',
+  'Scorpio',
+  'Sagittarius',
+  'Capricorn',
+  'Aquarius',
+  'Pisces',
 ];
 
 // Helper function to create all possible planet pairs
@@ -100,72 +128,80 @@ export async function applyConfig(): Promise<void> {
 export const presets = {
   currentYear: () => {
     const currentYear = new Date().getFullYear();
-    config.update(c => ({
+    config.update((c) => ({
       ...c,
       timeSpan: {
         startTime: new Date(currentYear, 0, 1).toISOString(),
-        endTime: new Date(currentYear + 1, 0, 1).toISOString()
-      }
+        endTime: new Date(currentYear + 1, 0, 1).toISOString(),
+      },
     }));
   },
   nextSixMonths: () => {
     const today = new Date();
     const sixMonthsLater = new Date();
     sixMonthsLater.setMonth(today.getMonth() + 6);
-    
-    config.update(c => ({
+
+    config.update((c) => ({
       ...c,
       timeSpan: {
         startTime: today.toISOString(),
-        endTime: sixMonthsLater.toISOString()
-      }
+        endTime: sixMonthsLater.toISOString(),
+      },
     }));
   },
   outerPlanetsOnly: () => {
     const outerPlanets = ['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'];
-    
-    config.update(c => ({
+
+    config.update((c) => ({
       ...c,
       detectors: {
         ...c.detectors,
         signIngressDetector: {
           ...c.detectors.signIngressDetector,
-          planets: outerPlanets
+          planets: outerPlanets,
         },
         retrogradeDetector: {
           ...c.detectors.retrogradeDetector,
-          planets: outerPlanets
+          planets: outerPlanets,
         },
         aspectDetector: {
           ...c.detectors.aspectDetector,
-          planetPairs: generateAllPlanetPairs(outerPlanets)
-        }
-      }
+          planetPairs: generateAllPlanetPairs(outerPlanets),
+        },
+      },
     }));
   },
   allPlanets: () => {
     const allPlanets = [
-      'Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 
-      'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'
+      'Sun',
+      'Moon',
+      'Mercury',
+      'Venus',
+      'Mars',
+      'Jupiter',
+      'Saturn',
+      'Uranus',
+      'Neptune',
+      'Pluto',
     ];
-    
-    config.update(c => ({
+
+    config.update((c) => ({
       ...c,
       detectors: {
         ...c.detectors,
         signIngressDetector: {
           ...c.detectors.signIngressDetector,
-          planets: allPlanets
+          planets: allPlanets,
         },
         retrogradeDetector: {
           ...c.detectors.retrogradeDetector,
-          planets: allPlanets
+          planets: allPlanets,
         },
         aspectDetector: {
           ...c.detectors.aspectDetector,
-          planetPairs: generateAllPlanetPairs(allPlanets.slice(0, 5)) // Limit pairs to avoid too many combinations
-        }
-      }
+          planetPairs: generateAllPlanetPairs(allPlanets.slice(0, 5)), // Limit pairs to avoid too many combinations
+        },
+      },
     }));
-  }
+  },
 };

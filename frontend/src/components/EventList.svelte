@@ -18,7 +18,9 @@
       <p id="meta-info" class="error">Error: {$error}</p>
     {:else}
       <p id="meta-info">
-        Generation range: {$metadata.startDate || new Date($config.timeSpan.startTime).toLocaleDateString()} - {$metadata.endDate || new Date($config.timeSpan.endTime).toLocaleDateString()}
+        Generation range: {$metadata.startDate ||
+          new Date($config.timeSpan.startTime).toLocaleDateString()} - {$metadata.endDate ||
+          new Date($config.timeSpan.endTime).toLocaleDateString()}
       </p>
     {/if}
   </header>
@@ -78,7 +80,7 @@
   footer a:hover {
     text-decoration: underline;
   }
-  
+
   #meta-info {
     margin: 0;
     font-weight: bold;

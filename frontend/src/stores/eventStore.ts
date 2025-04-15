@@ -23,7 +23,7 @@ export async function loadEvents(config?: any): Promise<void> {
 
   try {
     const apiUrl = import.meta.env.VITE_API_URL || '/.netlify/functions';
-    
+
     const response = await fetch(`${apiUrl}/scan`, {
       headers: {
         Accept: 'application/json',
@@ -36,14 +36,26 @@ export async function loadEvents(config?: any): Promise<void> {
         detectors: config?.detectors || {
           signIngressDetector: {
             enabled: true,
-            planets: ['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']
+            planets: ['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'],
           },
           retrogradeDetector: {
             enabled: true,
             planets: ['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'],
-            signs: ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 
-                    'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'],
-            checkSign: false
+            signs: [
+              'Aries',
+              'Taurus',
+              'Gemini',
+              'Cancer',
+              'Leo',
+              'Virgo',
+              'Libra',
+              'Scorpio',
+              'Sagittarius',
+              'Capricorn',
+              'Aquarius',
+              'Pisces',
+            ],
+            checkSign: false,
           },
           aspectDetector: {
             enabled: true,
@@ -57,11 +69,11 @@ export async function loadEvents(config?: any): Promise<void> {
               ['Saturn', 'Pluto'],
               ['Uranus', 'Neptune'],
               ['Uranus', 'Pluto'],
-              ['Neptune', 'Pluto']
+              ['Neptune', 'Pluto'],
             ],
-            aspects: ['conjunction', 'opposition', 'square', 'trine']
-          }
-        }
+            aspects: ['conjunction', 'opposition', 'square', 'trine'],
+          },
+        },
       }),
     });
 
