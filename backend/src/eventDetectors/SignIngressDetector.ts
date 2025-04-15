@@ -6,8 +6,10 @@ import {
   type PlanetName,
   type SignName,
   type JulianDate,
+  type BaseDetectorConfig,
 } from '../types';
 import { detectSign } from '../utils';
+import { z } from 'zod';
 
 export interface IngressData {
   planet: PlanetName;
@@ -15,12 +17,23 @@ export interface IngressData {
   newSign: SignName;
 }
 
-export class SignIngressDetector extends EventDetector<IngressData> {
-  private planets: PlanetName[];
+export interface SignIngressDetectorConfig extends BaseDetectorConfig {
+  planets: PlanetName[];
+}
 
-  constructor(planets?: PlanetName[]) {
-    super();
-    this.planets = planets || (Object.keys(PLANETS) as PlanetName[]);
+export class SignIngressDetector extends EventDetector<
+  IngressData,
+  SignIngressDetectorConfig
+> {
+  static configSchema = z.object({
+    enabled: z.boolean(),
+    planets: z.array(
+      z.enum([...PLANETS.keys()] as [PlanetName, ...PlanetName[]]),
+    ),
+  });
+
+  constructor(config: SignIngressDetectorConfig) {
+    super(config);
   }
 
   detect(
@@ -31,12 +44,12 @@ export class SignIngressDetector extends EventDetector<IngressData> {
   ): AstrologicalEvent<IngressData>[] {
     const events: AstrologicalEvent<IngressData>[] = [];
 
-    // Skip if no previous data
-    if (!previousData) {
+    // Skip if not enabled or no previous data
+    if (!this.config.enabled || !previousData) {
       return events;
     }
 
-    for (const planet of this.planets) {
+    for (const planet of this.config.planets) {
       if (!(planet in currentData) || !(planet in previousData)) {
         continue;
       }

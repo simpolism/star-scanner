@@ -64,7 +64,24 @@ export interface AstrologicalEvent<DataT = unknown> {
   data?: DataT;
 }
 
-export abstract class EventDetector<DataT = unknown> {
+export interface BaseDetectorConfig {
+  enabled: boolean;
+}
+
+export abstract class EventDetector<
+  DataT = unknown,
+  ConfigT extends BaseDetectorConfig = BaseDetectorConfig,
+> {
+  protected config: ConfigT;
+
+  constructor(config: ConfigT) {
+    this.config = config;
+  }
+
+  isEnabled(): boolean {
+    return this.config.enabled;
+  }
+
   abstract detect(
     currentDate: JulianDate,
     currentData: PlanetaryData,

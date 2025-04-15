@@ -1,3 +1,10 @@
+/* Preload Astronomicon font */
+@font-face {
+  font-family: 'Astronomicon';
+  src: url('/assets/fonts/ttf/AstronomiconFonts_1.1/Astronomicon.ttf') format('truetype');
+  font-display: block;
+}
+
 /* Global styles */
 body {
   font-family: Arial, sans-serif;

@@ -98,7 +98,7 @@ export function detectSign(position: number): SignName {
   const signPos = Math.floor(normalizedPos / 30);
 
   // note that Maps guarantee object ordering, so this is a safe index
-  const sign = Object.keys(SIGNS)[signPos] as SignName;
+  const sign = [...SIGNS.keys()][signPos];
   return sign;
 }
 

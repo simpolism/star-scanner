@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { AstrologicalEvent } from '../types/events';
-  // @ts-expect-error Typescript not respecting svelte compiler
   import AstroChart from './AstroChart.svelte';
 
   export let event: AstrologicalEvent;

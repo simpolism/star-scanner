@@ -17,13 +17,13 @@ export const loading = writable<boolean>(true);
 // Store for error state
 export const error = writable<string | null>(null);
 
-export async function loadEvents(startTime: string, endTime: string): Promise<void> {
+export async function loadEvents(): Promise<void> {
   loading.set(true);
   error.set(null);
 
   try {
     const apiUrl = import.meta.env.VITE_API_URL || '/.netlify/functions';
-    // TODO: clean this up
+    
     const response = await fetch(`${apiUrl}/scan`, {
       headers: {
         Accept: 'application/json',
@@ -31,8 +31,37 @@ export async function loadEvents(startTime: string, endTime: string): Promise<vo
       },
       method: 'POST',
       body: JSON.stringify({
-        startTime,
-        endTime,
+        startTime: new Date(2026, 0, 1).toISOString(),
+        endTime: new Date(2027, 0, 1).toISOString(),
+        detectors: {
+          signIngressDetector: {
+            enabled: true,
+            planets: ['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']
+          },
+          retrogradeDetector: {
+            enabled: true,
+            planets: ['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'],
+            signs: ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 
+                    'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'],
+            checkSign: false
+          },
+          aspectDetector: {
+            enabled: true,
+            planetPairs: [
+              ['Jupiter', 'Saturn'],
+              ['Jupiter', 'Uranus'],
+              ['Jupiter', 'Neptune'],
+              ['Jupiter', 'Pluto'],
+              ['Saturn', 'Uranus'],
+              ['Saturn', 'Neptune'],
+              ['Saturn', 'Pluto'],
+              ['Uranus', 'Neptune'],
+              ['Uranus', 'Pluto'],
+              ['Neptune', 'Pluto']
+            ],
+            aspects: ['conjunction', 'opposition', 'square', 'trine']
+          }
+        }
       }),
     });
 

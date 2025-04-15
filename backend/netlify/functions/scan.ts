@@ -12,7 +12,15 @@ import {
 } from '../../src/eventProcessors';
 import { isoToJulianDay, julianDayToIso } from '../../src/utils';
 import { PLANETS } from '../../src/constants';
+import { EventDetector } from '../../src/types';
 import { z } from 'zod';
+
+// Registry of available detectors - add new detectors here
+const detectorRegistry = {
+  aspectDetector: AspectDetector,
+  retrogradeDetector: RetrogradeDetector,
+  signIngressDetector: SignIngressDetector,
+};
 
 // Define the validation schema with Zod
 const ScanRequestSchema = z.object({
@@ -29,6 +37,8 @@ const ScanRequestSchema = z.object({
       /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d+)?(Z|[+-]\d{2}:\d{2})$/,
       'Must be ISO 8601 format',
     ),
+  // Optional detector configurations - accepts any detector config
+  detectors: z.record(z.string(), z.any()).optional(),
 });
 
 // Infer TypeScript type from Zod schema
@@ -140,46 +150,53 @@ const handler: Handler = async (event, _context) => {
       `Starting scan function with startTime: ${startTime} (JD: ${startJd}), endTime: ${endTime} (JD: ${endJd})`,
     );
 
-    // Create event detectors
-    const detectors = [
-      new SignIngressDetector([
-        'Jupiter',
-        'Saturn',
-        'Uranus',
-        'Neptune',
-        'Pluto',
-      ]),
-      new RetrogradeDetector([
-        'Jupiter',
-        'Saturn',
-        'Uranus',
-        'Neptune',
-        'Pluto',
-      ]),
-      new AspectDetector(
-        [
-          ['Jupiter', 'Saturn'],
-          ['Jupiter', 'Uranus'],
-          ['Jupiter', 'Neptune'],
-          ['Jupiter', 'Pluto'],
-          ['Saturn', 'Uranus'],
-          ['Saturn', 'Neptune'],
-          ['Saturn', 'Pluto'],
-          ['Uranus', 'Neptune'],
-          ['Uranus', 'Pluto'],
-          ['Neptune', 'Pluto'],
-        ],
-        ['conjunction', 'opposition', 'square', 'trine'],
-      ),
-    ];
+    // Initialize detectors based on provided configurations
+    const detectors: EventDetector[] = [];
+    const detectorConfigs = validatedRequest.detectors || {};
+    console.log(detectorConfigs);
 
-    // Create scanner and run scan (unchanged)
+    // Process each detector from registry that has config in the request
+    Object.entries(detectorConfigs).forEach(
+      ([detectorName, detectorConfig]) => {
+        // Check if this detector exists in our registry
+        const DetectorClass =
+          detectorRegistry[detectorName as keyof typeof detectorRegistry];
+
+        if (DetectorClass) {
+          try {
+            // Validate config using detector's schema
+            const config = DetectorClass.configSchema.parse(detectorConfig);
+
+            // Only add the detector if it's enabled
+            if (config.enabled) {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument
+              detectors.push(new DetectorClass(config as any));
+            }
+          } catch (error) {
+            console.warn(`Invalid configuration for ${detectorName}`, error);
+          }
+        }
+      },
+    );
+
+    // If no detectors were provided or enabled, return an error
+    if (detectors.length === 0) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          error: 'No detectors enabled',
+          message: 'At least one detector must be enabled in the request',
+        }),
+      };
+    }
+
+    // Create scanner and run scan
     const scanner = new AstrologicalEventScanner(startJd, endJd, detectors);
     console.log('Starting event scan');
     const events = await scanner.scan();
     console.log(`Scan complete, found ${events.length} events`);
 
-    // Process events (unchanged)
+    // Process events
     const processedEvents = events.map((event) => {
       const processedOutputs = [
         PlutoRetrogradeProcessor(event),
@@ -193,7 +210,7 @@ const handler: Handler = async (event, _context) => {
       };
     });
 
-    // Create response (unchanged)
+    // Create response
     const responseData = {
       metadata: {
         startDate: startTime,

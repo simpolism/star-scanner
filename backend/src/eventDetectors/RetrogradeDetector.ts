@@ -6,8 +6,10 @@ import {
   type PlanetName,
   type SignName,
   type JulianDate,
+  type BaseDetectorConfig,
 } from '../types';
 import { detectSign, isInSign } from '../utils';
+import { z } from 'zod';
 
 export interface RetrogradeData {
   planet: PlanetName;
@@ -15,16 +17,27 @@ export interface RetrogradeData {
   sign: SignName;
 }
 
-export class RetrogradeDetector extends EventDetector<RetrogradeData> {
-  private planets: PlanetName[];
-  private signs: SignName[];
-  private checkSign: boolean;
+export interface RetrogradeDetectorConfig extends BaseDetectorConfig {
+  planets: PlanetName[];
+  signs: SignName[];
+  checkSign: boolean;
+}
 
-  constructor(planets?: PlanetName[], signs?: SignName[]) {
-    super();
-    this.planets = planets || (Object.keys(PLANETS) as PlanetName[]);
-    this.signs = signs || (Object.keys(SIGNS) as SignName[]);
-    this.checkSign = !!signs;
+export class RetrogradeDetector extends EventDetector<
+  RetrogradeData,
+  RetrogradeDetectorConfig
+> {
+  static configSchema = z.object({
+    enabled: z.boolean(),
+    planets: z.array(
+      z.enum([...PLANETS.keys()] as [PlanetName, ...PlanetName[]]),
+    ),
+    signs: z.array(z.enum([...SIGNS.keys()] as [SignName, ...SignName[]])),
+    checkSign: z.boolean(),
+  });
+
+  constructor(config: RetrogradeDetectorConfig) {
+    super(config);
   }
 
   detect(
@@ -35,12 +48,12 @@ export class RetrogradeDetector extends EventDetector<RetrogradeData> {
   ): AstrologicalEvent<RetrogradeData>[] {
     const events: AstrologicalEvent<RetrogradeData>[] = [];
 
-    // Skip if no previous data
-    if (!previousData) {
+    // Skip if not enabled or no previous data
+    if (!this.config.enabled || !previousData) {
       return events;
     }
 
-    for (const planet of this.planets) {
+    for (const planet of this.config.planets) {
       if (!(planet in currentData) || !(planet in previousData)) {
         continue;
       }
@@ -56,9 +69,9 @@ export class RetrogradeDetector extends EventDetector<RetrogradeData> {
       const currPos = currentData[planet].longitude;
 
       // If checking specific signs, verify planet is in one of them
-      if (this.checkSign) {
+      if (this.config.checkSign) {
         let inTargetSign = false;
-        for (const sign of this.signs) {
+        for (const sign of this.config.signs) {
           if (isInSign(currPos, sign)) {
             inTargetSign = true;
             const status = currRetro ? 'begins retrograde' : 'goes direct';

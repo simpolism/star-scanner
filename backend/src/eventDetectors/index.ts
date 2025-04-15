@@ -1,3 +1,15 @@
-export { AspectDetector, AspectData } from './AspectDetector';
-export { RetrogradeDetector, RetrogradeData } from './RetrogradeDetector';
-export { SignIngressDetector, IngressData } from './SignIngressDetector';
+export {
+  AspectDetector,
+  AspectData,
+  AspectDetectorConfig,
+} from './AspectDetector';
+export {
+  RetrogradeDetector,
+  RetrogradeData,
+  RetrogradeDetectorConfig,
+} from './RetrogradeDetector';
+export {
+  SignIngressDetector,
+  IngressData,
+  SignIngressDetectorConfig,
+} from './SignIngressDetector';

@@ -7,8 +7,10 @@ import {
   type AspectName,
   type SignName,
   type JulianDate,
+  type BaseDetectorConfig,
 } from '../types';
 import { checkAspect, detectSign } from '../utils';
+import { z } from 'zod';
 
 // TODO: orb and position data, clean up tuples
 export interface AspectData {
@@ -19,29 +21,30 @@ export interface AspectData {
   status: 'start' | 'end' | 'peak';
 }
 
-export class AspectDetector extends EventDetector<AspectData> {
-  private planetPairs: [PlanetName, PlanetName][];
-  private aspects: AspectName[];
+export interface AspectDetectorConfig extends BaseDetectorConfig {
+  planetPairs: [PlanetName, PlanetName][];
+  aspects: AspectName[];
+}
 
-  constructor(
-    planetPairs?: [PlanetName, PlanetName][],
-    aspects?: AspectName[],
-  ) {
-    super();
-    // If no planet pairs specified, check all combinations
-    if (!planetPairs) {
-      const planetList = Object.keys(PLANETS) as PlanetName[];
-      this.planetPairs = [];
-      for (let i = 0; i < planetList.length; i++) {
-        for (let j = i + 1; j < planetList.length; j++) {
-          this.planetPairs.push([planetList[i], planetList[j]]);
-        }
-      }
-    } else {
-      this.planetPairs = planetPairs;
-    }
+export class AspectDetector extends EventDetector<
+  AspectData,
+  AspectDetectorConfig
+> {
+  static configSchema = z.object({
+    enabled: z.boolean(),
+    planetPairs: z.array(
+      z.tuple([
+        z.enum([...PLANETS.keys()] as [PlanetName, ...PlanetName[]]),
+        z.enum([...PLANETS.keys()] as [PlanetName, ...PlanetName[]]),
+      ]),
+    ),
+    aspects: z.array(
+      z.enum([...ASPECTS.keys()] as [AspectName, ...AspectName[]]),
+    ),
+  });
 
-    this.aspects = aspects || (Object.keys(ASPECTS) as AspectName[]);
+  constructor(config: AspectDetectorConfig) {
+    super(config);
   }
 
   detect(
@@ -53,12 +56,12 @@ export class AspectDetector extends EventDetector<AspectData> {
   ): AstrologicalEvent<AspectData>[] {
     const events: AstrologicalEvent<AspectData>[] = [];
 
-    // Skip if no previous data
-    if (!previousData || !previousData2) {
+    // Skip if not enabled or no previous data
+    if (!this.config.enabled || !previousData || !previousData2) {
       return events;
     }
 
-    for (const [p1, p2] of this.planetPairs) {
+    for (const [p1, p2] of this.config.planetPairs) {
       if (!(p1 in currentData) || !(p2 in currentData)) {
         continue;
       }
@@ -73,7 +76,7 @@ export class AspectDetector extends EventDetector<AspectData> {
       const prev2Pos1 = previousData2[p1].longitude;
       const prev2Pos2 = previousData2[p2].longitude;
 
-      for (const aspect of this.aspects) {
+      for (const aspect of this.config.aspects) {
         const hasAspectNow = checkAspect(currPos1, currPos2, aspect);
         const hadAspectPrev = checkAspect(prevPos1, prevPos2, aspect);
         const hadAspectPrev2 = checkAspect(prev2Pos1, prev2Pos2, aspect);
