@@ -82,7 +82,7 @@ export function getPlanetData(jd: number, planetId: number): PlanetData {
 export function isInSign(position: number, signName: SignName): boolean {
   const start = SIGNS.get(signName)!;
   const normalizedPos = position % 360;
-  return start <= normalizedPos && normalizedPos < (start + 30);
+  return start <= normalizedPos && normalizedPos < start + 30;
 }
 
 export function detectSign(position: number): SignName {

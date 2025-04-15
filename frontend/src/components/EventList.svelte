@@ -39,7 +39,8 @@
 
   <footer>
     <p>
-      <a href="https://github.com/simpolism/star-scanner" target="_blank">GitHub</a> | Data generated using Swiss Ephemeris.
+      <a href="https://github.com/simpolism/star-scanner" target="_blank">GitHub</a> | Data generated
+      using Swiss Ephemeris.
     </p>
   </footer>
 </div>

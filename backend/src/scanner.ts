@@ -1,5 +1,10 @@
 // src/scanner.ts
-import { EventDetector, type PlanetaryData, type AstrologicalEvent, type JulianDate } from './types';
+import {
+  EventDetector,
+  type PlanetaryData,
+  type AstrologicalEvent,
+  type JulianDate,
+} from './types';
 import { getPlanetData } from './utils';
 import { PLANETS } from './constants';
 

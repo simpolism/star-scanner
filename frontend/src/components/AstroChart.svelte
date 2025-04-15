@@ -153,12 +153,14 @@
       const clonedSvgElement = svgElement.cloneNode(true) as SVGElement;
 
       // Define the font-face rule using the Base64 data URL (if available)
-      const fontFaceStyle = fontDataUrl ? `
+      const fontFaceStyle = fontDataUrl
+        ? `
         @font-face {
           font-family: 'Astronomicon';
           src: url(${fontDataUrl}) format('truetype');
         }
-      ` : ''; // If font fetch failed, don't include the rule
+      `
+        : ''; // If font fetch failed, don't include the rule
 
       // Create or find the <defs> element in the clone
       let defs = clonedSvgElement.querySelector('defs');
@@ -168,10 +170,11 @@
       }
 
       // Create and append the <style> element to the defs in the clone
-      if (fontFaceStyle) { // Only add style if font was loaded
-          const styleElement = document.createElementNS('http://www.w3.org/2000/svg', 'style');
-          styleElement.textContent = fontFaceStyle.trim();
-          defs.appendChild(styleElement);
+      if (fontFaceStyle) {
+        // Only add style if font was loaded
+        const styleElement = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+        styleElement.textContent = fontFaceStyle.trim();
+        defs.appendChild(styleElement);
       }
 
       // Serialize the SVG element
