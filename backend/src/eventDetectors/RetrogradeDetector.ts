@@ -6,7 +6,7 @@ import {
   type PlanetName,
   type SignName,
 } from '../types';
-import { detectSign, isInSign } from '../utils';
+import { detectSign, isInSign, JulianDate } from '../utils';
 
 export interface RetrogradeData {
   planet: PlanetName;
@@ -27,9 +27,9 @@ export class RetrogradeDetector extends EventDetector<RetrogradeData> {
   }
 
   detect(
-    currentDate: Date,
+    currentDate: JulianDate,
     currentData: PlanetaryData,
-    previousDate: Date,
+    previousDate: JulianDate,
     previousData: PlanetaryData | null,
   ): AstrologicalEvent<RetrogradeData>[] {
     const events: AstrologicalEvent<RetrogradeData>[] = [];
@@ -62,7 +62,7 @@ export class RetrogradeDetector extends EventDetector<RetrogradeData> {
             inTargetSign = true;
             const status = currRetro ? 'begins retrograde' : 'goes direct';
             events.push({
-              date: new Date(currentDate),
+              date: currentDate,
               type: 'retrograde',
               description: `${planet} ${status} in ${sign}`,
             });
@@ -78,7 +78,7 @@ export class RetrogradeDetector extends EventDetector<RetrogradeData> {
         // Not checking signs, just report the retrograde change
         const status = currRetro ? 'begins retrograde' : 'goes direct';
         events.push({
-          date: new Date(currentDate),
+          date: currentDate,
           type: 'retrograde',
           description: `${planet} ${status}`,
           data: {

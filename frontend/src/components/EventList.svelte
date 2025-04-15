@@ -5,7 +5,7 @@
 
   // Load events when component mounts
   onMount(() => {
-    loadEvents();
+    loadEvents(new Date(2026, 0, 1).toISOString(), new Date(2027, 0, 1).toISOString());
   });
 </script>
 

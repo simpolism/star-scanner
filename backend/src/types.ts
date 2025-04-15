@@ -1,4 +1,5 @@
-import { ASPECTS, COLORS, PLANETS, SIGNS } from './constants';
+import { ASPECTS, PLANETS, SIGNS } from './constants';
+import { JulianDate } from './utils';
 
 export type PlanetName = keyof typeof PLANETS;
 export type SignName = keyof typeof SIGNS;
@@ -14,10 +15,16 @@ export interface PlanetaryData {
 }
 
 // Use colors as shorthand for event types
-export type EventType = keyof typeof COLORS.TYPE_COLORS;
+export type EventType =
+  | 'aspect_begin'
+  | 'aspect_end'
+  | 'aspect_peak'
+  | 'ingress'
+  | 'retrograde'
+  | 'configuration';
 
 export interface AstrologicalEvent<DataT = unknown> {
-  date: Date;
+  date: JulianDate;
   type: EventType;
   description: string;
   planets?: PlanetaryData;
@@ -26,9 +33,9 @@ export interface AstrologicalEvent<DataT = unknown> {
 
 export abstract class EventDetector<DataT = unknown> {
   abstract detect(
-    currentDate: Date,
+    currentDate: JulianDate,
     currentData: PlanetaryData,
-    previousDate: Date | null,
+    previousDate: JulianDate | null,
     previousData: PlanetaryData | null,
     previousData2?: PlanetaryData | null, // for going back two timesteps to see direction shifts
   ): AstrologicalEvent<DataT>[];

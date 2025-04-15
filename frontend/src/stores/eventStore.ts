@@ -17,13 +17,14 @@ export const loading = writable<boolean>(true);
 // Store for error state
 export const error = writable<string | null>(null);
 
-export async function loadEvents(): Promise<void> {
+export async function loadEvents(startDate: string, endDate: string): Promise<void> {
   loading.set(true);
   error.set(null);
 
   try {
     const apiUrl = import.meta.env.VITE_API_URL || '/.netlify/functions';
-    const response = await fetch(`${apiUrl}/scan`);
+    // TODO: clean this up
+    const response = await fetch(`${apiUrl}/scan?startTime=${startDate}&endTime=${endDate}`);
 
     if (!response.ok) {
       throw new Error(`Network response was not ok: ${response.status}`);

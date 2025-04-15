@@ -7,7 +7,7 @@ import {
   type AspectName,
   type SignName,
 } from '../types';
-import { checkAspect, detectSign } from '../utils';
+import { checkAspect, detectSign, JulianDate } from '../utils';
 
 // TODO: orb and position data, clean up tuples
 export interface AspectData {
@@ -41,9 +41,9 @@ export class AspectDetector extends EventDetector<AspectData> {
   }
 
   detect(
-    currentDate: Date,
+    currentDate: JulianDate,
     currentData: PlanetaryData,
-    previousDate: Date | null,
+    previousDate: JulianDate | null,
     previousData: PlanetaryData | null,
     previousData2: PlanetaryData | null,
   ): AstrologicalEvent<AspectData>[] {
@@ -77,7 +77,7 @@ export class AspectDetector extends EventDetector<AspectData> {
         // Detect aspect becoming exact (crossing from not in orb to in orb)
         if (hasAspectNow && !hadAspectPrev) {
           events.push({
-            date: new Date(currentDate),
+            date: currentDate,
             type: 'aspect_begin',
             description: `${p1} ${aspect} ${p2} (orb: ${hasAspectNow.toFixed(2)} deg)`,
             data: {
@@ -90,7 +90,7 @@ export class AspectDetector extends EventDetector<AspectData> {
           });
         } else if (hadAspectPrev && !hasAspectNow) {
           events.push({
-            date: new Date(currentDate),
+            date: currentDate,
             type: 'aspect_end',
             description: `${p1} ${aspect} ${p2} (orb: ${hadAspectPrev.toFixed(2)} deg)`,
             data: {
@@ -110,7 +110,7 @@ export class AspectDetector extends EventDetector<AspectData> {
           hadAspectPrev < hasAspectNow
         ) {
           events.push({
-            date: new Date(previousDate),
+            date: previousDate,
             type: 'aspect_peak',
             description: `${p1} ${aspect} ${p2} (orb: ${hadAspectPrev.toFixed(2)} deg)`,
             data: {
