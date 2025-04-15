@@ -125,7 +125,7 @@
     return window.btoa(binary);
   }
 
-  export async function openChartAsImage(): void {
+  export async function openChartAsImage(): Promise<void> {
     try {
       const svgElement = document.querySelector(`#${chartId} svg`) as SVGElement;
       if (!svgElement) {
@@ -171,7 +171,7 @@
         clonedSvgElement.insertBefore(defs, clonedSvgElement.firstChild);
       }
 
-      // Create and append the <style> element to the defs in the clone
+      // Create and append the style element to the defs in the clone
       if (fontFaceStyle) {
         // Only add style if font was loaded
         const styleElement = document.createElementNS('http://www.w3.org/2000/svg', 'style');
