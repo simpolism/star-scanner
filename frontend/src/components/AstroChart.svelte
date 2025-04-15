@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { AstrologicalEvent } from '../types/events';
+  import { config } from '../stores/configStore';
 
   export let event: AstrologicalEvent;
   export let chartId: string;
@@ -13,25 +14,62 @@
     if (!chartCreated && chartContainer) {
       generateAstrologyChart();
     }
+    
+    // Recreate chart when config changes
+    const unsubscribe = config.subscribe(() => {
+      if (chartContainer && chartCreated) {
+        // Clear the previous chart
+        while (chartContainer.firstChild) {
+          chartContainer.removeChild(chartContainer.firstChild);
+        }
+        chartCreated = false;
+        // Generate a new chart with updated settings
+        generateAstrologyChart();
+      }
+    });
+    
+    return () => {
+      unsubscribe();
+    };
   });
 
   function generateAstrologyChart(): void {
     try {
       chartError = '';
+      
+      // Default values in case chartDisplay is not defined
+      const defaultColors = {
+        fire: '#CC0000',
+        earth: '#006600',
+        air: '#E6B800',
+        water: '#00B3B3'
+      };
+      
+      const defaultAspects = [
+        { name: 'Conjunction', angle: 0, orb: 5 },
+        { name: 'Opposition', angle: 180, orb: 5 },
+        { name: 'Trine', angle: 120, orb: 5 },
+        { name: 'Square', angle: 90, orb: 5 }
+      ];
+      
+      // Safely access configuration
+      const elementColors = $config.chartDisplay?.colors || defaultColors;
+      const aspectSettings = $config.chartDisplay?.aspectSettings || [];
+      
       // Define chart settings
       const settings = {
-        COLOR_ARIES: '#CC0000',
-        COLOR_LEO: '#CC0000',
-        COLOR_SAGITTARIUS: '#CC0000',
-        COLOR_CAPRICORN: '#006600',
-        COLOR_TAURUS: '#006600',
-        COLOR_VIRGO: '#006600',
-        COLOR_GEMINI: '#E6B800',
-        COLOR_LIBRA: '#E6B800',
-        COLOR_AQUARIUS: '#E6B800',
-        COLOR_CANCER: '#00B3B3',
-        COLOR_SCORPIO: '#00B3B3',
-        COLOR_PISCES: '#00B3B3',
+        COLOR_ARIES: elementColors.fire,
+        COLOR_LEO: elementColors.fire,
+        COLOR_SAGITTARIUS: elementColors.fire,
+        COLOR_CAPRICORN: elementColors.earth,
+        COLOR_TAURUS: elementColors.earth,
+        COLOR_VIRGO: elementColors.earth,
+        COLOR_GEMINI: elementColors.air,
+        COLOR_LIBRA: elementColors.air,
+        COLOR_AQUARIUS: elementColors.air,
+        COLOR_CANCER: elementColors.water,
+        COLOR_SCORPIO: elementColors.water,
+        COLOR_PISCES: elementColors.water,
         ASPECT_COLORS: {
           Conjunction: '#333',
           Opposition: '#CC0000',
@@ -39,28 +77,15 @@
           Square: '#CC0000',
           Sextile: '#E6B800',
         },
-        DEFAULT_ASPECTS: [
-          {
-            name: 'Conjunction',
-            angle: 0,
-            orb: 5,
-          },
-          {
-            name: 'Opposition',
-            angle: 180,
-            orb: 5,
-          },
-          {
-            name: 'Trine',
-            angle: 120,
-            orb: 5,
-          },
-          {
-            name: 'Square',
-            angle: 90,
-            orb: 5,
-          },
-        ],
+        DEFAULT_ASPECTS: aspectSettings.length > 0 
+          ? aspectSettings
+            .filter(aspect => aspect.enabled)
+            .map(aspect => ({
+              name: aspect.name,
+              angle: aspect.angle,
+              orb: aspect.orb,
+            }))
+          : defaultAspects,
         ASPECTS_FONT_SIZE: 27,
         RADIX_POINTS_FONT_SIZE: 40,
         RADIX_SIGNS_FONT_SIZE: 40,
@@ -81,19 +106,16 @@
 
       // Add planet positions if available
       if (event.planets && Object.keys(event.planets).length > 0) {
-        const planetNames = [
-          'Sun',
-          'Moon',
-          'Mercury',
-          'Venus',
-          'Mars',
-          'Jupiter',
-          'Saturn',
-          'Uranus',
-          'Neptune',
-          'Pluto',
+        // Default planet list if visiblePlanets isn't defined
+        const defaultPlanets = [
+          'Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 
+          'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'
         ];
-        planetNames.forEach((planet) => {
+        
+        // Use the visible planets from config or fall back to default
+        const visiblePlanets = $config.chartDisplay?.visiblePlanets || defaultPlanets;
+        
+        visiblePlanets.forEach((planet) => {
           if (event.planets[planet]) {
             chartData.points.push({
               name: planet,
@@ -143,7 +165,6 @@
         const fontBuffer = await response.arrayBuffer();
         const fontBase64 = arrayBufferToBase64(fontBuffer);
         fontDataUrl = `data:font/ttf;base64,${fontBase64}`;
-        console.log('Font fetched and encoded as data URL.'); // Debugging
       } catch (fontError) {
         console.error('Error fetching or encoding font:', fontError);
         // Optionally: proceed without embedding font or show error to user

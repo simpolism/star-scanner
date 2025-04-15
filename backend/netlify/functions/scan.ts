@@ -146,14 +146,9 @@ const handler: Handler = async (event, _context) => {
       };
     }
 
-    console.log(
-      `Starting scan function with startTime: ${startTime} (JD: ${startJd}), endTime: ${endTime} (JD: ${endJd})`,
-    );
-
     // Initialize detectors based on provided configurations
     const detectors: EventDetector[] = [];
     const detectorConfigs = validatedRequest.detectors || {};
-    console.log(detectorConfigs);
 
     // Process each detector from registry that has config in the request
     Object.entries(detectorConfigs).forEach(
@@ -192,9 +187,7 @@ const handler: Handler = async (event, _context) => {
 
     // Create scanner and run scan
     const scanner = new AstrologicalEventScanner(startJd, endJd, detectors);
-    console.log('Starting event scan');
     const events = await scanner.scan();
-    console.log(`Scan complete, found ${events.length} events`);
 
     // Process events
     const processedEvents = events.map((event) => {

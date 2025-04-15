@@ -48,6 +48,58 @@ const defaultConfig = {
       aspects: ['conjunction', 'opposition', 'square', 'trine'],
     },
   },
+  chartDisplay: {
+    visiblePlanets: [
+      'Sun',
+      'Moon',
+      'Mercury',
+      'Venus',
+      'Mars',
+      'Jupiter',
+      'Saturn',
+      'Uranus',
+      'Neptune',
+      'Pluto',
+    ],
+    aspectSettings: [
+      {
+        name: 'Conjunction',
+        angle: 0,
+        orb: 5,
+        enabled: true,
+      },
+      {
+        name: 'Opposition',
+        angle: 180,
+        orb: 5,
+        enabled: true,
+      },
+      {
+        name: 'Trine',
+        angle: 120,
+        orb: 5,
+        enabled: true,
+      },
+      {
+        name: 'Square',
+        angle: 90,
+        orb: 5,
+        enabled: true,
+      },
+      {
+        name: 'Sextile',
+        angle: 60,
+        orb: 3,
+        enabled: false,
+      },
+    ],
+    colors: {
+      fire: '#CC0000',   // Aries, Leo, Sagittarius
+      earth: '#006600',  // Taurus, Virgo, Capricorn
+      air: '#E6B800',    // Gemini, Libra, Aquarius
+      water: '#00B3B3'   // Cancer, Scorpio, Pisces
+    },
+  },
 };
 
 // Try to load saved configuration from localStorage
@@ -56,7 +108,15 @@ function loadSavedConfig() {
     const savedConfig = localStorage.getItem('starScannerConfig');
     if (savedConfig) {
       try {
-        return JSON.parse(savedConfig);
+        const parsedConfig = JSON.parse(savedConfig);
+        
+        // Check if the saved config has the new chartDisplay property
+        // If not, add it from the default config (for backward compatibility)
+        if (!parsedConfig.chartDisplay) {
+          parsedConfig.chartDisplay = defaultConfig.chartDisplay;
+        }
+        
+        return parsedConfig;
       } catch (e) {
         console.error('Error parsing saved configuration:', e);
       }
@@ -202,6 +262,63 @@ export const presets = {
           planetPairs: generateAllPlanetPairs(allPlanets.slice(0, 5)), // Limit pairs to avoid too many combinations
         },
       },
+    }));
+  },
+  // Chart display presets
+  minimalistChart: () => {
+    const essentialPlanets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'];
+    
+    config.update((c) => ({
+      ...c,
+      chartDisplay: {
+        ...c.chartDisplay,
+        visiblePlanets: essentialPlanets,
+        aspectSettings: c.chartDisplay.aspectSettings.map(aspect => ({
+          ...aspect,
+          enabled: ['Conjunction', 'Opposition'].includes(aspect.name)
+        })),
+      }
+    }));
+  },
+  detailedChart: () => {
+    const allPlanets = [
+      'Sun',
+      'Moon',
+      'Mercury',
+      'Venus',
+      'Mars',
+      'Jupiter',
+      'Saturn',
+      'Uranus',
+      'Neptune',
+      'Pluto',
+    ];
+    
+    config.update((c) => ({
+      ...c,
+      chartDisplay: {
+        ...c.chartDisplay,
+        visiblePlanets: allPlanets,
+        aspectSettings: c.chartDisplay.aspectSettings.map(aspect => ({
+          ...aspect,
+          enabled: true
+        })),
+      }
+    }));
+  },
+  traditionalChart: () => {
+    const traditionalPlanets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn'];
+    
+    config.update((c) => ({
+      ...c,
+      chartDisplay: {
+        ...c.chartDisplay,
+        visiblePlanets: traditionalPlanets,
+        aspectSettings: c.chartDisplay.aspectSettings.map(aspect => ({
+          ...aspect,
+          enabled: ['Conjunction', 'Opposition', 'Trine', 'Square'].includes(aspect.name)
+        })),
+      }
     }));
   },
 };
