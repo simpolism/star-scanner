@@ -83,7 +83,7 @@
 <li class="event-item">
   <div class="event-header" on:click={toggleChart}>
     <span class="toggle-icon" class:open={showChart}>{showChart ? '›' : '+'}</span>
-    <span class="date">{new Date(event.date).toISOString().split('T')[0]}</span>
+    <span class="date">{event.dateUTC.split('T')[0]}</span>
     <span class="type type-{event.type}">{event.type.toUpperCase()}</span>
     <span class="description" on:click|stopPropagation>
       {@html formatDescription(event.description)}

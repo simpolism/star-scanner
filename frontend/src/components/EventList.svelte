@@ -19,7 +19,7 @@
     {:else}
       <p id="meta-info">
         Time generated: {new Date($metadata.generatedAt).toLocaleString()} |
-        <a href="https://github.com/simpolism/asi-2027" target="_blank">GitHub</a>
+        <a href="https://github.com/simpolism/star-scanner" target="_blank">GitHub</a>
       </p>
     {/if}
   </header>

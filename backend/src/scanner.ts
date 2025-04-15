@@ -1,18 +1,15 @@
 // src/scanner.ts
-import { EventEmitter } from 'events';
 import { EventDetector, type PlanetaryData, type AstrologicalEvent } from './types';
 import { getPlanetData, JulianDate } from './utils';
 import { PLANETS } from './constants';
 
-export class AstrologicalEventScanner extends EventEmitter {
-  private isRunning = false;
-
+export class AstrologicalEventScanner {
   constructor(
     private startDate: JulianDate,
     private endDate: JulianDate,
     private eventDetectors: EventDetector[],
   ) {
-    super();
+    // empty
   }
 
   async scan(): Promise<AstrologicalEvent[]> {
@@ -22,10 +19,7 @@ export class AstrologicalEventScanner extends EventEmitter {
     let previousData2: PlanetaryData | null = null;
     let previousDate: JulianDate | null = null;
 
-    this.isRunning = true;
-    this.emit('start', { startDate: this.startDate, endDate: this.endDate });
-
-    while (currentDate <= this.endDate && this.isRunning) {
+    while (currentDate <= this.endDate) {
       // Get current positions and data for all planets
       const currentData: PlanetaryData = {};
       for (const [planetName, planetId] of Object.entries(PLANETS)) {
@@ -47,11 +41,6 @@ export class AstrologicalEventScanner extends EventEmitter {
           planets: currentData,
         }));
         allEvents.push(...eventsWithAstroData);
-
-        // Emit events as they're found
-        for (const event of events) {
-          this.emit('event', event);
-        }
       }
 
       // Store current data for next iteration
@@ -62,28 +51,10 @@ export class AstrologicalEventScanner extends EventEmitter {
       // Move to next day -- in the future this interval will be provided
       currentDate += 1;
 
-      // Emit progress update (every 30 days)
-      if (Math.floor(currentDate) % 30 === 1) {
-        this.emit('progress', {
-          currentDate,
-          eventsFound: allEvents.length,
-          percentComplete: Math.round(
-            ((currentDate - this.startDate) / (this.endDate - this.startDate)) * 100,
-          ),
-        });
-      }
-
       // Allow other operations to proceed by yielding the event loop
       await new Promise((resolve) => setTimeout(resolve, 0));
     }
 
-    this.emit('complete', { eventsFound: allEvents.length });
-    this.isRunning = false;
     return allEvents;
-  }
-
-  stop(): void {
-    this.isRunning = false;
-    this.emit('stopped', { reason: 'User requested stop' });
   }
 }

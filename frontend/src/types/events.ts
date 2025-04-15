@@ -12,7 +12,8 @@ export interface Planet {
 }
 
 export interface AstrologicalEvent {
-  date: string;
+  date: number; // julian day
+  dateUTC: string;
   type: EventType;
   description: string;
   planets: Record<string, Planet>;

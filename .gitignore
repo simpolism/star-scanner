@@ -3,3 +3,4 @@ backend/dist/
 # Local Netlify folder
 .netlify
 packages/
+.watch_cache
