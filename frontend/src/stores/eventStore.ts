@@ -17,7 +17,7 @@ export const loading = writable<boolean>(true);
 // Store for error state
 export const error = writable<string | null>(null);
 
-export async function loadEvents(): Promise<void> {
+export async function loadEvents(config?: any): Promise<void> {
   loading.set(true);
   error.set(null);
 
@@ -31,9 +31,9 @@ export async function loadEvents(): Promise<void> {
       },
       method: 'POST',
       body: JSON.stringify({
-        startTime: new Date(2026, 0, 1).toISOString(),
-        endTime: new Date(2027, 0, 1).toISOString(),
-        detectors: {
+        startTime: config?.timeSpan?.startTime || new Date(2026, 0, 1).toISOString(),
+        endTime: config?.timeSpan?.endTime || new Date(2027, 0, 1).toISOString(),
+        detectors: config?.detectors || {
           signIngressDetector: {
             enabled: true,
             planets: ['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']
@@ -66,7 +66,16 @@ export async function loadEvents(): Promise<void> {
     });
 
     if (!response.ok) {
-      throw new Error(`Network response was not ok: ${response.status}`);
+      let errorData;
+      try {
+        errorData = await response.json();
+        if (!errorData.message || !errorData.error) {
+          throw new Error();
+        }
+      } catch (e) {
+        throw new Error(`Network response was not ok: ${response.status}`);
+      }
+      throw new Error(`${errorData.error}: ${errorData.message}`);
     }
 
     const data = await response.json();

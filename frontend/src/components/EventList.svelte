@@ -1,24 +1,24 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { events, metadata, loading, error, loadEvents } from '../stores/eventStore';
+  import { events, metadata, loading, error } from '../stores/eventStore';
+  import { config, applyConfig } from '../stores/configStore';
   import EventItem from './EventItem.svelte';
 
   // Load events when component mounts
   onMount(() => {
-    loadEvents();
+    applyConfig();
   });
 </script>
 
 <div class="events-container">
-  <header>
-    <h1 id="main-title"><a href="/">Star Scanner</a></h1>
+  <header class="event-header">
     {#if $loading}
       <p id="meta-info">Loading data...</p>
     {:else if $error}
       <p id="meta-info" class="error">Error: {$error}</p>
     {:else}
       <p id="meta-info">
-        Generation range: {$metadata.startDate} - {$metadata.endDate}
+        Generation range: {$metadata.startDate || new Date($config.timeSpan.startTime).toLocaleDateString()} - {$metadata.endDate || new Date($config.timeSpan.endTime).toLocaleDateString()}
       </p>
     {/if}
   </header>
@@ -52,11 +52,11 @@
     padding: 20px;
   }
 
-  header,
+  .event-header,
   footer {
-    padding: 20px;
-    background-color: #444;
-    color: white;
+    padding: 15px;
+    background-color: #f0f0f0;
+    color: #444;
     text-align: center;
     margin-bottom: 20px;
     border-radius: 4px;
@@ -65,21 +65,23 @@
   footer {
     margin-top: 20px;
     margin-bottom: 0;
+    background-color: #444;
+    color: white;
+    padding: 20px;
   }
 
-  header a,
   footer a {
     color: #9fe3ff;
     text-decoration: none;
   }
 
-  header a:hover,
   footer a:hover {
     text-decoration: underline;
   }
-
-  h1 {
-    margin-top: 0;
+  
+  #meta-info {
+    margin: 0;
+    font-weight: bold;
   }
 
   #loading {
