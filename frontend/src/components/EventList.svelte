@@ -11,15 +11,14 @@
 
 <div class="events-container">
   <header>
-    <h1 id="main-title"><a href="/">Event Log</a></h1>
+    <h1 id="main-title"><a href="/">Star Scanner</a></h1>
     {#if $loading}
       <p id="meta-info">Loading data...</p>
     {:else if $error}
       <p id="meta-info" class="error">Error: {$error}</p>
     {:else}
       <p id="meta-info">
-        Time generated: {new Date($metadata.generatedAt).toLocaleString()} |
-        <a href="https://github.com/simpolism/star-scanner" target="_blank">GitHub</a>
+        Generation range: {$metadata.startDate} - {$metadata.endDate}
       </p>
     {/if}
   </header>
@@ -40,7 +39,7 @@
 
   <footer>
     <p>
-      Data generated using Swiss Ephemeris. View <a href="/scan" target="_blank">Raw JSON Data</a>.
+      <a href="https://github.com/simpolism/star-scanner" target="_blank">GitHub</a> | Data generated using Swiss Ephemeris.
     </p>
   </footer>
 </div>

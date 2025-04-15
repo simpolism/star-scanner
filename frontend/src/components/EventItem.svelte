@@ -85,7 +85,7 @@
     <span class="toggle-icon" class:open={showChart}>{showChart ? '›' : '+'}</span>
     <span class="date">{event.dateUTC.split('T')[0]}</span>
     <span class="type type-{event.type}">{event.type.toUpperCase()}</span>
-    <span class="description" on:click|stopPropagation>
+    <span class="description">
       {@html formatDescription(event.description)}
     </span>
   </div>
