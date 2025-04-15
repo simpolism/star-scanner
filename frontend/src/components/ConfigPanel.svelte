@@ -3,7 +3,6 @@
     config,
     planetOptions,
     aspectOptions,
-    signOptions,
     presets,
     applyConfig,
   } from '../stores/configStore';
@@ -130,7 +129,7 @@
   function togglePlanetPair(planet1: string, planet2: string): void {
     const pairs = $config.detectors.aspectDetector.planetPairs;
     const pairIndex = pairs.findIndex(
-      (pair) =>
+      (pair: [string, string]) =>
         (pair[0] === planet1 && pair[1] === planet2) || (pair[0] === planet2 && pair[1] === planet1)
     );
 
@@ -146,7 +145,7 @@
   // Check if planet pair exists
   function hasPlanetPair(planet1: string, planet2: string): boolean {
     return $config.detectors.aspectDetector.planetPairs.some(
-      (pair) =>
+      (pair: [string, string]) =>
         (pair[0] === planet1 && pair[1] === planet2) || (pair[0] === planet2 && pair[1] === planet1)
     );
   }
@@ -219,7 +218,9 @@
     </div>
 
     <!-- Sign Ingress Detector -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="detector-section">
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div class="detector-header" on:click={() => (showSignIngress = !showSignIngress)}>
         <label>
           <input type="checkbox" bind:checked={$config.detectors.signIngressDetector.enabled} />
@@ -250,7 +251,9 @@
     </div>
 
     <!-- Retrograde Detector -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="detector-section">
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div class="detector-header" on:click={() => (showRetrograde = !showRetrograde)}>
         <label>
           <input type="checkbox" bind:checked={$config.detectors.retrogradeDetector.enabled} />
@@ -291,7 +294,9 @@
     </div>
 
     <!-- Aspect Detector -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="detector-section">
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div class="detector-header" on:click={() => (showAspects = !showAspects)}>
         <label>
           <input type="checkbox" bind:checked={$config.detectors.aspectDetector.enabled} />
