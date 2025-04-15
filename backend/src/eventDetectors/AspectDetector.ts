@@ -6,8 +6,9 @@ import {
   type PlanetName,
   type AspectName,
   type SignName,
+  type JulianDate,
 } from '../types';
-import { checkAspect, detectSign, JulianDate } from '../utils';
+import { checkAspect, detectSign } from '../utils';
 
 // TODO: orb and position data, clean up tuples
 export interface AspectData {

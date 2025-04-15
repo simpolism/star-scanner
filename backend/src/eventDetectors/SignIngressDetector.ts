@@ -5,8 +5,9 @@ import {
   type AstrologicalEvent,
   type PlanetName,
   type SignName,
+  type JulianDate,
 } from '../types';
-import { detectSign, JulianDate } from '../utils';
+import { detectSign } from '../utils';
 
 export interface IngressData {
   planet: PlanetName;

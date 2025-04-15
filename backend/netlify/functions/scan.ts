@@ -34,7 +34,7 @@ const handler: Handler = async (event, context) => {
 
     // In the future these compute points will be chosen by the user so may be fewer,
     // but we will assume all planetary computations to be safe.
-    const N_COMPUTE_POINTS = Object.keys(PLANETS).length;
+    const N_COMPUTE_POINTS = PLANETS.size;
 
     // Later this will be based on provided interval rather than automatically in days.
     const MAX_DAYS = MAX_COMPUTE_ITEMS / N_COMPUTE_POINTS;

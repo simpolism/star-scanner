@@ -1,5 +1,5 @@
 import * as sweph from 'sweph';
-import type { AspectName, PlanetData, SignName } from './types';
+import type { AspectName, PlanetData, SignName, JulianDate } from './types';
 import { ASPECTS, SIGNS } from './constants';
 
 // Initialize ephemeris (only if not already initialized)
@@ -11,8 +11,6 @@ try {
 } catch (error) {
   console.error('Error initializing ephemeris:', error);
 }
-
-export type JulianDate = number;
 
 export const isoToJulianDay = (isoString: string): number => {
   // Parse ISO string directly with regex
@@ -70,7 +68,11 @@ export function julianDayToIso(jd: JulianDate): string {
 }
 
 export function getPlanetData(jd: number, planetId: number): PlanetData {
-  const result = sweph.calc_ut(jd, planetId, sweph.constants.SEFLG_SWIEPH);
+  const result = sweph.calc_ut(
+    jd,
+    planetId,
+    sweph.constants.SEFLG_SWIEPH | sweph.constants.SEFLG_SPEED,
+  );
   return {
     longitude: result.data[0], // Longitude is first element in data array
     retrograde: result.data[3] < 0, // Negative longitude speed means retrograde
@@ -78,16 +80,18 @@ export function getPlanetData(jd: number, planetId: number): PlanetData {
 }
 
 export function isInSign(position: number, signName: SignName): boolean {
-  const [start, end] = SIGNS[signName];
+  const start = SIGNS.get(signName)!;
   const normalizedPos = position % 360;
-  return start <= normalizedPos && normalizedPos < end;
+  return start <= normalizedPos && normalizedPos < (start + 30);
 }
 
 export function detectSign(position: number): SignName {
-  for (const sign of Object.keys(SIGNS) as SignName[]) {
-    if (isInSign(position, sign)) return sign;
-  }
-  throw new Error('Invalid position');
+  const normalizedPos = position % 360;
+  const signPos = Math.floor(normalizedPos / 30);
+
+  // note that Maps guarantee object ordering, so this is a safe index
+  const sign = Object.keys(SIGNS)[signPos] as SignName;
+  return sign;
 }
 
 /**
@@ -98,7 +102,7 @@ export function checkAspect(
   pos2: number,
   aspectName: AspectName,
 ): number | undefined {
-  const { angle, orb } = ASPECTS[aspectName];
+  const { angle, orb } = ASPECTS.get(aspectName)!;
 
   // Calculate the smallest angle between positions
   let diff = Math.abs(pos1 - pos2) % 360;

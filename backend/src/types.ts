@@ -1,12 +1,37 @@
-import { ASPECTS, PLANETS, SIGNS } from './constants';
-import { JulianDate } from './utils';
+export type JulianDate = number;
+export type Degree = number;
+export type Aspect = { angle: Degree; orb: Degree };
 
-export type PlanetName = keyof typeof PLANETS;
-export type SignName = keyof typeof SIGNS;
-export type AspectName = keyof typeof ASPECTS;
+export type PlanetName =
+  | 'Sun'
+  | 'Moon'
+  | 'Mercury'
+  | 'Venus'
+  | 'Mars'
+  | 'Jupiter'
+  | 'Saturn'
+  | 'Uranus'
+  | 'Neptune'
+  | 'Pluto';
+
+export type SignName =
+  | 'Aries'
+  | 'Taurus'
+  | 'Gemini'
+  | 'Cancer'
+  | 'Leo'
+  | 'Virgo'
+  | 'Libra'
+  | 'Scorpio'
+  | 'Sagittarius'
+  | 'Capricorn'
+  | 'Aquarius'
+  | 'Pisces';
+
+export type AspectName = 'conjunction' | 'opposition' | 'trine' | 'square' | 'sextile';
 
 export interface PlanetData {
-  longitude: number;
+  longitude: Degree;
   retrograde: boolean;
 }
 

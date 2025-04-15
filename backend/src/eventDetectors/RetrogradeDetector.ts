@@ -5,8 +5,9 @@ import {
   type PlanetaryData,
   type PlanetName,
   type SignName,
+  type JulianDate,
 } from '../types';
-import { detectSign, isInSign, JulianDate } from '../utils';
+import { detectSign, isInSign } from '../utils';
 
 export interface RetrogradeData {
   planet: PlanetName;

@@ -1,6 +1,6 @@
 // src/scanner.ts
-import { EventDetector, type PlanetaryData, type AstrologicalEvent } from './types';
-import { getPlanetData, JulianDate } from './utils';
+import { EventDetector, type PlanetaryData, type AstrologicalEvent, type JulianDate } from './types';
+import { getPlanetData } from './utils';
 import { PLANETS } from './constants';
 
 export class AstrologicalEventScanner {
@@ -22,9 +22,9 @@ export class AstrologicalEventScanner {
     while (currentDate <= this.endDate) {
       // Get current positions and data for all planets
       const currentData: PlanetaryData = {};
-      for (const [planetName, planetId] of Object.entries(PLANETS)) {
+      PLANETS.forEach((planetId, planetName) => {
         currentData[planetName] = getPlanetData(currentDate, planetId);
-      }
+      });
 
       // Run all event detectors
       for (const detector of this.eventDetectors) {
