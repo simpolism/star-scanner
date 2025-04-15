@@ -14,7 +14,12 @@ module.exports = {
   plugins: ['@typescript-eslint', 'prettier'],
   rules: {
     // Enforce consistent code style
-    'prettier/prettier': 'error',
+    'prettier/prettier': ['error', {
+      "singleQuote": true,
+      "trailingComma": "all",
+      "printWidth": 80,
+      "tabWidth": 2
+    }],
     '@typescript-eslint/explicit-function-return-type': 'error',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],

@@ -37,9 +37,13 @@ export const isoToJulianDay = (isoString: string): number => {
 
   // Use Gregorian calendar for dates after 1582-10-15, Julian before
   const isGregorian =
-    year > 1582 || (year === 1582 && month > 10) || (year === 1582 && month === 10 && day >= 15);
+    year > 1582 ||
+    (year === 1582 && month > 10) ||
+    (year === 1582 && month === 10 && day >= 15);
 
-  const calendarFlag = isGregorian ? sweph.constants.SE_GREG_CAL : sweph.constants.SE_JUL_CAL;
+  const calendarFlag = isGregorian
+    ? sweph.constants.SE_GREG_CAL
+    : sweph.constants.SE_JUL_CAL;
 
   return sweph.julday(year, month, day, hourFraction, calendarFlag);
 };
@@ -47,10 +51,14 @@ export const isoToJulianDay = (isoString: string): number => {
 export function julianDayToIso(jd: JulianDate): string {
   // Determine calendar flag based on Julian Day Number
   // 2299160.5 is the cutover point (October 4/15, 1582)
-  const calendarFlag = jd >= 2299160.5 ? sweph.constants.SE_GREG_CAL : sweph.constants.SE_JUL_CAL;
+  const calendarFlag =
+    jd >= 2299160.5 ? sweph.constants.SE_GREG_CAL : sweph.constants.SE_JUL_CAL;
 
   // Convert Julian Day to UTC components
-  const { year, month, day, hour, minute, second } = sweph.jdut1_to_utc(jd, calendarFlag);
+  const { year, month, day, hour, minute, second } = sweph.jdut1_to_utc(
+    jd,
+    calendarFlag,
+  );
 
   // Format date components
   const formattedYear = Math.abs(year).toString().padStart(4, '0');

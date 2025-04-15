@@ -1,8 +1,15 @@
 // netlify/functions/scan.ts
 import { Handler, HandlerResponse } from '@netlify/functions';
 import { AstrologicalEventScanner } from '../../src/scanner';
-import { AspectDetector, RetrogradeDetector, SignIngressDetector } from '../../src/eventDetectors';
-import { NeptunePlutoIngressProcessor, PlutoRetrogradeProcessor } from '../../src/eventProcessors';
+import {
+  AspectDetector,
+  RetrogradeDetector,
+  SignIngressDetector,
+} from '../../src/eventDetectors';
+import {
+  NeptunePlutoIngressProcessor,
+  PlutoRetrogradeProcessor,
+} from '../../src/eventProcessors';
 import { isoToJulianDay, julianDayToIso } from '../../src/utils';
 import { PLANETS } from '../../src/constants';
 import { z } from 'zod';
@@ -10,12 +17,18 @@ import { z } from 'zod';
 // Define the validation schema with Zod
 const ScanRequestSchema = z.object({
   // Required parameters with validation
-  startTime: z.string()
-    .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d+)?(Z|[+-]\d{2}:\d{2})$/, 
-      "Must be ISO 8601 format"),
-  endTime: z.string()
-    .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d+)?(Z|[+-]\d{2}:\d{2})$/, 
-      "Must be ISO 8601 format"),
+  startTime: z
+    .string()
+    .regex(
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d+)?(Z|[+-]\d{2}:\d{2})$/,
+      'Must be ISO 8601 format',
+    ),
+  endTime: z
+    .string()
+    .regex(
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d+)?(Z|[+-]\d{2}:\d{2})$/,
+      'Must be ISO 8601 format',
+    ),
 });
 
 // Infer TypeScript type from Zod schema
@@ -26,17 +39,17 @@ const validateRequest = (body: unknown): ScanRequest => {
   return ScanRequestSchema.parse(body);
 };
 
-const handler: Handler = async (event, context) => {
+const handler: Handler = async (event, _context) => {
   // Check if method is POST
   if (event.httpMethod !== 'POST') {
     return {
       statusCode: 405,
       body: JSON.stringify({
         error: 'Method Not Allowed',
-        message: 'This endpoint only accepts POST requests'
+        message: 'This endpoint only accepts POST requests',
       }),
       headers: {
-        'Allow': 'POST'
+        Allow: 'POST',
       },
     };
   }
@@ -48,7 +61,7 @@ const handler: Handler = async (event, context) => {
       statusCode: 415,
       body: JSON.stringify({
         error: 'Unsupported Media Type',
-        message: 'Content-Type must be application/json'
+        message: 'Content-Type must be application/json',
       }),
     };
   }
@@ -57,8 +70,9 @@ const handler: Handler = async (event, context) => {
   let validatedRequest: ScanRequest;
   try {
     // Parse JSON body
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const rawBody = JSON.parse(event.body || '{}');
-    
+
     // Validate with Zod
     validatedRequest = validateRequest(rawBody);
   } catch (error) {
@@ -69,11 +83,11 @@ const handler: Handler = async (event, context) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           error: 'Validation Error',
-          details: error.errors.map(e => ({
+          details: error.errors.map((e) => ({
             path: e.path.join('.'),
-            message: e.message
-          }))
-        })
+            message: e.message,
+          })),
+        }),
       };
     }
     return {
@@ -81,7 +95,7 @@ const handler: Handler = async (event, context) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         error: 'Invalid request body',
-        message: 'Request body must be valid JSON'
+        message: 'Request body must be valid JSON',
       }),
     };
   }
@@ -93,39 +107,55 @@ const handler: Handler = async (event, context) => {
     // Convert ISO strings to Julian Day Numbers
     const startJd = isoToJulianDay(startTime);
     const endJd = isoToJulianDay(endTime);
-    
+
     // verify request timespan is valid
     const MAX_COMPUTE_ITEMS = 5000; // should ALWAYS be WELL under <10s
     const N_COMPUTE_POINTS = PLANETS.size;
     const MAX_DAYS = MAX_COMPUTE_ITEMS / N_COMPUTE_POINTS;
     const daysRequested = Math.floor(endJd - startJd);
-    
+
     if (daysRequested < 0) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ 
-          error: 'Invalid parameters', 
-          message: 'Invalid time range: endTime must be after startTime'
-        }),
-      };
-    }
-    
-    if (daysRequested > MAX_DAYS) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ 
-          error: 'Invalid parameters', 
-          message: `Invalid time range: too long, must be less than ${Math.floor(MAX_DAYS)}`
+        body: JSON.stringify({
+          error: 'Invalid parameters',
+          message: 'Invalid time range: endTime must be after startTime',
         }),
       };
     }
 
-    console.log(`Starting scan function with startTime: ${startTime} (JD: ${startJd}), endTime: ${endTime} (JD: ${endJd})`);
-    
+    if (daysRequested > MAX_DAYS) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          error: 'Invalid parameters',
+          message: `Invalid time range: too long, must be less than ${Math.floor(
+            MAX_DAYS,
+          )}`,
+        }),
+      };
+    }
+
+    console.log(
+      `Starting scan function with startTime: ${startTime} (JD: ${startJd}), endTime: ${endTime} (JD: ${endJd})`,
+    );
+
     // Create event detectors
     const detectors = [
-      new SignIngressDetector(['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']),
-      new RetrogradeDetector(['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']),
+      new SignIngressDetector([
+        'Jupiter',
+        'Saturn',
+        'Uranus',
+        'Neptune',
+        'Pluto',
+      ]),
+      new RetrogradeDetector([
+        'Jupiter',
+        'Saturn',
+        'Uranus',
+        'Neptune',
+        'Pluto',
+      ]),
       new AspectDetector(
         [
           ['Jupiter', 'Saturn'],
@@ -148,7 +178,7 @@ const handler: Handler = async (event, context) => {
     console.log('Starting event scan');
     const events = await scanner.scan();
     console.log(`Scan complete, found ${events.length} events`);
-    
+
     // Process events (unchanged)
     const processedEvents = events.map((event) => {
       const processedOutputs = [
@@ -162,7 +192,7 @@ const handler: Handler = async (event, context) => {
         processedOutputs,
       };
     });
-    
+
     // Create response (unchanged)
     const responseData = {
       metadata: {
@@ -189,10 +219,10 @@ const handler: Handler = async (event, context) => {
     console.error('Error generating astrological events:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ 
-        error: 'Failed to generate astrological events', 
+      body: JSON.stringify({
+        error: 'Failed to generate astrological events',
         message: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined 
+        stack: error instanceof Error ? error.stack : undefined,
       }),
     } as HandlerResponse;
   }

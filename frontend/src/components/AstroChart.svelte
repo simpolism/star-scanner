@@ -7,6 +7,7 @@
 
   let chartContainer: HTMLElement;
   let chartCreated = false;
+  let chartError = '';
 
   onMount(() => {
     if (!chartCreated && chartContainer) {
@@ -16,6 +17,7 @@
 
   function generateAstrologyChart(): void {
     try {
+      chartError = '';
       // Define chart settings
       const settings = {
         COLOR_ARIES: '#CC0000',
@@ -66,11 +68,13 @@
       };
 
       // Initialize the chart
+      // eslint-disable-next-line no-undef
       const universe = new astrology.Universe(chartId, settings);
       const radix = universe.radix();
 
       // Create chart data from the event
       const chartData = {
+        // eslint-disable-next-line no-undef
         points: [] as astrology.ChartPoint[],
         cusps: [] as number[],
       };
@@ -105,9 +109,7 @@
       chartCreated = true;
     } catch (e) {
       console.error('Error generating chart:', e);
-      if (chartContainer) {
-        chartContainer.innerHTML = `<div class="chart-error">Unable to generate chart: ${e instanceof Error ? e.message : 'Unknown error'}</div>`;
-      }
+      chartError = `Unable to generate chart: ${e instanceof Error ? e.message : 'Unknown error'}`;
     }
   }
 
@@ -222,6 +224,9 @@
 
 <div class="chart-container">
   <div id={chartId} class="astro-chart" bind:this={chartContainer}></div>
+  {#if chartError}
+    <div class="chart-error">{chartError}</div>
+  {/if}
 </div>
 
 <style>

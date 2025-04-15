@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   import type { AstrologicalEvent } from '../types/events';
+  // @ts-expect-error Typescript not respecting svelte compiler
   import AstroChart from './AstroChart.svelte';
 
   export let event: AstrologicalEvent;
 
-  const dispatch = createEventDispatcher();
   const eventId = `event-${new Date(event.date).getTime()}-${event.type.replace(/[^a-zA-Z0-9]/g, '')}`;
   const chartId = `chart-svg-${eventId}`;
 
@@ -81,16 +80,21 @@
 </script>
 
 <li class="event-item">
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div class="event-header" on:click={toggleChart}>
     <span class="toggle-icon" class:open={showChart}>{showChart ? '›' : '+'}</span>
     <span class="date">{event.dateUTC.split('T')[0]}</span>
     <span class="type type-{event.type}">{event.type.toUpperCase()}</span>
     <span class="description">
+      <!-- eslint-disable-next-line svelte/no-at-html-tags -->
       {@html formatDescription(event.description)}
     </span>
   </div>
 
   {#if showChart}
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="chart-container" on:click={handleChartClick}>
       <AstroChart {event} {chartId} bind:this={astroChartComponent} />
     </div>
@@ -100,6 +104,7 @@
     {#each event.processedOutputs as output}
       {#if output}
         <div class="special-event">
+          <!-- eslint-disable-next-line svelte/no-at-html-tags -->
           {@html output}
         </div>
       {/if}

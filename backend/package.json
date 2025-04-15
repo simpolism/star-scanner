@@ -6,7 +6,7 @@
     "build": "tsc",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
-    "format": "prettier --write src/",
+    "format": "prettier --config .prettierrc --write src/ netlify/**/*",
     "check": "npm run lint && npm run build"
   },
   "dependencies": {

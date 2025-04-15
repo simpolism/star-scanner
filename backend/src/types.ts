@@ -1,6 +1,9 @@
 export type JulianDate = number;
 export type Degree = number;
-export type Aspect = { angle: Degree; orb: Degree };
+export interface Aspect {
+  angle: Degree;
+  orb: Degree;
+}
 
 export type PlanetName =
   | 'Sun'
@@ -28,7 +31,12 @@ export type SignName =
   | 'Aquarius'
   | 'Pisces';
 
-export type AspectName = 'conjunction' | 'opposition' | 'trine' | 'square' | 'sextile';
+export type AspectName =
+  | 'conjunction'
+  | 'opposition'
+  | 'trine'
+  | 'square'
+  | 'sextile';
 
 export interface PlanetData {
   longitude: Degree;

@@ -23,7 +23,10 @@ export class AspectDetector extends EventDetector<AspectData> {
   private planetPairs: [PlanetName, PlanetName][];
   private aspects: AspectName[];
 
-  constructor(planetPairs?: [PlanetName, PlanetName][], aspects?: AspectName[]) {
+  constructor(
+    planetPairs?: [PlanetName, PlanetName][],
+    aspects?: AspectName[],
+  ) {
     super();
     // If no planet pairs specified, check all combinations
     if (!planetPairs) {
@@ -80,7 +83,9 @@ export class AspectDetector extends EventDetector<AspectData> {
           events.push({
             date: currentDate,
             type: 'aspect_begin',
-            description: `${p1} ${aspect} ${p2} (orb: ${hasAspectNow.toFixed(2)} deg)`,
+            description: `${p1} ${aspect} ${p2} (orb: ${hasAspectNow.toFixed(
+              2,
+            )} deg)`,
             data: {
               planet1: [p1, detectSign(currPos1)],
               planet2: [p2, detectSign(currPos2)],
@@ -93,7 +98,9 @@ export class AspectDetector extends EventDetector<AspectData> {
           events.push({
             date: currentDate,
             type: 'aspect_end',
-            description: `${p1} ${aspect} ${p2} (orb: ${hadAspectPrev.toFixed(2)} deg)`,
+            description: `${p1} ${aspect} ${p2} (orb: ${hadAspectPrev.toFixed(
+              2,
+            )} deg)`,
             data: {
               planet1: [p1, detectSign(prevPos1)],
               planet2: [p2, detectSign(prevPos2)],
@@ -113,7 +120,9 @@ export class AspectDetector extends EventDetector<AspectData> {
           events.push({
             date: previousDate,
             type: 'aspect_peak',
-            description: `${p1} ${aspect} ${p2} (orb: ${hadAspectPrev.toFixed(2)} deg)`,
+            description: `${p1} ${aspect} ${p2} (orb: ${hadAspectPrev.toFixed(
+              2,
+            )} deg)`,
             data: {
               planet1: [p1, detectSign(prevPos1)],
               planet2: [p2, detectSign(prevPos2)],
