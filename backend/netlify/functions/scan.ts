@@ -5,6 +5,26 @@ import { AspectDetector, RetrogradeDetector, SignIngressDetector } from '../../s
 import { NeptunePlutoIngressProcessor, PlutoRetrogradeProcessor } from '../../src/eventProcessors';
 import { isoToJulianDay, julianDayToIso } from '../../src/utils';
 import { PLANETS } from '../../src/constants';
+import { z } from 'zod';
+
+// Define the validation schema with Zod
+const ScanRequestSchema = z.object({
+  // Required parameters with validation
+  startTime: z.string()
+    .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d+)?(Z|[+-]\d{2}:\d{2})$/, 
+      "Must be ISO 8601 format"),
+  endTime: z.string()
+    .regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(.\d+)?(Z|[+-]\d{2}:\d{2})$/, 
+      "Must be ISO 8601 format"),
+});
+
+// Infer TypeScript type from Zod schema
+type ScanRequest = z.infer<typeof ScanRequestSchema>;
+
+// Use in handler function
+const validateRequest = (body: unknown): ScanRequest => {
+  return ScanRequestSchema.parse(body);
+};
 
 const handler: Handler = async (event, context) => {
   // Check if method is POST
@@ -34,12 +54,31 @@ const handler: Handler = async (event, context) => {
   }
 
   // Parse request body
-  let requestBody;
+  let validatedRequest: ScanRequest;
   try {
-    requestBody = JSON.parse(event.body || '{}');
+    // Parse JSON body
+    const rawBody = JSON.parse(event.body || '{}');
+    
+    // Validate with Zod
+    validatedRequest = validateRequest(rawBody);
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      // Format validation errors
+      return {
+        statusCode: 400,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          error: 'Validation Error',
+          details: error.errors.map(e => ({
+            path: e.path.join('.'),
+            message: e.message
+          }))
+        })
+      };
+    }
     return {
       statusCode: 400,
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         error: 'Invalid request body',
         message: 'Request body must be valid JSON'
@@ -48,19 +87,8 @@ const handler: Handler = async (event, context) => {
   }
 
   // Extract parameters from request body
-  const { startTime, endTime } = requestBody;
-  
-  // Validate required parameters
-  if (!startTime || !endTime) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ 
-        error: 'Missing required parameters', 
-        message: 'Both startTime and endTime parameters are required'
-      }),
-    };
-  }
-  
+  const { startTime, endTime } = validatedRequest;
+
   try {
     // Convert ISO strings to Julian Day Numbers
     const startJd = isoToJulianDay(startTime);

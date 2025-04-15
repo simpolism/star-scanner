@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@netlify/functions": "^2.0.0",
-    "sweph": "2.10.3-4"
+    "sweph": "2.10.3-4",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/node": "^16.11.12",
