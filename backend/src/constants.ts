@@ -1,5 +1,5 @@
 import * as sweph from 'sweph';
-import { Degree, SignName, PlanetName, AspectName, Aspect } from './types';
+import { Degree, SignName, PlanetName, AspectName } from './types';
 
 export const PLANETS = new Map<PlanetName, number>([
   ['Sun', sweph.constants.SE_SUN],
@@ -29,10 +29,10 @@ export const SIGNS = new Map<SignName, Degree>([
   ['Pisces', 330],
 ]);
 
-export const ASPECTS = new Map<AspectName, Aspect>([
-  ['conjunction', { angle: 0.0, orb: 5.0 }],
-  ['opposition', { angle: 180.0, orb: 5.0 }],
-  ['trine', { angle: 120.0, orb: 5.0 }],
-  ['square', { angle: 90.0, orb: 5.0 }],
-  ['sextile', { angle: 60.0, orb: 2.0 }],
+export const ASPECTS = new Map<AspectName, Degree>([
+  ['conjunction', 0.0],
+  ['opposition', 180.0],
+  ['trine', 120.0],
+  ['square', 90.0],
+  ['sextile', 60.0],
 ]);

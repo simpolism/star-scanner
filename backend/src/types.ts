@@ -1,9 +1,5 @@
 export type JulianDate = number;
 export type Degree = number;
-export interface Aspect {
-  angle: Degree;
-  orb: Degree;
-}
 
 export type PlanetName =
   | 'Sun'

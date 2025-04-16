@@ -1,5 +1,11 @@
 import * as sweph from 'sweph';
-import type { AspectName, PlanetData, SignName, JulianDate } from './types';
+import type {
+  AspectName,
+  PlanetData,
+  SignName,
+  JulianDate,
+  Degree,
+} from './types';
 import { ASPECTS, SIGNS } from './constants';
 
 // Initialize ephemeris (only if not already initialized)
@@ -106,11 +112,15 @@ export function detectSign(position: number): SignName {
  * Check if an aspect is valid based on both angular distance and sign distance
  */
 export function checkAspect(
-  pos1: number,
-  pos2: number,
+  pos1: Degree,
+  pos2: Degree,
   aspectName: AspectName,
+  orb: Degree,
 ): number | undefined {
-  const { angle, orb } = ASPECTS.get(aspectName)!;
+  const angle = ASPECTS.get(aspectName);
+  if (angle === undefined) {
+    throw new Error('Unknown aspect');
+  }
 
   // Calculate the smallest angle between positions
   let diff = Math.abs(pos1 - pos2) % 360;

@@ -45,7 +45,7 @@ const defaultConfig = {
         ['Uranus', 'Pluto'],
         ['Neptune', 'Pluto'],
       ],
-      aspects: ['conjunction', 'opposition', 'square', 'trine'],
+      aspects: [['conjunction', 5], ['opposition', 5], ['square', 5], ['trine', 5]],
     },
   },
   chartDisplay: {

@@ -8,6 +8,7 @@ import {
   type SignName,
   type JulianDate,
   type BaseDetectorConfig,
+  Degree,
 } from '../types';
 import { checkAspect, detectSign } from '../utils';
 import { z } from 'zod';
@@ -23,7 +24,7 @@ export interface AspectData {
 
 export interface AspectDetectorConfig extends BaseDetectorConfig {
   planetPairs: [PlanetName, PlanetName][];
-  aspects: AspectName[];
+  aspects: [AspectName, Degree][];
 }
 
 export class AspectDetector extends EventDetector<
@@ -39,7 +40,10 @@ export class AspectDetector extends EventDetector<
       ]),
     ),
     aspects: z.array(
-      z.enum([...ASPECTS.keys()] as [AspectName, ...AspectName[]]),
+      z.tuple([
+        z.enum([...ASPECTS.keys()] as [AspectName, ...AspectName[]]),
+        z.number(),
+      ]),
     ),
   });
 
@@ -76,10 +80,10 @@ export class AspectDetector extends EventDetector<
       const prev2Pos1 = previousData2[p1].longitude;
       const prev2Pos2 = previousData2[p2].longitude;
 
-      for (const aspect of this.config.aspects) {
-        const hasAspectNow = checkAspect(currPos1, currPos2, aspect);
-        const hadAspectPrev = checkAspect(prevPos1, prevPos2, aspect);
-        const hadAspectPrev2 = checkAspect(prev2Pos1, prev2Pos2, aspect);
+      for (const [aspect, orb] of this.config.aspects) {
+        const hasAspectNow = checkAspect(currPos1, currPos2, aspect, orb);
+        const hadAspectPrev = checkAspect(prevPos1, prevPos2, aspect, orb);
+        const hadAspectPrev2 = checkAspect(prev2Pos1, prev2Pos2, aspect, orb);
 
         // Detect aspect becoming exact (crossing from not in orb to in orb)
         if (hasAspectNow && !hadAspectPrev) {

@@ -2,36 +2,69 @@
   import { config, planetOptions, aspectOptions } from '../../stores/configStore';
 
   export let showAspects = true;
+  
+  // Default orb value
+  const DEFAULT_ORB = 5;
+
+  // Reactive declarations for aspect states
+  $: aspectStates = aspectOptions.map(aspect => {
+    const aspectTuple = $config.detectors.aspectDetector.aspects.find(([name]) => name === aspect);
+    return {
+      name: aspect,
+      selected: !!aspectTuple,
+      orb: aspectTuple ? aspectTuple[1] : DEFAULT_ORB
+    };
+  });
 
   // Update aspect selection
   function toggleAspect(aspect: string): void {
     const aspects = $config.detectors.aspectDetector.aspects;
-    const index = aspects.indexOf(aspect);
-
-    if (index === -1) {
-      aspects.push(aspect);
+    const aspectTuple = aspects.find(([name]) => name === aspect);
+    
+    if (!aspectTuple) {
+      // Create a new array with the added aspect
+      $config.detectors.aspectDetector.aspects = [
+        ...$config.detectors.aspectDetector.aspects,
+        [aspect, DEFAULT_ORB]
+      ];
     } else {
-      aspects.splice(index, 1);
+      // Create a new array without the removed aspect
+      $config.detectors.aspectDetector.aspects = 
+        $config.detectors.aspectDetector.aspects.filter(([name]) => name !== aspect);
     }
-
-    $config = $config;
+  }
+  
+  // Update aspect orb value
+  function updateAspectOrb(aspect: string, orb: number): void {
+    // Create a new array with the updated orb value
+    $config.detectors.aspectDetector.aspects = $config.detectors.aspectDetector.aspects.map(tuple => 
+      tuple[0] === aspect ? [aspect, orb] : tuple
+    );
   }
 
   // Handle planet pair selection
   function togglePlanetPair(planet1: string, planet2: string): void {
     const pairs = $config.detectors.aspectDetector.planetPairs;
-    const pairIndex = pairs.findIndex(
+    const isPairSelected = pairs.some(
       (pair: [string, string]) =>
         (pair[0] === planet1 && pair[1] === planet2) || (pair[0] === planet2 && pair[1] === planet1)
     );
 
-    if (pairIndex === -1) {
-      pairs.push([planet1, planet2]);
+    if (!isPairSelected) {
+      // Create a new array with the added pair
+      $config.detectors.aspectDetector.planetPairs = [
+        ...$config.detectors.aspectDetector.planetPairs,
+        [planet1, planet2]
+      ];
     } else {
-      pairs.splice(pairIndex, 1);
+      // Create a new array without the removed pair
+      $config.detectors.aspectDetector.planetPairs = 
+        $config.detectors.aspectDetector.planetPairs.filter(
+          (pair: [string, string]) =>
+            !(pair[0] === planet1 && pair[1] === planet2) && 
+            !(pair[0] === planet2 && pair[1] === planet1)
+        );
     }
-
-    $config = $config;
   }
 
   // Check if planet pair exists
@@ -43,7 +76,29 @@
   }
 </script>
 
-
+<style>
+  .aspect-settings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+  
+  .aspect-settings-table th, 
+  .aspect-settings-table td {
+    padding: 6px;
+    text-align: left;
+    font-size: 0.9em;
+  }
+  
+  .aspect-settings-table input[type="number"] {
+    width: 60px;
+  }
+  
+  .disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+  }
+</style>
 
 <!-- Aspect Detector -->
 <div class="detector-section">
@@ -57,20 +112,43 @@
 
   {#if showAspects}
     <div class="detector-content">
-      <div class="aspect-selector">
+      <div class="aspect-settings">
         <span>Aspects:</span>
-        <div class="aspect-options">
-          {#each aspectOptions as aspect}
-            <label>
-              <input
-                type="checkbox"
-                checked={$config.detectors.aspectDetector.aspects.includes(aspect)}
-                on:change={() => toggleAspect(aspect)}
-              />
-              {aspect}
-            </label>
-          {/each}
-        </div>
+        <table class="aspect-settings-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Enabled</th>
+              <th>Orb (°)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {#each aspectStates as aspectState}
+              <tr>
+                <td>{aspectState.name}</td>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={aspectState.selected}
+                    on:change={() => toggleAspect(aspectState.name)}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    min="0"
+                    max="10"
+                    step="0.5"
+                    value={aspectState.orb}
+                    on:change={(e) => updateAspectOrb(aspectState.name, parseFloat(e.target.value))}
+                    disabled={!aspectState.selected}
+                    class:disabled={!aspectState.selected}
+                  />
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
       </div>
 
       <div class="planet-pairs">
