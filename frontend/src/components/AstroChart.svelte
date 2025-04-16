@@ -14,7 +14,7 @@
     if (!chartCreated && chartContainer) {
       generateAstrologyChart();
     }
-    
+
     // Recreate chart when config changes
     const unsubscribe = config.subscribe(() => {
       if (chartContainer && chartCreated) {
@@ -27,7 +27,7 @@
         generateAstrologyChart();
       }
     });
-    
+
     return () => {
       unsubscribe();
     };
@@ -36,26 +36,26 @@
   function generateAstrologyChart(): void {
     try {
       chartError = '';
-      
+
       // Default values in case chartDisplay is not defined
       const defaultColors = {
         fire: '#CC0000',
         earth: '#006600',
         air: '#E6B800',
-        water: '#00B3B3'
+        water: '#00B3B3',
       };
-      
+
       const defaultAspects = [
         { name: 'Conjunction', angle: 0, orb: 5 },
         { name: 'Opposition', angle: 180, orb: 5 },
         { name: 'Trine', angle: 120, orb: 5 },
-        { name: 'Square', angle: 90, orb: 5 }
+        { name: 'Square', angle: 90, orb: 5 },
       ];
-      
+
       // Safely access configuration
       const elementColors = $config.chartDisplay?.colors || defaultColors;
       const aspectSettings = $config.chartDisplay?.aspectSettings || [];
-      
+
       // Define chart settings
       const settings = {
         COLOR_ARIES: elementColors.fire,
@@ -77,15 +77,16 @@
           Square: '#CC0000',
           Sextile: '#E6B800',
         },
-        DEFAULT_ASPECTS: aspectSettings.length > 0 
-          ? aspectSettings
-            .filter(aspect => aspect.enabled)
-            .map(aspect => ({
-              name: aspect.name,
-              angle: aspect.angle,
-              orb: aspect.orb,
-            }))
-          : defaultAspects,
+        DEFAULT_ASPECTS:
+          aspectSettings.length > 0
+            ? aspectSettings
+                .filter((aspect) => aspect.enabled)
+                .map((aspect) => ({
+                  name: aspect.name,
+                  angle: aspect.angle,
+                  orb: aspect.orb,
+                }))
+            : defaultAspects,
         ASPECTS_FONT_SIZE: 27,
         RADIX_POINTS_FONT_SIZE: 40,
         RADIX_SIGNS_FONT_SIZE: 40,
@@ -108,13 +109,21 @@
       if (event.planets && Object.keys(event.planets).length > 0) {
         // Default planet list if visiblePlanets isn't defined
         const defaultPlanets = [
-          'Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 
-          'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'
+          'Sun',
+          'Moon',
+          'Mercury',
+          'Venus',
+          'Mars',
+          'Jupiter',
+          'Saturn',
+          'Uranus',
+          'Neptune',
+          'Pluto',
         ];
-        
+
         // Use the visible planets from config or fall back to default
         const visiblePlanets = $config.chartDisplay?.visiblePlanets || defaultPlanets;
-        
+
         visiblePlanets.forEach((planet) => {
           if (event.planets[planet]) {
             chartData.points.push({

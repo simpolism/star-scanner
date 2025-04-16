@@ -45,7 +45,12 @@ const defaultConfig = {
         ['Uranus', 'Pluto'],
         ['Neptune', 'Pluto'],
       ],
-      aspects: [['conjunction', 5], ['opposition', 5], ['square', 5], ['trine', 5]],
+      aspects: [
+        ['conjunction', 5],
+        ['opposition', 5],
+        ['square', 5],
+        ['trine', 5],
+      ],
     },
   },
   chartDisplay: {
@@ -94,10 +99,10 @@ const defaultConfig = {
       },
     ],
     colors: {
-      fire: '#CC0000',   // Aries, Leo, Sagittarius
-      earth: '#006600',  // Taurus, Virgo, Capricorn
-      air: '#E6B800',    // Gemini, Libra, Aquarius
-      water: '#00B3B3'   // Cancer, Scorpio, Pisces
+      fire: '#CC0000', // Aries, Leo, Sagittarius
+      earth: '#006600', // Taurus, Virgo, Capricorn
+      air: '#E6B800', // Gemini, Libra, Aquarius
+      water: '#00B3B3', // Cancer, Scorpio, Pisces
     },
   },
 };
@@ -109,13 +114,13 @@ function loadSavedConfig() {
     if (savedConfig) {
       try {
         const parsedConfig = JSON.parse(savedConfig);
-        
+
         // Check if the saved config has the new chartDisplay property
         // If not, add it from the default config (for backward compatibility)
         if (!parsedConfig.chartDisplay) {
           parsedConfig.chartDisplay = defaultConfig.chartDisplay;
         }
-        
+
         return parsedConfig;
       } catch (e) {
         console.error('Error parsing saved configuration:', e);
@@ -267,17 +272,17 @@ export const presets = {
   // Chart display presets
   minimalistChart: () => {
     const essentialPlanets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'];
-    
+
     config.update((c) => ({
       ...c,
       chartDisplay: {
         ...c.chartDisplay,
         visiblePlanets: essentialPlanets,
-        aspectSettings: c.chartDisplay.aspectSettings.map(aspect => ({
+        aspectSettings: c.chartDisplay.aspectSettings.map((aspect) => ({
           ...aspect,
-          enabled: ['Conjunction', 'Opposition'].includes(aspect.name)
+          enabled: ['Conjunction', 'Opposition'].includes(aspect.name),
         })),
-      }
+      },
     }));
   },
   detailedChart: () => {
@@ -293,32 +298,32 @@ export const presets = {
       'Neptune',
       'Pluto',
     ];
-    
+
     config.update((c) => ({
       ...c,
       chartDisplay: {
         ...c.chartDisplay,
         visiblePlanets: allPlanets,
-        aspectSettings: c.chartDisplay.aspectSettings.map(aspect => ({
+        aspectSettings: c.chartDisplay.aspectSettings.map((aspect) => ({
           ...aspect,
-          enabled: true
+          enabled: true,
         })),
-      }
+      },
     }));
   },
   traditionalChart: () => {
     const traditionalPlanets = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn'];
-    
+
     config.update((c) => ({
       ...c,
       chartDisplay: {
         ...c.chartDisplay,
         visiblePlanets: traditionalPlanets,
-        aspectSettings: c.chartDisplay.aspectSettings.map(aspect => ({
+        aspectSettings: c.chartDisplay.aspectSettings.map((aspect) => ({
           ...aspect,
-          enabled: ['Conjunction', 'Opposition', 'Trine', 'Square'].includes(aspect.name)
+          enabled: ['Conjunction', 'Opposition', 'Trine', 'Square'].includes(aspect.name),
         })),
-      }
+      },
     }));
   },
 };

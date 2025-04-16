@@ -13,7 +13,7 @@
   let showVisiblePlanets = true;
   let showAspectSettings = true;
   let isLoading = false;
-  
+
   // UI states for collapsible sections
   let isEventDetectionOpen = true;
   let isChartDisplayOpen = true;
@@ -127,51 +127,44 @@
 
   <!-- Event Detection Section -->
   <div class="section">
-    <div class="section-header" on:click={() => isEventDetectionOpen = !isEventDetectionOpen}>
+    <div class="section-header" on:click={() => (isEventDetectionOpen = !isEventDetectionOpen)}>
       <h3>Event Detection</h3>
       <span class="toggle-icon">{isEventDetectionOpen ? '▼' : '▶'}</span>
     </div>
-    
+
     {#if isEventDetectionOpen}
-    <div class="section-content">
-      <TimeRangeConfig 
-        bind:startDateInput 
-        bind:endDateInput 
-        bind:isValidForm 
-        bind:validationMessage
-        on:updateTimeSpan={handleUpdateTimeSpan}
-        on:presetApplied={handlePresetApplied}
-      />
-      
-      <EventDetectionConfig 
-        bind:showSignIngress 
-        bind:showRetrograde 
-        bind:showAspects 
-      />
-      
-      <div class="actions">
-        <button class="apply-button" on:click={handleApply} disabled={isLoading}>
-          {isLoading ? 'Loading...' : 'Apply Configuration'}
-        </button>
+      <div class="section-content">
+        <TimeRangeConfig
+          bind:startDateInput
+          bind:endDateInput
+          bind:isValidForm
+          bind:validationMessage
+          on:updateTimeSpan={handleUpdateTimeSpan}
+          on:presetApplied={handlePresetApplied}
+        />
+
+        <EventDetectionConfig bind:showSignIngress bind:showRetrograde bind:showAspects />
+
+        <div class="actions">
+          <button class="apply-button" on:click={handleApply} disabled={isLoading}>
+            {isLoading ? 'Loading...' : 'Apply Configuration'}
+          </button>
+        </div>
       </div>
-    </div>
     {/if}
   </div>
-  
+
   <!-- Chart Display Section -->
   <div class="section">
-    <div class="section-header" on:click={() => isChartDisplayOpen = !isChartDisplayOpen}>
+    <div class="section-header" on:click={() => (isChartDisplayOpen = !isChartDisplayOpen)}>
       <h3>Chart Display</h3>
       <span class="toggle-icon">{isChartDisplayOpen ? '▼' : '▶'}</span>
     </div>
-    
+
     {#if isChartDisplayOpen}
-    <div class="section-content">
-      <ChartDisplayConfig 
-        bind:showVisiblePlanets 
-        bind:showAspectSettings 
-      />
-    </div>
+      <div class="section-content">
+        <ChartDisplayConfig bind:showVisiblePlanets bind:showAspectSettings />
+      </div>
     {/if}
   </div>
 </div>
@@ -194,7 +187,7 @@
     user-select: none;
     border-bottom: 1px solid #eee;
   }
-  
+
   h2 {
     margin: 0;
     color: #444;
@@ -205,7 +198,7 @@
     border-bottom: 1px solid #eee;
     padding-bottom: 15px;
   }
-  
+
   .section:last-child {
     border-bottom: none;
   }
@@ -218,13 +211,13 @@
     cursor: pointer;
     user-select: none;
   }
-  
+
   .section-header h3 {
     margin: 0;
     color: #444;
     font-weight: bold;
   }
-  
+
   .section-content {
     padding-top: 10px;
   }
@@ -262,7 +255,7 @@
     .section-header h3 {
       font-size: 16px;
     }
-    
+
     .apply-button {
       width: 100%;
     }
