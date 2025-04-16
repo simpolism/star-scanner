@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { config, planetOptions } from '../../stores/configStore';
+  import { config, planetOptions, signOptions } from '../../stores/configStore';
 
   export let showRetrograde = true;
 
@@ -12,6 +12,20 @@
       planets.push(planet);
     } else {
       planets.splice(index, 1);
+    }
+
+    $config = $config;
+  }
+  
+  // Update sign selection
+  function toggleSign(sign: string): void {
+    const signs = $config.detectors.retrogradeDetector.signs;
+    const index = signs.indexOf(sign);
+
+    if (index === -1) {
+      signs.push(sign);
+    } else {
+      signs.splice(index, 1);
     }
 
     $config = $config;
@@ -48,14 +62,20 @@
         </div>
       </div>
 
-      <div class="check-sign-option">
-        <label>
-          <input
-            type="checkbox"
-            bind:checked={$config.detectors.retrogradeDetector.checkSign}
-          />
-          Check Sign
-        </label>
+      <div class="sign-selector">
+        <span>Signs:</span>
+        <div class="sign-options">
+          {#each signOptions as sign}
+            <label>
+              <input
+                type="checkbox"
+                checked={$config.detectors.retrogradeDetector.signs.includes(sign)}
+                on:change={() => toggleSign(sign)}
+              />
+              {sign}
+            </label>
+          {/each}
+        </div>
       </div>
     </div>
   {/if}

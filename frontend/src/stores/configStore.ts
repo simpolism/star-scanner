@@ -11,6 +11,20 @@ const defaultConfig = {
     signIngressDetector: {
       enabled: true,
       planets: ['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'],
+      signs: [
+        'Aries',
+        'Taurus',
+        'Gemini',
+        'Cancer',
+        'Leo',
+        'Virgo',
+        'Libra',
+        'Scorpio',
+        'Sagittarius',
+        'Capricorn',
+        'Aquarius',
+        'Pisces',
+      ],
     },
     retrogradeDetector: {
       enabled: true,
@@ -29,7 +43,6 @@ const defaultConfig = {
         'Aquarius',
         'Pisces',
       ],
-      checkSign: false,
     },
     aspectDetector: {
       enabled: true,
@@ -278,7 +291,7 @@ export const presets = {
       chartDisplay: {
         ...c.chartDisplay,
         visiblePlanets: essentialPlanets,
-        aspectSettings: c.chartDisplay.aspectSettings.map((aspect) => ({
+        aspectSettings: c.chartDisplay.aspectSettings.map((aspect: { name: string; }) => ({
           ...aspect,
           enabled: ['Conjunction', 'Opposition'].includes(aspect.name),
         })),
@@ -304,7 +317,7 @@ export const presets = {
       chartDisplay: {
         ...c.chartDisplay,
         visiblePlanets: allPlanets,
-        aspectSettings: c.chartDisplay.aspectSettings.map((aspect) => ({
+        aspectSettings: c.chartDisplay.aspectSettings.map((aspect: any) => ({
           ...aspect,
           enabled: true,
         })),
@@ -319,7 +332,7 @@ export const presets = {
       chartDisplay: {
         ...c.chartDisplay,
         visiblePlanets: traditionalPlanets,
-        aspectSettings: c.chartDisplay.aspectSettings.map((aspect) => ({
+        aspectSettings: c.chartDisplay.aspectSettings.map((aspect: { name: string; }) => ({
           ...aspect,
           enabled: ['Conjunction', 'Opposition', 'Trine', 'Square'].includes(aspect.name),
         })),

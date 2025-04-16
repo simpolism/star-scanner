@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { config, planetOptions } from '../../stores/configStore';
+  import { config, planetOptions, signOptions } from '../../stores/configStore';
 
   export let showSignIngress = true;
 
@@ -12,6 +12,20 @@
       planets.push(planet);
     } else {
       planets.splice(index, 1);
+    }
+
+    $config = $config;
+  }
+  
+  // Update sign selection
+  function toggleSign(sign: string): void {
+    const signs = $config.detectors.signIngressDetector.signs;
+    const index = signs.indexOf(sign);
+
+    if (index === -1) {
+      signs.push(sign);
+    } else {
+      signs.splice(index, 1);
     }
 
     $config = $config;
@@ -43,6 +57,22 @@
                 on:change={() => togglePlanet(planet)}
               />
               {planet}
+            </label>
+          {/each}
+        </div>
+      </div>
+      
+      <div class="sign-selector">
+        <span>Signs:</span>
+        <div class="sign-options">
+          {#each signOptions as sign}
+            <label>
+              <input
+                type="checkbox"
+                checked={$config.detectors.signIngressDetector.signs.includes(sign)}
+                on:change={() => toggleSign(sign)}
+              />
+              {sign}
             </label>
           {/each}
         </div>

@@ -8,7 +8,7 @@
 
   // Reactive declarations for aspect states
   $: aspectStates = aspectOptions.map(aspect => {
-    const aspectTuple = $config.detectors.aspectDetector.aspects.find(([name]) => name === aspect);
+    const aspectTuple = $config.detectors.aspectDetector.aspects.find(([name]: [string]) => name === aspect);
     return {
       name: aspect,
       selected: !!aspectTuple,
@@ -19,7 +19,7 @@
   // Update aspect selection
   function toggleAspect(aspect: string): void {
     const aspects = $config.detectors.aspectDetector.aspects;
-    const aspectTuple = aspects.find(([name]) => name === aspect);
+    const aspectTuple = aspects.find(([name]: [string]) => name === aspect);
     
     if (!aspectTuple) {
       // Create a new array with the added aspect
@@ -30,14 +30,14 @@
     } else {
       // Create a new array without the removed aspect
       $config.detectors.aspectDetector.aspects = 
-        $config.detectors.aspectDetector.aspects.filter(([name]) => name !== aspect);
+        $config.detectors.aspectDetector.aspects.filter(([name]: [string]) => name !== aspect);
     }
   }
   
   // Update aspect orb value
   function updateAspectOrb(aspect: string, orb: number): void {
     // Create a new array with the updated orb value
-    $config.detectors.aspectDetector.aspects = $config.detectors.aspectDetector.aspects.map(tuple => 
+    $config.detectors.aspectDetector.aspects = $config.detectors.aspectDetector.aspects.map((tuple: [string, number]) => 
       tuple[0] === aspect ? [aspect, orb] : tuple
     );
   }

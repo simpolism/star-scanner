@@ -8,7 +8,7 @@ import {
   type JulianDate,
   type BaseDetectorConfig,
 } from '../types';
-import { detectSign, isInSign } from '../utils';
+import { detectSign } from '../utils';
 import { z } from 'zod';
 
 export interface RetrogradeData {
@@ -20,7 +20,6 @@ export interface RetrogradeData {
 export interface RetrogradeDetectorConfig extends BaseDetectorConfig {
   planets: PlanetName[];
   signs: SignName[];
-  checkSign: boolean;
 }
 
 export class RetrogradeDetector extends EventDetector<
@@ -33,7 +32,6 @@ export class RetrogradeDetector extends EventDetector<
       z.enum([...PLANETS.keys()] as [PlanetName, ...PlanetName[]]),
     ),
     signs: z.array(z.enum([...SIGNS.keys()] as [SignName, ...SignName[]])),
-    checkSign: z.boolean(),
   });
 
   constructor(config: RetrogradeDetectorConfig) {
@@ -68,39 +66,21 @@ export class RetrogradeDetector extends EventDetector<
 
       const currPos = currentData[planet].longitude;
 
-      // If checking specific signs, verify planet is in one of them
-      if (this.config.checkSign) {
-        let inTargetSign = false;
-        for (const sign of this.config.signs) {
-          if (isInSign(currPos, sign)) {
-            inTargetSign = true;
-            const status = currRetro ? 'begins retrograde' : 'goes direct';
-            events.push({
-              date: currentDate,
-              type: 'retrograde',
-              description: `${planet} ${status} in ${sign}`,
-            });
-            break;
-          }
-        }
-
-        // Skip if not in any target sign
-        if (!inTargetSign) {
-          continue;
-        }
-      } else {
-        // Not checking signs, just report the retrograde change
+      // verify planet is in a specified sign
+      const currSign = detectSign(currPos);
+      if (this.config.signs.includes(currSign)) {
         const status = currRetro ? 'begins retrograde' : 'goes direct';
         events.push({
           date: currentDate,
           type: 'retrograde',
-          description: `${planet} ${status}`,
+          description: `${planet} ${status} in ${currSign}`,
           data: {
             planet: planet,
             direction: currRetro ? 'retrograde' : 'direct',
             sign: detectSign(currPos),
           },
         });
+        break;
       }
     }
 

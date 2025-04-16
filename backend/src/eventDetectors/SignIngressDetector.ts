@@ -1,4 +1,4 @@
-import { PLANETS } from '../constants';
+import { PLANETS, SIGNS } from '../constants';
 import {
   EventDetector,
   type PlanetaryData,
@@ -19,6 +19,7 @@ export interface IngressData {
 
 export interface SignIngressDetectorConfig extends BaseDetectorConfig {
   planets: PlanetName[];
+  signs: SignName[];
 }
 
 export class SignIngressDetector extends EventDetector<
@@ -30,6 +31,7 @@ export class SignIngressDetector extends EventDetector<
     planets: z.array(
       z.enum([...PLANETS.keys()] as [PlanetName, ...PlanetName[]]),
     ),
+    signs: z.array(z.enum([...SIGNS.keys()] as [SignName, ...SignName[]])),
   });
 
   constructor(config: SignIngressDetectorConfig) {
@@ -58,7 +60,7 @@ export class SignIngressDetector extends EventDetector<
       const currSign = detectSign(currPos);
       const prevPos = previousData[planet].longitude;
       const prevSign = detectSign(prevPos);
-      if (currSign !== prevSign) {
+      if (currSign !== prevSign && this.config.signs.includes(currSign)) {
         events.push({
           date: currentDate,
           type: 'ingress',

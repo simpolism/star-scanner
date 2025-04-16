@@ -35,6 +35,8 @@
   </div>
 
   <SignIngressDetector bind:showSignIngress />
+  <hr>
   <RetrogradeDetector bind:showRetrograde />
+  <hr>
   <AspectDetector bind:showAspects />
 </div>

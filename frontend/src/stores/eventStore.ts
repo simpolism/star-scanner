@@ -55,7 +55,6 @@ export async function loadEvents(config?: any): Promise<void> {
               'Aquarius',
               'Pisces',
             ],
-            checkSign: false,
           },
           aspectDetector: {
             enabled: true,

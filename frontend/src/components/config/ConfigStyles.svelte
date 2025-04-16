@@ -124,18 +124,24 @@
   }
 
   .planet-options,
-  .aspect-options {
+  .aspect-options,
+  .sign-options {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
   }
 
   .planet-options label,
-  .aspect-options label {
+  .aspect-options label,
+  .sign-options label {
     display: flex;
     align-items: center;
     gap: 5px;
     cursor: pointer;
+  }
+  
+  .sign-selector {
+    margin-top: 15px;
   }
 
   .check-sign-option {
