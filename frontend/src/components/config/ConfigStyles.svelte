@@ -1,3 +1,4 @@
+<!-- svelte-ignore css-unused-selector -->
 <style global>
   .config-section {
     margin-bottom: 20px;

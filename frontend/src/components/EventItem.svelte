@@ -79,8 +79,6 @@
 </script>
 
 <li class="event-item">
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div class="event-header" on:click={toggleChart}>
     <span class="toggle-icon" class:open={showChart}>{showChart ? '›' : '+'}</span>
     <span class="date">{event.dateUTC.split('T')[0]}</span>
@@ -92,8 +90,6 @@
   </div>
 
   {#if showChart}
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div class="chart-container" on:click={handleChartClick}>
       <AstroChart {event} {chartId} bind:this={astroChartComponent} />
     </div>

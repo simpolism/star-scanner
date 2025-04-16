@@ -28,8 +28,5 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/no-explicit-any': 'warn',
-    'svelte/no-at-html-tags': 'off',
-    'svelte/a11y-click-events-have-key-events': 'off',
-    'svelte/a11y-no-static-element-interactions': 'off',
   },
 };
