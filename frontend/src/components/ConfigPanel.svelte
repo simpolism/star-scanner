@@ -12,7 +12,6 @@
   let showAspects = true;
   let showVisiblePlanets = true;
   let showAspectSettings = true;
-  let showColorSettings = true;
   let isLoading = false;
   
   // UI states
@@ -167,7 +166,6 @@
     <ChartDisplayConfig 
       bind:showVisiblePlanets 
       bind:showAspectSettings 
-      bind:showColorSettings 
     />
   </div>
 

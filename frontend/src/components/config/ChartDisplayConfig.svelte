@@ -2,12 +2,10 @@
   import { presets } from '../../stores/configStore';
   import VisiblePlanetsSection from './VisiblePlanetsSection.svelte';
   import AspectSettingsSection from './AspectSettingsSection.svelte';
-  import ColorSettingsSection from './ColorSettingsSection.svelte';
 
   // UI state
   export let showVisiblePlanets = true;
   export let showAspectSettings = true;
-  export let showColorSettings = true;
 
   // Apply preset configuration
   function applyPreset(preset: string): void {
@@ -40,5 +38,4 @@
   
   <VisiblePlanetsSection bind:showVisiblePlanets />
   <AspectSettingsSection bind:showAspectSettings />
-  <ColorSettingsSection bind:showColorSettings />
 </div>
