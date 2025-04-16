@@ -2,9 +2,9 @@
   import './config/ConfigStyles.svelte';
   import { config, applyConfig } from '../stores/configStore';
   import { onMount } from 'svelte';
-  import TimeRangeConfig from './config/TimeRangeConfig.svelte';
-  import EventDetectionConfig from './config/EventDetectionConfig.svelte';
-  import ChartDisplayConfig from './config/ChartDisplayConfig.svelte';
+  import TimeRangeConfig from './config/eventDetection/TimeRangeConfig.svelte';
+  import EventDetectionConfig from './config/eventDetection/EventDetectionConfig.svelte';
+  import ChartDisplayConfig from './config/chartDisplay/ChartDisplayConfig.svelte';
 
   // UI state
   let showSignIngress = true;

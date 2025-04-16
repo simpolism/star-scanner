@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { presets } from '../../stores/configStore';
+  import { presets } from '../../../stores/configStore';
   import { createEventDispatcher } from 'svelte';
 
   export let startDateInput;
@@ -27,8 +27,6 @@
     dispatch('presetApplied');
   }
 </script>
-
-
 
 <div class="config-section">
   <div class="section-header">

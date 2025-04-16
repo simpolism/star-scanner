@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { config, planetOptions, signOptions } from '../../stores/configStore';
+  import { config, planetOptions, signOptions } from '../../../stores/configStore';
 
   export let showSignIngress = true;
 
@@ -16,7 +16,7 @@
 
     $config = $config;
   }
-  
+
   // Update sign selection
   function toggleSign(sign: string): void {
     const signs = $config.detectors.signIngressDetector.signs;
@@ -31,8 +31,6 @@
     $config = $config;
   }
 </script>
-
-
 
 <!-- Sign Ingress Detector -->
 <div class="detector-section">
@@ -61,7 +59,7 @@
           {/each}
         </div>
       </div>
-      
+
       <div class="sign-selector">
         <span>Signs:</span>
         <div class="sign-options">

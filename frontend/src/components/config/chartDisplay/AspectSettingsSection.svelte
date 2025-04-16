@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { config } from '../../stores/configStore';
+  import { config } from '../../../stores/configStore';
 
   export let showAspectSettings = true;
 
   // Toggle aspect setting in chart
   function toggleChartAspect(aspectName: string): void {
-    const aspectIndex = $config.chartDisplay.aspectSettings.findIndex(a => a.name === aspectName);
+    const aspectIndex = $config.chartDisplay.aspectSettings.findIndex((a) => a.name === aspectName);
     if (aspectIndex !== -1) {
-      $config.chartDisplay.aspectSettings[aspectIndex].enabled = 
+      $config.chartDisplay.aspectSettings[aspectIndex].enabled =
         !$config.chartDisplay.aspectSettings[aspectIndex].enabled;
       $config = $config;
     }
@@ -15,15 +15,13 @@
 
   // Update aspect orb setting
   function updateAspectOrb(aspectName: string, orb: number): void {
-    const aspectIndex = $config.chartDisplay.aspectSettings.findIndex(a => a.name === aspectName);
+    const aspectIndex = $config.chartDisplay.aspectSettings.findIndex((a) => a.name === aspectName);
     if (aspectIndex !== -1) {
       $config.chartDisplay.aspectSettings[aspectIndex].orb = orb;
       $config = $config;
     }
   }
 </script>
-
-
 
 <!-- Aspect Settings Section -->
 <div class="detector-section">

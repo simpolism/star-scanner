@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { config, planetOptions } from '../../stores/configStore';
+  import { config, planetOptions } from '../../../stores/configStore';
 
   export let showVisiblePlanets = true;
 
@@ -17,8 +17,6 @@
     $config = $config;
   }
 </script>
-
-
 
 <!-- Visible Planets Section -->
 <div class="detector-section">

@@ -139,7 +139,7 @@
     gap: 5px;
     cursor: pointer;
   }
-  
+
   .sign-selector {
     margin-top: 15px;
   }
@@ -148,7 +148,7 @@
     margin-top: 15px;
   }
 
-  .pairs-table, 
+  .pairs-table,
   .aspect-settings-table {
     border-collapse: collapse;
     margin-top: 10px;
@@ -173,30 +173,30 @@
     font-weight: normal;
     color: #555;
   }
-  
-  .aspect-settings-table input[type="number"] {
+
+  .aspect-settings-table input[type='number'] {
     width: 50px;
     padding: 4px;
     text-align: center;
   }
-  
+
   .color-settings {
     display: flex;
     flex-direction: column;
     gap: 15px;
   }
-  
+
   .color-setting-row {
     display: flex;
     align-items: center;
     gap: 10px;
   }
-  
+
   .color-setting-row label {
     flex: 1;
   }
-  
-  .color-setting-row input[type="color"] {
+
+  .color-setting-row input[type='color'] {
     width: 40px;
     height: 30px;
     border: 1px solid #ddd;

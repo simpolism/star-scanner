@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { config, planetOptions, signOptions } from '../../stores/configStore';
+  import { config, planetOptions, signOptions } from '../../../stores/configStore';
 
   export let showRetrograde = true;
 
@@ -16,7 +16,7 @@
 
     $config = $config;
   }
-  
+
   // Update sign selection
   function toggleSign(sign: string): void {
     const signs = $config.detectors.retrogradeDetector.signs;
@@ -31,8 +31,6 @@
     $config = $config;
   }
 </script>
-
-
 
 <!-- Retrograde Detector -->
 <div class="detector-section">

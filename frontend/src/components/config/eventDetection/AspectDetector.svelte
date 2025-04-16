@@ -1,18 +1,20 @@
 <script lang="ts">
-  import { config, planetOptions, aspectOptions } from '../../stores/configStore';
+  import { config, planetOptions, aspectOptions } from '../../../stores/configStore';
 
   export let showAspects = true;
-  
+
   // Default orb value
   const DEFAULT_ORB = 5;
 
   // Reactive declarations for aspect states
-  $: aspectStates = aspectOptions.map(aspect => {
-    const aspectTuple = $config.detectors.aspectDetector.aspects.find(([name]: [string]) => name === aspect);
+  $: aspectStates = aspectOptions.map((aspect) => {
+    const aspectTuple = $config.detectors.aspectDetector.aspects.find(
+      ([name]: [string]) => name === aspect
+    );
     return {
       name: aspect,
       selected: !!aspectTuple,
-      orb: aspectTuple ? aspectTuple[1] : DEFAULT_ORB
+      orb: aspectTuple ? aspectTuple[1] : DEFAULT_ORB,
     };
   });
 
@@ -20,25 +22,26 @@
   function toggleAspect(aspect: string): void {
     const aspects = $config.detectors.aspectDetector.aspects;
     const aspectTuple = aspects.find(([name]: [string]) => name === aspect);
-    
+
     if (!aspectTuple) {
       // Create a new array with the added aspect
       $config.detectors.aspectDetector.aspects = [
         ...$config.detectors.aspectDetector.aspects,
-        [aspect, DEFAULT_ORB]
+        [aspect, DEFAULT_ORB],
       ];
     } else {
       // Create a new array without the removed aspect
-      $config.detectors.aspectDetector.aspects = 
-        $config.detectors.aspectDetector.aspects.filter(([name]: [string]) => name !== aspect);
+      $config.detectors.aspectDetector.aspects = $config.detectors.aspectDetector.aspects.filter(
+        ([name]: [string]) => name !== aspect
+      );
     }
   }
-  
+
   // Update aspect orb value
   function updateAspectOrb(aspect: string, orb: number): void {
     // Create a new array with the updated orb value
-    $config.detectors.aspectDetector.aspects = $config.detectors.aspectDetector.aspects.map((tuple: [string, number]) => 
-      tuple[0] === aspect ? [aspect, orb] : tuple
+    $config.detectors.aspectDetector.aspects = $config.detectors.aspectDetector.aspects.map(
+      (tuple: [string, number]) => (tuple[0] === aspect ? [aspect, orb] : tuple)
     );
   }
 
@@ -54,14 +57,14 @@
       // Create a new array with the added pair
       $config.detectors.aspectDetector.planetPairs = [
         ...$config.detectors.aspectDetector.planetPairs,
-        [planet1, planet2]
+        [planet1, planet2],
       ];
     } else {
       // Create a new array without the removed pair
-      $config.detectors.aspectDetector.planetPairs = 
+      $config.detectors.aspectDetector.planetPairs =
         $config.detectors.aspectDetector.planetPairs.filter(
           (pair: [string, string]) =>
-            !(pair[0] === planet1 && pair[1] === planet2) && 
+            !(pair[0] === planet1 && pair[1] === planet2) &&
             !(pair[0] === planet2 && pair[1] === planet1)
         );
     }
@@ -75,30 +78,6 @@
     );
   }
 </script>
-
-<style>
-  .aspect-settings-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 8px;
-  }
-  
-  .aspect-settings-table th, 
-  .aspect-settings-table td {
-    padding: 6px;
-    text-align: left;
-    font-size: 0.9em;
-  }
-  
-  .aspect-settings-table input[type="number"] {
-    width: 60px;
-  }
-  
-  .disabled {
-    background-color: #f5f5f5;
-    cursor: not-allowed;
-  }
-</style>
 
 <!-- Aspect Detector -->
 <div class="detector-section">
@@ -185,3 +164,27 @@
     </div>
   {/if}
 </div>
+
+<style>
+  .aspect-settings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+  }
+
+  .aspect-settings-table th,
+  .aspect-settings-table td {
+    padding: 6px;
+    text-align: left;
+    font-size: 0.9em;
+  }
+
+  .aspect-settings-table input[type='number'] {
+    width: 60px;
+  }
+
+  .disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+  }
+</style>

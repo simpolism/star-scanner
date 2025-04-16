@@ -20,16 +20,16 @@
     margin-bottom: 20px;
     border-radius: 4px;
   }
-  
+
   .app-header a {
     color: #9fe3ff;
     text-decoration: none;
   }
-  
+
   .app-header a:hover {
     text-decoration: underline;
   }
-  
+
   h1 {
     margin: 0;
   }

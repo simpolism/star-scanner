@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { presets } from '../../stores/configStore';
+  import { presets } from '../../../stores/configStore';
   import VisiblePlanetsSection from './VisiblePlanetsSection.svelte';
   import AspectSettingsSection from './AspectSettingsSection.svelte';
 
@@ -23,8 +23,6 @@
   }
 </script>
 
-
-
 <div class="config-section">
   <div class="section-header">
     <div class="presets">
@@ -34,7 +32,7 @@
       <button on:click={() => applyPreset('detailedChart')}>Detailed</button>
     </div>
   </div>
-  
+
   <VisiblePlanetsSection bind:showVisiblePlanets />
   <AspectSettingsSection bind:showAspectSettings />
 </div>

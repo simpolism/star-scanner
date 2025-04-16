@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { presets } from '../../stores/configStore';
+  import { presets } from '../../../stores/configStore';
   import SignIngressDetector from './SignIngressDetector.svelte';
   import RetrogradeDetector from './RetrogradeDetector.svelte';
   import AspectDetector from './AspectDetector.svelte';
@@ -22,8 +22,6 @@
   }
 </script>
 
-
-
 <div class="config-section">
   <div class="section-header">
     <h3>Detectors</h3>
@@ -35,8 +33,8 @@
   </div>
 
   <SignIngressDetector bind:showSignIngress />
-  <hr>
+  <hr />
   <RetrogradeDetector bind:showRetrograde />
-  <hr>
+  <hr />
   <AspectDetector bind:showAspects />
 </div>
