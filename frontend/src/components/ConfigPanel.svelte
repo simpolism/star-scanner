@@ -14,11 +14,9 @@
   let showAspectSettings = true;
   let isLoading = false;
   
-  // UI states
-  let isConfigOpen = true;
-  
-  // Tab state
-  let activeTab = 'eventDetection'; // 'eventDetection' or 'chartDisplay'
+  // UI states for collapsible sections
+  let isEventDetectionOpen = true;
+  let isChartDisplayOpen = true;
 
   // Form validation
   let startDateInput: HTMLInputElement;
@@ -123,58 +121,59 @@
 </script>
 
 <div class="config-panel">
-  <div class="config-header" on:click={() => isConfigOpen = !isConfigOpen}>
+  <div class="config-header">
     <h2>Configuration</h2>
-    <span class="toggle-icon">{isConfigOpen ? '▼' : '▶'}</span>
-  </div>
-  
-  {#if isConfigOpen}
-  <!-- Tabs Navigation -->
-  <div class="tab-navigation">
-    <button 
-      class="tab-button {activeTab === 'eventDetection' ? 'active' : ''}" 
-      on:click={() => activeTab = 'eventDetection'}>
-      Event Detection
-    </button>
-    <button 
-      class="tab-button {activeTab === 'chartDisplay' ? 'active' : ''}" 
-      on:click={() => activeTab = 'chartDisplay'}>
-      Chart Display
-    </button>
-  </div>
-  
-  <!-- Event Detection Tab -->
-  <div class="tab-content" style="display: {activeTab === 'eventDetection' ? 'block' : 'none'}">
-    <TimeRangeConfig 
-      bind:startDateInput 
-      bind:endDateInput 
-      bind:isValidForm 
-      bind:validationMessage
-      on:updateTimeSpan={handleUpdateTimeSpan}
-      on:presetApplied={handlePresetApplied}
-    />
-    
-    <EventDetectionConfig 
-      bind:showSignIngress 
-      bind:showRetrograde 
-      bind:showAspects 
-    />
-  </div>
-  
-  <!-- Chart Display Tab -->
-  <div class="tab-content" style="display: {activeTab === 'chartDisplay' ? 'block' : 'none'}">
-    <ChartDisplayConfig 
-      bind:showVisiblePlanets 
-      bind:showAspectSettings 
-    />
   </div>
 
-  <div class="actions">
-    <button class="apply-button" on:click={handleApply} disabled={isLoading}>
-      {isLoading ? 'Loading...' : 'Apply Configuration'}
-    </button>
+  <!-- Event Detection Section -->
+  <div class="section">
+    <div class="section-header" on:click={() => isEventDetectionOpen = !isEventDetectionOpen}>
+      <h3>Event Detection</h3>
+      <span class="toggle-icon">{isEventDetectionOpen ? '▼' : '▶'}</span>
+    </div>
+    
+    {#if isEventDetectionOpen}
+    <div class="section-content">
+      <TimeRangeConfig 
+        bind:startDateInput 
+        bind:endDateInput 
+        bind:isValidForm 
+        bind:validationMessage
+        on:updateTimeSpan={handleUpdateTimeSpan}
+        on:presetApplied={handlePresetApplied}
+      />
+      
+      <EventDetectionConfig 
+        bind:showSignIngress 
+        bind:showRetrograde 
+        bind:showAspects 
+      />
+      
+      <div class="actions">
+        <button class="apply-button" on:click={handleApply} disabled={isLoading}>
+          {isLoading ? 'Loading...' : 'Apply Configuration'}
+        </button>
+      </div>
+    </div>
+    {/if}
   </div>
-  {/if}
+  
+  <!-- Chart Display Section -->
+  <div class="section">
+    <div class="section-header" on:click={() => isChartDisplayOpen = !isChartDisplayOpen}>
+      <h3>Chart Display</h3>
+      <span class="toggle-icon">{isChartDisplayOpen ? '▼' : '▶'}</span>
+    </div>
+    
+    {#if isChartDisplayOpen}
+    <div class="section-content">
+      <ChartDisplayConfig 
+        bind:showVisiblePlanets 
+        bind:showAspectSettings 
+      />
+    </div>
+    {/if}
+  </div>
 </div>
 
 <style>
@@ -201,35 +200,37 @@
     color: #444;
   }
 
-  .tab-navigation {
-    display: flex;
-    border-bottom: 1px solid #eee;
-    margin-bottom: 20px;
-  }
-
-  .tab-button {
-    padding: 10px 20px;
-    background: none;
-    border: none;
-    border-bottom: 3px solid transparent;
-    cursor: pointer;
-    font-weight: bold;
-    color: #666;
-    transition: all 0.2s;
-  }
-
-  .tab-button:hover {
-    color: #444;
-    background-color: #f9f9f9;
-  }
-
-  .tab-button.active {
-    color: #444;
-    border-bottom-color: #444;
-  }
-
-  .tab-content {
+  .section {
     margin-top: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+  }
+  
+  .section:last-child {
+    border-bottom: none;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .section-header h3 {
+    margin: 0;
+    color: #444;
+    font-weight: bold;
+  }
+  
+  .section-content {
+    padding-top: 10px;
+  }
+
+  .toggle-icon {
+    transition: transform 0.2s;
   }
 
   .actions {
@@ -258,14 +259,12 @@
   }
 
   @media (max-width: 768px) {
-    .tab-navigation {
-      flex-direction: row;
-      overflow-x: auto;
+    .section-header h3 {
+      font-size: 16px;
     }
     
-    .tab-button {
-      flex: 1;
-      white-space: nowrap;
+    .apply-button {
+      width: 100%;
     }
   }
 </style>

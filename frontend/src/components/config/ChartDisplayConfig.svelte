@@ -27,7 +27,6 @@
 
 <div class="config-section">
   <div class="section-header">
-    <h3>Chart Display Settings</h3>
     <div class="presets">
       <span>Presets:</span>
       <button on:click={() => applyPreset('minimalistChart')}>Minimalist</button>
