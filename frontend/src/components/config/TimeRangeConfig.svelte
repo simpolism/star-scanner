@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { config, presets } from '../../stores/configStore';
+  import { presets } from '../../stores/configStore';
   import { createEventDispatcher } from 'svelte';
 
   export let startDateInput;
@@ -8,11 +8,6 @@
   export let validationMessage = '';
 
   const dispatch = createEventDispatcher();
-
-  // Convert ISO string to YYYY-MM-DD for input fields
-  function formatDateForInput(isoString: string): string {
-    return isoString.split('T')[0];
-  }
 
   // Update time span in config
   function updateTimeSpan(): void {
