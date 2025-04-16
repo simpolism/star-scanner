@@ -1,3 +1,5 @@
+import svelteConfig from './svelte.config.js';
+
 module.exports = {
   root: true,
   extends: [
@@ -22,6 +24,7 @@ module.exports = {
       files: ['*.svelte'],
       parser: 'svelte-eslint-parser',
       parserOptions: {
+        svelteConfig,
         parser: '@typescript-eslint/parser',
       },
     },
