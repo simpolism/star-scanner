@@ -17,7 +17,6 @@ export interface AstrologicalEvent {
   type: EventType;
   description: string;
   planets: Record<string, Planet>;
-  processedOutputs?: string[];
 }
 
 export interface EventsMetadata {

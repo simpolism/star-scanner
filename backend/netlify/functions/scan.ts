@@ -6,10 +6,6 @@ import {
   RetrogradeDetector,
   SignIngressDetector,
 } from '../../src/eventDetectors';
-import {
-  NeptunePlutoIngressProcessor,
-  PlutoRetrogradeProcessor,
-} from '../../src/eventProcessors';
 import { isoToJulianDay, julianDayToIso } from '../../src/utils';
 import { PLANETS } from '../../src/constants';
 import { EventDetector } from '../../src/types';
@@ -189,17 +185,11 @@ const handler: Handler = async (event, _context) => {
     const scanner = new AstrologicalEventScanner(startJd, endJd, detectors);
     const events = await scanner.scan();
 
-    // Process events
+    // Process events (currently only add UTC date)
     const processedEvents = events.map((event) => {
-      const processedOutputs = [
-        PlutoRetrogradeProcessor(event),
-        NeptunePlutoIngressProcessor(event),
-      ].filter((output) => output !== undefined);
-
       return {
         ...event,
         dateUTC: julianDayToIso(event.date),
-        processedOutputs,
       };
     });
 

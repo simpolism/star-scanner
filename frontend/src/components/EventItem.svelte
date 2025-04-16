@@ -94,17 +94,6 @@
       <AstroChart {event} {chartId} bind:this={astroChartComponent} />
     </div>
   {/if}
-
-  {#if event.processedOutputs && event.processedOutputs.length > 0}
-    {#each event.processedOutputs as output}
-      {#if output}
-        <div class="special-event">
-          <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-          {@html output}
-        </div>
-      {/if}
-    {/each}
-  {/if}
 </li>
 
 <style>
